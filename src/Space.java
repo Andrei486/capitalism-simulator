@@ -1,2 +1,3 @@
-public class Space {
+public abstract class Space {
+    
 }
