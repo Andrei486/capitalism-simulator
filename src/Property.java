@@ -2,31 +2,57 @@ public class Property {
 
     private float cost;
     private ColorGroup colorGroup;
-    private Player owner;
+    private Player owner = null;
     private static float RENT_MULTIPLIER = 0.5f;
 
+    /**
+     * Creates a new property with a given cost and color.
+     * @param cost the cost to buy the new property
+     * @param colorGroup the color group that the new property should be part of
+     */
     public Property(float cost, ColorGroup colorGroup) {
-
+        this.cost = cost;
+        this.colorGroup = colorGroup;
     }
 
+    /**
+     * Get the cost to buy this property.
+     * @return float representing the amount of currency needed to buy this property
+     */
     public float getCost() {
-        return 0;
+        return this.cost;
     }
 
+    /**
+     * Get the cost of rent on this property, including houses and hotels.
+     * @return float representing the amount of currency to be paid as rent on this property
+     */
     public float getRent() {
-        return 0;
+        return this.cost * RENT_MULTIPLIER; //include houses and hotels here later
     }
 
+    /**
+     * Gets the color group that this property is part of.
+     * @return color of this property as a ColorGroup
+     */
     public ColorGroup getColorGroup() {
-        return null;
+        return this.colorGroup;
     }
 
+    /**
+     * Gets the current owner of this property.
+     * @return the Player that owns this property
+     */
     public Player getOwner() {
-        return null;
+        return this.owner;
     }
 
+    /**
+     * Sets the current owner of this property.
+     * @param p the Player who should own this property
+     */
     public void setOwner(Player p) {
-
+        this.owner = p;
     }
 
     @Override
