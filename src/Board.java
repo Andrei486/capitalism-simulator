@@ -1,6 +1,4 @@
-import java.util.Collection;
 import java.util.Deque;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
@@ -27,6 +25,7 @@ public class Board {
             this.players[i] = player;
             nextTurns.add(player);
         }
+        this.currentPlayer = nextTurns.getFirst();
     }
 
     /**
