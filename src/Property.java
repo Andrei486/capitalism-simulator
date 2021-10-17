@@ -1,6 +1,6 @@
 public class Property {
 
-    private float cost;
+    private int cost;
     private ColorGroup colorGroup;
     private Player owner = null;
     private static float RENT_MULTIPLIER = 0.5f;
@@ -10,25 +10,26 @@ public class Property {
      * @param cost the cost to buy the new property
      * @param colorGroup the color group that the new property should be part of
      */
-    public Property(float cost, ColorGroup colorGroup) {
+    public Property(int cost, ColorGroup colorGroup) {
         this.cost = cost;
         this.colorGroup = colorGroup;
     }
 
     /**
      * Get the cost to buy this property.
-     * @return float representing the amount of currency needed to buy this property
+     * @return integer representing the amount of currency needed to buy this property
      */
-    public float getCost() {
+    public int getCost() {
         return this.cost;
     }
 
     /**
      * Get the cost of rent on this property, including houses and hotels.
-     * @return float representing the amount of currency to be paid as rent on this property
+     * Costs are always rounded down.
+     * @return integer representing the amount of currency to be paid as rent on this property
      */
-    public float getRent() {
-        return this.cost * RENT_MULTIPLIER; //include houses and hotels here later
+    public int getRent() {
+        return (int) (this.cost * RENT_MULTIPLIER); //include houses and hotels here later
     }
 
     /**
