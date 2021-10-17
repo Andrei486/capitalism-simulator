@@ -21,6 +21,7 @@ public class Player {
         this.money = STARTING_MONEY;
         this.position = 0;
         this.isBankrupt = false;
+        this.properties = new HashSet<>();
     }
 
     /**
@@ -31,6 +32,7 @@ public class Player {
     public void buy (Property property) {
         this.loseMoney(property.getRent());
         property.setOwner(this);
+        this.properties.add(property);
     }
 
     /**
@@ -94,6 +96,7 @@ public class Player {
         for (Property property: this.properties) {
             property.setOwner(null);
         }
+        this.properties.clear();
         this.isBankrupt = true;
     }
 
