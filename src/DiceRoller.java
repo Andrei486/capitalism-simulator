@@ -19,43 +19,16 @@ public class DiceRoller {
         roll();
     }
 
-    private void roll() {
+    public void roll() {
         die1 = (int) (Math.random() * 6) + 1;
         die2 = (int) (Math.random() * 6) + 1;
-    }
-
-    public int getDie1() {
-        return die1;
-    }
-
-    public int getDie2() {
-        return die2;
     }
 
     public int getTotal() {
         return die1 + die2;
     }
 
-    public void isDouble(){
-        if(die1 == die2){
-            System.out.print("Player plays again.");
-        }
-    }
-
-    public String toString() {
-        return "Player Moves " + getTotal() + " spaces.";
-    }
-
-    public static void main(String[] args) {
-
-        DiceRoller dice;
-        int rollCount;
-
-        dice = new DiceRoller();
-        dice.roll();
-
-        System.out.println(dice.getDie1() + " and " + dice.getDie2());
-
-        dice.isDouble();
+    public boolean isDouble(){
+        return die1 == die2;
     }
 }
