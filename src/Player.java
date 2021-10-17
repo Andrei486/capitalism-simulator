@@ -50,6 +50,30 @@ public class Player {
     }
 
     /**
+     * Gets the name of the player.
+     * @return a string of its name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Gets the amount of money a player has.
+     * @return an integer value equal to the money the player owns
+     */
+    public int getMoney() {
+        return this.money;
+    }
+
+    /**
+     * Gets the set of properties the player owns.
+     * @return a hashset of the properties the player owns
+     */
+    public HashSet<Property> getProperties() {
+        return properties;
+    }
+
+    /**
      * Takes money from the player, bankrupts the player if they do not have the money to pay.
      * @param money the money to be paid
      * @return true if the player could pay, false if they bankrupted
