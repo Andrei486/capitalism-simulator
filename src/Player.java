@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.HashSet;
 
 /**
@@ -47,6 +48,30 @@ public class Player {
         else {
             property.getOwner().gainMoney(this.money);
         }
+    }
+
+    /**
+     * Gets the name of the player.
+     * @return a string of its name
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /**
+     * Gets the amount of money a player has.
+     * @return an integer value equal to the money the player owns
+     */
+    public int getMoney() {
+        return this.money;
+    }
+
+    /**
+     * Gets the set of properties the player owns.
+     * @return a hashset of the properties the player owns
+     */
+    public HashSet<Property> getProperties() {
+        return properties;
     }
 
     /**
