@@ -2,10 +2,9 @@ public class EmptySpace extends Space {
 
     /**
      * Creates a new empty space.
-     * @param name
      */
-    public EmptySpace(String name) {
-        super(name);
+    public EmptySpace() {
+        super("");
     }
 
     /**
@@ -24,6 +23,6 @@ public class EmptySpace extends Space {
      */
     @Override
     public String getDescription() {
-        return this.getName() + " (no property)";
+        return "(empty space)";
     }
 }
