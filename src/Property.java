@@ -1,5 +1,6 @@
 public class Property {
 
+    private String name;
     private int cost;
     private ColorGroup colorGroup;
     private Player owner = null;
@@ -10,7 +11,8 @@ public class Property {
      * @param cost the cost to buy the new property
      * @param colorGroup the color group that the new property should be part of
      */
-    public Property(int cost, ColorGroup colorGroup) {
+    public Property(String name, int cost, ColorGroup colorGroup) {
+        this.name = name;
         this.cost = cost;
         this.colorGroup = colorGroup;
     }
@@ -21,6 +23,14 @@ public class Property {
      */
     public int getCost() {
         return this.cost;
+    }
+
+    /**
+     * Gets the name of this property.
+     * @return String containing the property's name
+     */
+    public String getName() {
+        return this.name;
     }
 
     /**
