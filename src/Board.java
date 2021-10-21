@@ -77,8 +77,15 @@ public class Board {
         }
     }
 
+    /**
+     * Replaces current player's position in queue depending on dice roll.
+     * If player rolls a double, players plays again.
+     */
     public  void  advanceTurn(){
-
+        if(!getDiceRoller().isDouble()){
+            Player currentPlayer = nextTurns.removeFirst();
+            nextTurns.addLast(currentPlayer);
+        }
     }
 
     /**
