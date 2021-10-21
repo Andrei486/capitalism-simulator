@@ -10,8 +10,7 @@ public class Board {
     private Player[] players;
     private Player currentPlayer;
     private Deque<Player> nextTurns;
-    private DiceRoller getTotal;
-    private int position;
+    private DiceRoller diceRoller;
 
     /**
      * Constructs a board with the specified number of players.
@@ -62,15 +61,16 @@ public class Board {
      * @return the total value of the given dice roll.
      */
     public DiceRoller getDiceRoller(){
-        return this.getTotal;
+        return this.diceRoller;
     }
 
     /**
      * Moves the player by the amount rolled on the dice.
-     * @param getTotal integer of how many spaces were covered.
+     * @param player integer of how many spaces were covered by the player.
      */
-    public void movePlayer(int getTotal){
-        position += getTotal;
+    public void movePlayer(int player){
+        int position = 0;
+        position += player;
         int BOARD_SIZE = 40;
         if (position >= BOARD_SIZE){
             position -= BOARD_SIZE;
@@ -81,10 +81,11 @@ public class Board {
      * Replaces current player's position in queue depending on dice roll.
      * If player rolls a double, players plays again.
      */
+
     public  void  advanceTurn(){
         if(!getDiceRoller().isDouble()){
-            Player currentPlayer = nextTurns.removeFirst();
-            nextTurns.addLast(currentPlayer);
+            Player currentPlayer = nextTurns.remove();
+            nextTurns.add(currentPlayer);
         }
     }
 
