@@ -10,7 +10,8 @@ public class Board {
     private Player[] players;
     private Player currentPlayer;
     private Deque<Player> nextTurns;
-    private DiceRoller diceRoller;
+    private DiceRoller getTotal;
+    private int position;
 
     /**
      * Constructs a board with the specified number of players.
@@ -53,6 +54,31 @@ public class Board {
      */
     public Space getSpace(int position) {
         return this.spaces[position];
+    }
+
+    /**
+     * Gets the total roll of both dice.
+     * Value must be between 1 and 12, inclusive.
+     * @return the total value of the given dice roll.
+     */
+    public DiceRoller getDiceRoller(){
+        return this.getTotal;
+    }
+
+    /**
+     * Moves the player by the amount rolled on the dice.
+     * @param getTotal integer of how many spaces were covered.
+     */
+    public void movePlayer(int getTotal){
+        position += getTotal;
+        int BOARD_SIZE = 40;
+        if (position >= BOARD_SIZE){
+            position -= BOARD_SIZE;
+        }
+    }
+
+    public  void  advanceTurn(){
+
     }
 
     /**
