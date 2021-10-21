@@ -1,5 +1,6 @@
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -9,27 +10,30 @@ public class Board {
     private Space[] spaces;
     private Player[] players;
     private Player currentPlayer;
-    private Deque<Player> nextTurns;
+    private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
 
     /**
      * Constructs a board with the specified number of players.
+     *
      * @param nPlayers integer number of players
      */
     public Board(int nPlayers) {
         initializeBoard();
         this.players = new Player[nPlayers];
         nextTurns = new LinkedList<>();
+        diceRoller = new DiceRoller();
         for (int i = 0; i < nPlayers; i++) {
-            Player player = new Player("P" + i);
+            Player player = new Player("P" + (i + 1));
             this.players[i] = player;
             nextTurns.add(player);
         }
-        this.currentPlayer = nextTurns.getFirst();
+        this.currentPlayer = nextTurns.peek();
     }
 
     /**
      * Gets all players that are playing on this board.
+     *
      * @return array of all the Players
      */
     public Player[] getPlayers() {
@@ -39,6 +43,7 @@ public class Board {
     /**
      * Gets the player who is currently moving. This player is the one who
      * should act (buy, etc) and can end their turn.
+     *
      * @return Player who is currently moving
      */
     public Player getCurrentPlayer() {
@@ -48,6 +53,7 @@ public class Board {
     /**
      * Gets the space on this board at a specific position.
      * Positions start at 0 for GO, and increase clockwise up to 39.
+     *
      * @param position integer position of the space to get
      * @return the Space at the given position
      */
@@ -58,21 +64,23 @@ public class Board {
     /**
      * Gets the total roll of both dice.
      * Value must be between 1 and 12, inclusive.
+     *
      * @return the total value of the given dice roll.
      */
-    public DiceRoller getDiceRoller(){
+    public DiceRoller getDiceRoller() {
         return this.diceRoller;
     }
 
     /**
      * Moves the player by the amount rolled on the dice.
+     *
      * @param player integer of how many spaces were covered by the player.
      */
-    public void movePlayer(int player){
+    public void movePlayer(int player) {
         int position = 0;
         position += player;
         int BOARD_SIZE = 40;
-        if (position >= BOARD_SIZE){
+        if (position >= BOARD_SIZE) {
             position -= BOARD_SIZE;
         }
     }
@@ -82,11 +90,12 @@ public class Board {
      * If player rolls a double, players plays again.
      */
 
-    public  void  advanceTurn(){
-        if(!getDiceRoller().isDouble()){
-            Player currentPlayer = nextTurns.remove();
+    public void advanceTurn() {
+        if (!getDiceRoller().isDouble()) {
+            currentPlayer = nextTurns.remove();
             nextTurns.add(currentPlayer);
         }
+        else System.out.println(currentPlayer.getName() + " rolled a double, they play again!");
     }
 
     /**
@@ -128,6 +137,18 @@ public class Board {
         for (int i = 0; i < propertyIndices.length; i++) {
             property = new Property(propertyNames[i], propertyCosts[i], propertyColors[i]);
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
+        }
+    }
+
+    public static void main(String[] args) {
+        Board newGame = new Board(3);
+        for (int i = 0; i < 100; i++) {
+            System.out.println(newGame.currentPlayer.getName() + " playing his turn!");
+            newGame.diceRoller.roll();
+            int roll = newGame.diceRoller.getTotal();
+            newGame.movePlayer(roll);
+            System.out.println(newGame.currentPlayer.getName() + " rolled a " + roll);
+            newGame.advanceTurn();
         }
     }
 }
