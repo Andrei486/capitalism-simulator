@@ -1,5 +1,6 @@
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -9,8 +10,9 @@ public class Board {
     private Space[] spaces;
     private Player[] players;
     private Player currentPlayer;
-    private Deque<Player> nextTurns;
+    private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
+    private int BOARD_SIZE;
 
     /**
      * Constructs a board with the specified number of players.
@@ -20,12 +22,13 @@ public class Board {
         initializeBoard();
         this.players = new Player[nPlayers];
         nextTurns = new LinkedList<>();
+        diceRoller = new DiceRoller();
         for (int i = 0; i < nPlayers; i++) {
-            Player player = new Player("P" + i);
+            Player player = new Player("P" + (i + 1));
             this.players[i] = player;
             nextTurns.add(player);
         }
-        this.currentPlayer = nextTurns.getFirst();
+        this.currentPlayer = nextTurns.remove();
     }
 
     /**
@@ -56,9 +59,42 @@ public class Board {
     }
 
     /**
+     * Gets the total roll of both dice.
+     * Value will be between 1 and 12, inclusive.
+     * @return the total value of the given dice roll.
+     */
+    public DiceRoller getDiceRoller() {
+        return this.diceRoller;
+    }
+
+    /**
+     * Moves the player by the amount rolled on the dice.
+     * @param player integer of how many spaces were covered by the player.
+     */
+    public void movePlayer(Player player) {
+        diceRoller.roll();
+        int newPosition = diceRoller.getTotal() + player.getPosition();
+        newPosition = newPosition % BOARD_SIZE;
+        player.setPosition(newPosition);
+    }
+
+    /**
+     * Replaces current player's position in queue depending on dice roll.
+     * If player rolls a double, players plays again.
+     */
+
+    public void advanceTurn() {
+        if (!getDiceRoller().isDouble()) {
+            nextTurns.add(currentPlayer);
+            currentPlayer = nextTurns.remove();
+        }
+    }
+
+    /**
      * Initializes the spaces on the board, creating properties as needed.
      */
     private void initializeBoard() {
+        BOARD_SIZE = 40;
         Property property;
         this.spaces = new Space[40];
         int[] emptyIndices = {0, 2, 4, 5, 7, 10, 12, 15, 17, 20, 22, 25, 28, 30, 33, 35, 36, 38};
