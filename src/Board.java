@@ -12,10 +12,10 @@ public class Board {
     private Player currentPlayer;
     private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
+    private int BOARD_SIZE;
 
     /**
      * Constructs a board with the specified number of players.
-     *
      * @param nPlayers integer number of players
      */
     public Board(int nPlayers) {
@@ -33,7 +33,6 @@ public class Board {
 
     /**
      * Gets all players that are playing on this board.
-     *
      * @return array of all the Players
      */
     public Player[] getPlayers() {
@@ -43,7 +42,6 @@ public class Board {
     /**
      * Gets the player who is currently moving. This player is the one who
      * should act (buy, etc) and can end their turn.
-     *
      * @return Player who is currently moving
      */
     public Player getCurrentPlayer() {
@@ -53,7 +51,6 @@ public class Board {
     /**
      * Gets the space on this board at a specific position.
      * Positions start at 0 for GO, and increase clockwise up to 39.
-     *
      * @param position integer position of the space to get
      * @return the Space at the given position
      */
@@ -63,8 +60,7 @@ public class Board {
 
     /**
      * Gets the total roll of both dice.
-     * Value must be between 1 and 12, inclusive.
-     *
+     * Value will be between 1 and 12, inclusive.
      * @return the total value of the given dice roll.
      */
     public DiceRoller getDiceRoller() {
@@ -76,15 +72,11 @@ public class Board {
      * @param player integer of how many spaces were covered by the player.
      */
     public void movePlayer(Player player) {
-            int BOARD_SIZE = 40;
-            int newPosition = diceRoller.getTotal() + player.getPosition();
-            if(newPosition > BOARD_SIZE - 1){
-                newPosition = newPosition%BOARD_SIZE;
-                player.setPosition(newPosition);
-            }else{
-                player.setPosition(newPosition);
-            }
-        }
+        diceRoller.roll();
+        int newPosition = diceRoller.getTotal() + player.getPosition();
+        newPosition = newPosition % BOARD_SIZE;
+        player.setPosition(newPosition);
+    }
 
     /**
      * Replaces current player's position in queue depending on dice roll.
@@ -93,8 +85,8 @@ public class Board {
 
     public void advanceTurn() {
         if (!getDiceRoller().isDouble()) {
-            currentPlayer = nextTurns.remove();
             nextTurns.add(currentPlayer);
+            currentPlayer = nextTurns.remove();
         }
     }
 
@@ -102,6 +94,7 @@ public class Board {
      * Initializes the spaces on the board, creating properties as needed.
      */
     private void initializeBoard() {
+        BOARD_SIZE = 40;
         Property property;
         this.spaces = new Space[40];
         int[] emptyIndices = {0, 2, 4, 5, 7, 10, 12, 15, 17, 20, 22, 25, 28, 30, 33, 35, 36, 38};
@@ -139,18 +132,4 @@ public class Board {
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }
     }
-    /*
-    public static void main(String[] args) {
-        Board newGame = new Board(3);
-        for (int i = 0; i < 100; i++) {
-            System.out.println(newGame.currentPlayer.getName() + " playing his turn!");
-            newGame.diceRoller.roll();
-            int roll = newGame.diceRoller.getTotal();
-            newGame.movePlayer(newGame.currentPlayer);
-            System.out.println(newGame.currentPlayer.getName() + " rolled a " + roll);
-            newGame.advanceTurn();
-            System.out.println(newGame.currentPlayer.getPosition());
-        }
-    }
-     */
 }
