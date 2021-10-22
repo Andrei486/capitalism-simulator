@@ -139,7 +139,7 @@ public class Board {
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }
     }
-
+    /*
     public static void main(String[] args) {
         Board newGame = new Board(3);
         for (int i = 0; i < 100; i++) {
@@ -152,4 +152,5 @@ public class Board {
             System.out.println(newGame.currentPlayer.getPosition());
         }
     }
+     */
 }
