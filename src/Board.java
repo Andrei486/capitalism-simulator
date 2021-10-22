@@ -28,7 +28,7 @@ public class Board {
             this.players[i] = player;
             nextTurns.add(player);
         }
-        this.currentPlayer = nextTurns.peek();
+        this.currentPlayer = nextTurns.remove();
     }
 
     /**
@@ -73,17 +73,18 @@ public class Board {
 
     /**
      * Moves the player by the amount rolled on the dice.
-     *
      * @param player integer of how many spaces were covered by the player.
      */
-    public void movePlayer(int player) {
-        int position = 0;
-        position += player;
-        int BOARD_SIZE = 40;
-        if (position >= BOARD_SIZE) {
-            position -= BOARD_SIZE;
+    public void movePlayer(Player player) {
+            int BOARD_SIZE = 40;
+            int newPosition = diceRoller.getTotal() + player.getPosition();
+            if(newPosition > BOARD_SIZE - 1){
+                newPosition = newPosition%BOARD_SIZE;
+                player.setPosition(newPosition);
+            }else{
+                player.setPosition(newPosition);
+            }
         }
-    }
 
     /**
      * Replaces current player's position in queue depending on dice roll.
@@ -95,7 +96,6 @@ public class Board {
             currentPlayer = nextTurns.remove();
             nextTurns.add(currentPlayer);
         }
-        else System.out.println(currentPlayer.getName() + " rolled a double, they play again!");
     }
 
     /**
@@ -146,9 +146,10 @@ public class Board {
             System.out.println(newGame.currentPlayer.getName() + " playing his turn!");
             newGame.diceRoller.roll();
             int roll = newGame.diceRoller.getTotal();
-            newGame.movePlayer(roll);
+            newGame.movePlayer(newGame.currentPlayer);
             System.out.println(newGame.currentPlayer.getName() + " rolled a " + roll);
             newGame.advanceTurn();
+            System.out.println(newGame.currentPlayer.getPosition());
         }
     }
 }
