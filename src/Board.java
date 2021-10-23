@@ -1,4 +1,5 @@
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -6,13 +7,14 @@ import java.util.Queue;
  * Class representing a Monopoly board. Provides methods that allow
  * player turns to be advanced and players to move along the board.
  */
-public class Board {
+public class Board implements GameEventListener{
     private Space[] spaces;
     private Player[] players;
     private Player currentPlayer;
     private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
     private int BOARD_SIZE;
+    private HashSet<GameEventListener> gameListeners;
 
     /**
      * Constructs a board with the specified number of players.
@@ -24,7 +26,7 @@ public class Board {
         nextTurns = new LinkedList<>();
         diceRoller = new DiceRoller();
         for (int i = 0; i < nPlayers; i++) {
-            Player player = new Player("P" + (i + 1));
+            Player player = new Player("P" + (i + 1), this);
             this.players[i] = player;
             nextTurns.add(player);
         }
@@ -130,6 +132,44 @@ public class Board {
         for (int i = 0; i < propertyIndices.length; i++) {
             property = new Property(propertyNames[i], propertyCosts[i], propertyColors[i]);
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
+        }
+    }
+
+    /**
+     * Adds a GameEventListener to the gameListener Hashset.
+     * @param l the GameEventListener to be added
+     */
+    public void addGameListener(GameEventListener l) {
+        gameListeners.add(l);
+    }
+
+    /**
+     * Remove a GameEventListener from the gameListener Hashset.
+     * @param l the GameEventListener to be removed
+     */
+    public void removeGameListener(GameEventListener l) {
+        gameListeners.remove(l);
+    }
+
+    /**
+     * Sends the RentEvent to all the GameEventListener in the gameListener Hashset.
+     * @param e the event to be sent out
+     */
+    @Override
+    public void handlePayRent(RentEvent e) {
+        for (GameEventListener l: gameListeners) {
+            l.handlePayRent(e);
+        }
+    }
+
+    /**
+     * Sends the BankruptcyEvent to all the GameEventListener in the gameListener Hashset.
+     * @param e the event to be sent out
+     */
+    @Override
+    public void handleBankruptcy(BankruptcyEvent e) {
+        for (GameEventListener l: gameListeners) {
+            l.handleBankruptcy(e);
         }
     }
 }
