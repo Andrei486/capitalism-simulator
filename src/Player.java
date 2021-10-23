@@ -11,7 +11,7 @@ public class Player {
     private int position;
     private boolean isBankrupt;
     private Board board;
-    private static int STARTING_MONEY = 1500;
+    private static final int STARTING_MONEY = 1500;
 
     /**
      * Constructs a player class object

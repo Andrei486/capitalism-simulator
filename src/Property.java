@@ -1,10 +1,14 @@
+/**
+ * Class representing a Monopoly property that can be bought and owned by a player.
+ * @author Andrei Popescu, 101143798
+ */
 public class Property {
 
     private String name;
     private int cost;
     private ColorGroup colorGroup;
     private Player owner = null;
-    private static float RENT_MULTIPLIER = 0.5f;
+    private static final float RENT_MULTIPLIER = 0.5f;
 
     /**
      * Creates a new property with a given cost and color.
@@ -68,10 +72,16 @@ public class Property {
 
     @Override
     public String toString() {
-        return "Property{" +
-                "cost=" + cost +
-                ", colorGroup=" + colorGroup +
-                ", owner=" + owner +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Property: " + this.name + "\n");
+        sb.append("Color:    " + this.getColorGroup() + "\n");
+        sb.append("Cost:     " + this.getCost() + "\n");
+        sb.append("Rent:     " + this.getRent() + "\n");
+        if (this.getOwner() == null) {
+            sb.append("Not owned\n");
+        } else {
+            sb.append("Owned by " + this.getOwner().getName());
+        }
+        return sb.toString();
     }
 }

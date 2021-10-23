@@ -1,3 +1,8 @@
+/**
+ * Class representing an empty space on the board, such as Free Parking.
+ * When the player lands on one of these spaces, nothing happens.
+ * @author Andrei Popescu, 101143798
+ */
 public class EmptySpace extends Space {
 
     /**
@@ -23,6 +28,6 @@ public class EmptySpace extends Space {
      */
     @Override
     public String getDescription() {
-        return "(empty space)";
+        return "Empty space";
     }
 }
