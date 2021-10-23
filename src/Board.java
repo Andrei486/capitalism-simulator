@@ -9,6 +9,7 @@ import java.util.Queue;
 public class Board implements GameEventListener{
     private Space[] spaces;
     private Player[] players;
+    private Property[] properties;
     private Player currentPlayer;
     private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
@@ -63,6 +64,14 @@ public class Board implements GameEventListener{
     }
 
     /**
+     * Gets all properties present on this board.
+     * @return an array of all Properties on this board
+     */
+    public Property[] getProperties() {
+        return this.properties;
+    }
+
+    /**
      * Returns the dice roller that controls player movement on this board.
      * @return the DiceRoller object associated to this board.
      */
@@ -113,6 +122,7 @@ public class Board implements GameEventListener{
         BOARD_SIZE = 40;
         Property property;
         this.spaces = new Space[40];
+        this.properties = new Property[22];
         int[] emptyIndices = {0, 2, 4, 5, 7, 10, 12, 15, 17, 20, 22, 25, 28, 30, 33, 35, 36, 38};
         for (int i : emptyIndices) {
             this.spaces[i] = new EmptySpace();
@@ -145,6 +155,7 @@ public class Board implements GameEventListener{
         };
         for (int i = 0; i < propertyIndices.length; i++) {
             property = new Property(propertyNames[i], propertyCosts[i], propertyColors[i]);
+            this.properties[i] = property;
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }
     }
