@@ -31,6 +31,7 @@ public class Board implements GameEventListener{
             nextTurns.add(player);
         }
         this.currentPlayer = nextTurns.remove();
+        this.gameListeners = new HashSet<>();
     }
 
     /**

@@ -12,7 +12,7 @@ public class BankruptcyEvent extends EventObject {
     }
 
     /**
-     * Gets the player paying the rent.
+     * Gets the player who has gon bankrupt.
      * @return the player
      */
     @Override
