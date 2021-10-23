@@ -1,4 +1,3 @@
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -13,6 +12,7 @@ public class Board {
     private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
     private int BOARD_SIZE;
+    private int bankruptPlayers;
 
     /**
      * Constructs a board with the specified number of players.
@@ -20,6 +20,7 @@ public class Board {
      */
     public Board(int nPlayers) {
         initializeBoard();
+        bankruptPlayers = 0;
         this.players = new Player[nPlayers];
         nextTurns = new LinkedList<>();
         diceRoller = new DiceRoller();
@@ -86,7 +87,20 @@ public class Board {
         if (!getDiceRoller().isDouble()) {
             nextTurns.add(currentPlayer);
             currentPlayer = nextTurns.remove();
+            //remove any bankrupt players from the turn order without giving them a turn
+            while (currentPlayer.getIsBankrupt()) {
+                currentPlayer = nextTurns.remove();
+                bankruptPlayers++;
+            }
         }
+    }
+
+    /**
+     * Checks whether the game is over. The game is over when all but one player is bankrupt.
+     * @return true if the game is over, false otherwise.
+     */
+    public boolean isGameOver() {
+        return bankruptPlayers >= (players.length - 1);
     }
 
     /**
