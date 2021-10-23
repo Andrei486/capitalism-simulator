@@ -1,11 +1,17 @@
 import java.util.HashSet;
 
 public class TextController implements GameEventListener {
+    private Board board;
+
+    public TextController(Board board){
+        this.board = board;
+    }
 
     @Override
     public void handlePayRent(RentEvent e) {
-        Player currentPlayer = board.getCurrentPlayer();
-        Property currentProperty = board.getProperties()[currentPlayer.getPosition()];
+        Player currentPlayer = (Player) e.getSource();
+        Property currentProperty = e.getProperty();
+
         System.out.println(currentProperty.getName() + " paid $" + currentProperty.getRent() +
                  " in rent to " + currentProperty.getOwner() + ".");
 
@@ -22,9 +28,9 @@ public class TextController implements GameEventListener {
      * @param command a valid command
      * @author Mohammad Alkhaledi
      * Receives a command string, and performs appropriate action
-     * list of commands: help, buy, show, show [player name], properties,property [playr name], end
+     * list of commands: help, buy, show, show [player name], properties,property [property name], end
      */
-    private void parseCommand(String command) {
+    public void parseCommand(String command) {
         String[] splitCommand = command.split("\\s");
         command = splitCommand[0];
         String secondWord = null;
@@ -38,15 +44,15 @@ public class TextController implements GameEventListener {
 
             case "buy":
                 Player currentPlayer = board.getCurrentPlayer();
-                EmptySpace emptySpace = board.getCurrentSpace();
+                Space currentSpace1 = board.getSpace(currentPlayer.getPosition());
 
-                if (emptySpace.getName().equals("")) {
+                if (currentSpace1 instanceof EmptySpace) {
                     System.out.println("You are not on a property. You cannot buy right now.");
                     break;
                 }
 
-                PropertySpace currentSpace = board.getCurrentSpace();
-                Property currentProperty = currentSpace.getProperty();
+                PropertySpace currentPropertySpace = (PropertySpace) currentSpace1;
+                Property currentProperty = currentPropertySpace.getProperty();
                 if (currentProperty.getOwner() == currentPlayer) {
                     System.out.println("This property is owned already. You cannot buy it again.");
                 } else {
@@ -101,6 +107,7 @@ public class TextController implements GameEventListener {
                 }
 
                 break;
+
             case "properties":
                 System.out.print("Properties: ");
                 HashSet<Property> properties = board.getCurrentPlayer().getProperties();
