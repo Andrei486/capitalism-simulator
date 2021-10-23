@@ -73,7 +73,8 @@ public class Property {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Property" + this.name + "\n");
+        sb.append("Property " + this.name + "\n");
+        sb.append("Color: "+ this.getColorGroup() + "\n");
         sb.append("Cost: "+ this.getCost() + "\n");
         sb.append("Rent: "+ this.getRent() + "\n");
         if (this.getOwner() == null) {
@@ -81,11 +82,6 @@ public class Property {
         } else {
             sb.append("Owned by " + this.getOwner().getName());
         }
-
-        return "Property{" +
-                "cost=" + cost +
-                ", colorGroup=" + colorGroup +
-                ", owner=" + owner +
-                '}';
+        return sb.toString();
     }
 }
