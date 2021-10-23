@@ -12,7 +12,7 @@ public class TextController implements GameEventListener {
         Player currentPlayer = (Player) e.getSource();
         Property currentProperty = e.getProperty();
 
-        System.out.println(currentProperty.getName() + " paid $" + currentProperty.getRent() +
+        System.out.println(currentPlayer.getName() + " paid $" + e.getRentPaid() +
                  " in rent to " + currentProperty.getOwner() + ".");
 
     }
@@ -28,7 +28,7 @@ public class TextController implements GameEventListener {
      * @param command a valid command
      * @author Mohammad Alkhaledi
      * Receives a command string, and performs appropriate action
-     * list of commands: help, buy, show, show [player name], properties,property [property name], end
+     * list of commands: help, buy, show, show [player name], properties,property [property name], end, quit
      */
     public void parseCommand(String command) {
         String[] splitCommand = command.split("\\s");
@@ -46,14 +46,15 @@ public class TextController implements GameEventListener {
                 Player currentPlayer = board.getCurrentPlayer();
                 Space currentSpace1 = board.getSpace(currentPlayer.getPosition());
 
-                if (currentSpace1 instanceof EmptySpace) {
+                if (!(currentSpace1 instanceof PropertySpace)) {
                     System.out.println("You are not on a property. You cannot buy right now.");
                     break;
                 }
 
                 PropertySpace currentPropertySpace = (PropertySpace) currentSpace1;
                 Property currentProperty = currentPropertySpace.getProperty();
-                if (currentProperty.getOwner() == currentPlayer) {
+
+                if (!(currentProperty.getOwner() == null)) {
                     System.out.println("This property is owned already. You cannot buy it again.");
                 } else {
                     currentPlayer.buy(currentProperty);
@@ -129,6 +130,7 @@ public class TextController implements GameEventListener {
             case "property":
                 Property[] properties1 = board.getProperties();
                 Property thisProperty = null;
+
                 if (secondWord != null) {
                     for (Property p : properties1) {
                         if (secondWord.equals(p.getName())) {
@@ -139,7 +141,7 @@ public class TextController implements GameEventListener {
                         System.out.println("there is no property named " + secondWord);
                         break;
                     }
-                    System.out.println(thisProperty.toString());
+                    System.out.println(thisProperty);
 
                 } else {
                     System.out.println("You need to put in a property name.");
@@ -149,7 +151,31 @@ public class TextController implements GameEventListener {
                 break;
             case "end":
                 System.out.println("Ending turn.");
-                advanceTurn();
+                board.advanceTurn();
+
+                Player currentPlayer2 = board.getCurrentPlayer();
+                Space currentSpace2 = board.getSpace(currentPlayer2.getPosition());
+                board.movePlayer(currentPlayer2);
+                System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
+                System.out.println("Current money: $" + currentPlayer2.getMoney());
+                System.out.println("Rolling dice to move: rolled a total of " + board.getDiceRoller().getTotal());
+                if(board.getDiceRoller().isDouble()){
+                    System.out.println("Rolled doubles!");
+                }
+                if(!(currentSpace2 instanceof PropertySpace)){
+                    System.out.println("Moved to empty space.");
+                }
+                else{
+                    PropertySpace currentPropertySpace2 = (PropertySpace)currentSpace2;
+                    Property currentProperty2 = currentPropertySpace2.getProperty();
+                    System.out.println("Moved to space\n" + currentProperty2);
+                }
+                System.out.println("What do you want to do?\nEnter a command, or help for a command list" +
+                        "\n>");
+                break;
+            case "quit":
+                System.out.println("Quiting game.");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Invalid command. Type help for a command list");
