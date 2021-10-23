@@ -19,7 +19,7 @@ public class TextController implements GameEventListener {
 
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
-        Player currentPlayer = board.getCurrentPlayer();
+        Player currentPlayer = (Player) e.getSource();
         System.out.println(currentPlayer.getName() + "went bankrupt.");
     }
 
@@ -152,23 +152,23 @@ public class TextController implements GameEventListener {
             case "end":
                 System.out.println("Ending turn.");
                 board.advanceTurn();
-
                 Player currentPlayer2 = board.getCurrentPlayer();
-                Space currentSpace2 = board.getSpace(currentPlayer2.getPosition());
                 board.movePlayer(currentPlayer2);
+                Space currentSpace2 = board.getSpace(currentPlayer2.getPosition());
+
                 System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
                 System.out.println("Current money: $" + currentPlayer2.getMoney());
                 System.out.println("Rolling dice to move: rolled a total of " + board.getDiceRoller().getTotal());
                 if(board.getDiceRoller().isDouble()){
                     System.out.println("Rolled doubles!");
                 }
+                System.out.println("Moved to ");
                 if(!(currentSpace2 instanceof PropertySpace)){
-                    System.out.println("Moved to empty space.");
+                    System.out.println("empty space.");
                 }
                 else{
                     PropertySpace currentPropertySpace2 = (PropertySpace)currentSpace2;
-                    Property currentProperty2 = currentPropertySpace2.getProperty();
-                    System.out.println("Moved to space\n" + currentProperty2);
+                    System.out.println("Moved to space\n" + currentPropertySpace2.getDescription());
                 }
                 System.out.println("What do you want to do?\nEnter a command, or help for a command list" +
                         "\n>");
