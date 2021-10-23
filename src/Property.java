@@ -8,7 +8,7 @@ public class Property {
     private int cost;
     private ColorGroup colorGroup;
     private Player owner = null;
-    private static float RENT_MULTIPLIER = 0.5f;
+    private static final float RENT_MULTIPLIER = 0.5f;
 
     /**
      * Creates a new property with a given cost and color.
