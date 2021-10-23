@@ -163,13 +163,8 @@ public class TextController implements GameEventListener {
                     System.out.println("Rolled doubles!");
                 }
                 System.out.println("Moved to ");
-                if(!(currentSpace2 instanceof PropertySpace)){
-                    System.out.println("empty space.");
-                }
-                else{
-                    PropertySpace currentPropertySpace2 = (PropertySpace)currentSpace2;
-                    System.out.println("Moved to space\n" + currentPropertySpace2.getDescription());
-                }
+                System.out.println("\n" + currentSpace2.getDescription());
+
                 System.out.println("What do you want to do?\nEnter a command, or help for a command list" +
                         "\n>");
                 break;
