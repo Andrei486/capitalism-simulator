@@ -73,10 +73,10 @@ public class Property {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Property " + this.name + "\n");
-        sb.append("Color: "+ this.getColorGroup() + "\n");
-        sb.append("Cost: "+ this.getCost() + "\n");
-        sb.append("Rent: "+ this.getRent() + "\n");
+        sb.append("Property: " + this.name + "\n");
+        sb.append("Color:    " + this.getColorGroup() + "\n");
+        sb.append("Cost:     " + this.getCost() + "\n");
+        sb.append("Rent:     " + this.getRent() + "\n");
         if (this.getOwner() == null) {
             sb.append("Not owned\n");
         } else {
