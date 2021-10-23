@@ -1,5 +1,9 @@
 import java.util.EventObject;
 
+/**
+ * Event which informs other objects about a Player paying rent, how much they paid, and the property they paid from.
+ * @author Sebastian Lionais 101157892
+ */
 public class RentEvent extends EventObject {
     private Property property;
     private int rentPaid;

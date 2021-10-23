@@ -1,5 +1,9 @@
 import java.util.EventObject;
 
+/**
+ * An event which informs objects of Player class running out of money.
+ * @author Sebastian Lionais 101157892
+ */
 public class BankruptcyEvent extends EventObject {
     /**
      * Constructs a prototypical Event.
