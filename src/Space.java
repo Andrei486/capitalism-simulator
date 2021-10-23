@@ -1,3 +1,8 @@
+/**
+ * Class representing a space on a Monopoly board.
+ * Base class for all different space types.
+ * @author Andrei Popescu, 101143798
+ */
 public abstract class Space {
     private String name;
 

@@ -1,17 +1,21 @@
-/**This class implements the property space class, which extends the space class
+/**
+ * This class implements the property space class, which extends the space class.
+ * Represents a space with a property on it.
  * Milestone 1
  * @author Mohammad Alkhaledi
  * */
 public class PropertySpace extends Space {
     private Property property;
-    /**Default constructor for propertySpace
+    /**
+     * Default constructor for PropertySpace
      * @param property property for the space
      * */
     public PropertySpace(Property property){
         super(property.getName());
         this.property = property;
     }
-    /**Returns property of the property space
+    /**
+     * Returns property of the property space.
      * @return property
      * */
     public Property getProperty(){
@@ -19,8 +23,8 @@ public class PropertySpace extends Space {
     }
 
     /**
-     * Resolves forced effects resulting from player landing on the space
-     * such as having to pay rent, or landing on the "go to jail" space etc.
+     * Resolves forced effects resulting from player landing on the space.
+     * Players landing on a property space owned by another player must pay rent.
      * @param p the Player landing on this space
      */
     public void onEndTurn(Player p){
@@ -29,8 +33,9 @@ public class PropertySpace extends Space {
             p.payRent(property);
         }
     }
-    /**Returns description of property space
-     * @return property.toString()
+    /**
+     * Returns description of property space
+     * @return String representation of the property on this space
      * */
     public String getDescription(){
         return property.toString();

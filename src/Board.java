@@ -59,30 +59,29 @@ public class Board {
     }
 
     /**
-     * Gets the total roll of both dice.
-     * Value will be between 1 and 12, inclusive.
-     * @return the total value of the given dice roll.
+     * Returns the dice roller that controls player movement on this board.
+     * @return the DiceRoller object associated to this board.
      */
     public DiceRoller getDiceRoller() {
         return this.diceRoller;
     }
 
     /**
-     * Moves the player by the amount rolled on the dice.
-     * @param player integer of how many spaces were covered by the player.
+     * Rolls the dice and moves a Player by the amount rolled.
+     * @param player the Player to move.
      */
     public void movePlayer(Player player) {
         diceRoller.roll();
         int newPosition = diceRoller.getTotal() + player.getPosition();
         newPosition = newPosition % BOARD_SIZE;
         player.setPosition(newPosition);
+        this.getSpace(newPosition).onEndTurn(player);
     }
 
     /**
      * Replaces current player's position in queue depending on dice roll.
-     * If player rolls a double, players plays again.
+     * If player rolls a double, player gets another turn.
      */
-
     public void advanceTurn() {
         if (!getDiceRoller().isDouble()) {
             nextTurns.add(currentPlayer);
