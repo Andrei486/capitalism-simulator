@@ -10,14 +10,17 @@ public class Player {
     private HashSet<Property> properties;
     private int position;
     private boolean isBankrupt;
+    private Board board;
     private static int STARTING_MONEY = 1500;
 
     /**
      * Constructs a player class object
      * @param name the name of the player
+     * @param board the board the player is playing on
      */
-    public Player (String name) {
+    public Player (String name, Board board) {
         this.name = name;
+        this.board = board;
         this.money = STARTING_MONEY;
         this.position = 0;
         this.isBankrupt = false;
@@ -36,16 +39,19 @@ public class Player {
     }
 
     /**
-     * Pays the rent of the property to the player the owns it, if this player lacks the money to do so
+     * Pays the rent of the property to the player the owns it, if this player lacks the money to do so it gives
+     * the other player the rest of their money. In both cases a rent event is created and handled by board.
      * @param property the property that determines the rent and owner
      */
     public void payRent(Property property) {
         int rent = property.getRent();
         if (this.loseMoney(rent)) {
             property.getOwner().gainMoney(rent);
+            this.board.handlePayRent(new RentEvent(this, rent, property));
         }
         else {
             property.getOwner().gainMoney(this.money);
+            this.board.handlePayRent(new RentEvent(this, this.money, property));
         }
     }
 
@@ -114,7 +120,8 @@ public class Player {
     }
 
     /**
-     * Returns all properties to the bank and sets isBankrupt to true
+     * Returns all properties to the bank and sets isBankrupt to true and gets board to handle
+     * a BankruptcyEvent.
      */
     public void bankrupt() {
         for (Property property: this.properties) {
@@ -122,6 +129,7 @@ public class Player {
         }
         this.properties.clear();
         this.isBankrupt = true;
+        board.handleBankruptcy(new BankruptcyEvent(this));
     }
 
     /**
