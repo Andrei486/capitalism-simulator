@@ -1,13 +1,18 @@
 import java.util.HashSet;
+import java.util.Scanner;
 
 public class TextController implements GameEventListener {
     private Board board;
+    private RentEvent rentEvent;
+    private BankruptcyEvent bankruptcyEvent;
 
     /**Default constructor for TextController
      * @param board the board to be used for the monopoly game
      * */
     public TextController(Board board){
         this.board = board;
+        this.rentEvent = null;
+        this.bankruptcyEvent = null;
     }
 
     /**Prints statement that displays rent being paid
@@ -15,12 +20,17 @@ public class TextController implements GameEventListener {
      * */
     @Override
     public void handlePayRent(RentEvent e) {
+        rentEvent = e;
+    }
+
+    private void printRentEvent(RentEvent e) {
         Player currentPlayer = (Player) e.getSource();
         Property currentProperty = e.getProperty();
 
         System.out.println(currentPlayer.getName() + " paid $" + e.getRentPaid() +
-                 " in rent to " + currentProperty.getOwner() + ".");
-
+                " in rent to " + currentProperty.getOwner().getName() + ".");
+        System.out.println(currentPlayer.getName() + " has $" + currentPlayer.getMoney() + " left.");
+        rentEvent = null;
     }
 
     /**Prints statement that displays player being bankrupted
@@ -28,8 +38,13 @@ public class TextController implements GameEventListener {
      * */
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
+        bankruptcyEvent = e;
+    }
+
+    private void printBankruptcyEvent(BankruptcyEvent e) {
         Player currentPlayer = (Player) e.getSource();
-        System.out.println(currentPlayer.getName() + "went bankrupt.");
+        System.out.println(currentPlayer.getName() + " went bankrupt.");
+        bankruptcyEvent = null;
     }
 
     /**Prints list of valid commands
@@ -66,19 +81,19 @@ public class TextController implements GameEventListener {
 
         // if property is owned
         if (!(currentProperty.getOwner() == null)) {
-            System.out.println("This property is owned already. You cannot buy it again.");
+            System.out.println("This property is owned already. You cannot buy it.");
         }
         //if player does not have more than the cost of the property
         else if(currentPlayer.getMoney() <= currentProperty.getCost()) {
             System.out.println("You can't afford " + currentPlayer.getName() +
-                    ", it costs $" + currentProperty.getCost() + ", but you only have" +
+                    ", it costs $" + currentProperty.getCost() + ", but you only have " +
                     "$" + currentPlayer.getMoney());
         }
         //player has enough money to buy property and the property is not owned
         else {
             currentPlayer.buy(currentProperty);
             System.out.println("You pay $" + currentProperty
-                    .getCost() + ", and now own " + currentProperty.getName() + "Congratulation!");
+                    .getCost() + ", and now own " + currentProperty.getName() + ". Congratulations!");
             System.out.println("You now have $" + currentPlayer.getMoney() + " remaining.");
         }
     }
@@ -111,37 +126,26 @@ public class TextController implements GameEventListener {
         }
         System.out.println("Player name: " + player1.getName());
         System.out.println("Money: $" + player1.getMoney());
-        System.out.print("Properties: ");
-        HashSet<Property> properties = player1.getProperties();
-        int propertySize = properties.size();
-        int counter = 0;
-
-        for (Property p : properties) {
-            if (counter < propertySize) {
-                System.out.print(p.getName() + ", ");
-            } else {
-                System.out.print(p.getName() + "\n");
-            }
-            ++counter;
-        }
+        showProperties(player1);
     }
 
     /**Prints properties of the current player. Names only.
      */
-    public void showProperties(){
+    public void showProperties(Player player){
         System.out.print("Properties: ");
-        HashSet<Property> properties = board.getCurrentPlayer().getProperties();
+        HashSet<Property> properties = player.getProperties();
         int propertySize = properties.size();
         int counter = 0;
 
         for (Property p : properties) {
-            if (counter < propertySize) {
+            if (counter < propertySize - 1) {
                 System.out.print(p.getName() + ", ");
             } else {
-                System.out.print(p.getName() + "\n");
+                System.out.print(p.getName());
             }
             ++counter;
         }
+        System.out.println();
     }
 
     /**On success: if property name exists. Prints the statistics of a property given a string for its name
@@ -173,23 +177,35 @@ public class TextController implements GameEventListener {
     /**
      * Starts the next turn for the monopoly game.
      * This function is called at the start of monopoly game, and at the end of a turn.
+     * @return true if the player is allowed to input commands on this turn
      */
-    public void startTurn(){
+    public boolean startTurn(){
         Player currentPlayer2 = board.getCurrentPlayer();
+        System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
+        System.out.println("Current money: $" + currentPlayer2.getMoney());
+
         board.movePlayer(currentPlayer2);
         Space currentSpace2 = board.getSpace(currentPlayer2.getPosition());
 
-        System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
-        System.out.println("Current money: $" + currentPlayer2.getMoney());
+
         System.out.println("Rolling dice to move: rolled a total of " + board.getDiceRoller().getTotal());
         if(board.getDiceRoller().isDouble()){
             System.out.println("Rolled doubles!");
         }
-        System.out.println("Moved to ");
-        System.out.println("\n" + currentSpace2.getDescription());
+        System.out.print("Moved to: ");
+        System.out.println(currentSpace2.getDescription());
 
-        System.out.println("What do you want to do?\nEnter a command, or help for a command list" +
-                "\n>");
+        if (rentEvent != null) {
+            printRentEvent(rentEvent);
+        }
+        if (bankruptcyEvent != null) {
+            printBankruptcyEvent(bankruptcyEvent);
+            board.advanceTurn();
+            return false;
+        }
+
+        System.out.println("What do you want to do?\nEnter a command, or help for a command list");
+        return true;
     }
 
     /**
@@ -201,12 +217,12 @@ public class TextController implements GameEventListener {
      */
     public boolean parseCommand(String command) {
         String[] splitCommand = command.split("\\s");
-        command = splitCommand[0];
+        String firstWord = splitCommand[0];
         String secondWord = null;
         if (splitCommand.length > 1) {
-            secondWord = splitCommand[1];
+            secondWord = command.substring(firstWord.length() + 1);
         }
-        switch (command) {
+        switch (firstWord) {
             case "help":
                 printHelp();
                 return false;
@@ -228,7 +244,7 @@ public class TextController implements GameEventListener {
                 return false;
 
             case "properties":
-                showProperties();
+                showProperties(board.getCurrentPlayer());
                 return false;
 
             case "property":
@@ -238,7 +254,6 @@ public class TextController implements GameEventListener {
             case "end":
                 System.out.println("Ending turn.");
                 board.advanceTurn();
-                startTurn();
                 return true;
 
             case "quit":
@@ -249,12 +264,31 @@ public class TextController implements GameEventListener {
                 System.out.println("Invalid command. Type help for a command list");
                 return false;
         }
+    }
 
+    public void playGame(Board board) {
+        this.board = board;
+
+        Scanner playerInput = new Scanner(System.in);
+        String command;
+        boolean canInput;
+        while (!board.isGameOver()) {
+            if (startTurn()) {
+                do {
+                    System.out.print("> ");
+                    command = playerInput.nextLine();
+                    //continue parsing commands until the player ends their turn
+                } while (!parseCommand(command));
+            }
+        }
+        System.out.println(board.getCurrentPlayer().getName() + " wins!");
     }
 
     public static void main(String[] args) {
+        Board board = new Board(3);
 
-
+        TextController tc = new TextController(board);
+        board.addGameListener(tc);
+        tc.playGame(board);
     }
-
 }

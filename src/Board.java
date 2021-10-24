@@ -99,11 +99,10 @@ public class Board implements GameEventListener{
         if (!getDiceRoller().isDouble()) {
             nextTurns.add(currentPlayer);
             currentPlayer = nextTurns.remove();
-            //remove any bankrupt players from the turn order without giving them a turn
-            while (currentPlayer.getIsBankrupt()) {
-                currentPlayer = nextTurns.remove();
-                bankruptPlayers++;
-            }
+        }
+        //remove any bankrupt players from the turn order without giving them a turn
+        while (currentPlayer.getIsBankrupt()) {
+            currentPlayer = nextTurns.remove();
         }
     }
 
@@ -193,6 +192,7 @@ public class Board implements GameEventListener{
      */
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
+        bankruptPlayers++;
         for (GameEventListener l: gameListeners) {
             l.handleBankruptcy(e);
         }
