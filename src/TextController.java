@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class TextController implements GameEventListener {
@@ -285,7 +286,28 @@ public class TextController implements GameEventListener {
     }
 
     public static void main(String[] args) {
-        Board board = new Board(3);
+        int numPlayers = 0;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Welcome to Monopoly!");
+        System.out.print("How many players are there?\n>");
+        while(numPlayers <= 1){
+            try{
+                numPlayers = in.nextInt();
+                if(numPlayers <= 0){
+                    System.out.print("Please input a positive number greater than 1.\n>");
+                }
+                else if(numPlayers == 1){
+                    System.out.print("Please enter more than one player.\n>");
+                }
+
+            }catch(InputMismatchException e){
+                System.out.print("Please input a whole, positive number greater than 1.\n>");
+                in.nextLine();
+            }
+        }
+
+
+        Board board = new Board(numPlayers);
 
         TextController tc = new TextController(board);
         board.addGameListener(tc);
