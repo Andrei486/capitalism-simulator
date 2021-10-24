@@ -33,7 +33,7 @@ public class Player {
      * @param property the property that is being bought
      */
     public void buy (Property property) {
-        this.loseMoney(property.getRent());
+        this.loseMoney(property.getCost());
         property.setOwner(this);
         this.properties.add(property);
     }
@@ -52,6 +52,7 @@ public class Player {
         else {
             property.getOwner().gainMoney(this.money);
             this.board.handlePayRent(new RentEvent(this, this.money, property));
+            this.money = 0;
         }
     }
 

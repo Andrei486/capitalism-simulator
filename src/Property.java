@@ -8,7 +8,7 @@ public class Property {
     private int cost;
     private ColorGroup colorGroup;
     private Player owner = null;
-    private static final float RENT_MULTIPLIER = 0.5f;
+    private static final float RENT_MULTIPLIER = 2.0f;
 
     /**
      * Creates a new property with a given cost and color.
@@ -78,7 +78,7 @@ public class Property {
         sb.append("Cost:     " + this.getCost() + "\n");
         sb.append("Rent:     " + this.getRent() + "\n");
         if (this.getOwner() == null) {
-            sb.append("Not owned\n");
+            sb.append("Not owned");
         } else {
             sb.append("Owned by " + this.getOwner().getName());
         }
