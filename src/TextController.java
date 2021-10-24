@@ -2,6 +2,9 @@ import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * A class providing a text-based interface for users to play the game.
+ */
 public class TextController implements GameEventListener {
     private Board board;
     private RentEvent rentEvent;
@@ -25,7 +28,7 @@ public class TextController implements GameEventListener {
     }
 
     private void printRentEvent(RentEvent e) {
-        Player currentPlayer = (Player) e.getSource();
+        Player currentPlayer = e.getSource();
         Property currentProperty = e.getProperty();
 
         System.out.println(currentPlayer.getName() + " paid $" + e.getRentPaid() +
@@ -43,14 +46,14 @@ public class TextController implements GameEventListener {
     }
 
     private void printBankruptcyEvent(BankruptcyEvent e) {
-        Player currentPlayer = (Player) e.getSource();
+        Player currentPlayer = e.getSource();
         System.out.println(currentPlayer.getName() + " went bankrupt.");
         bankruptcyEvent = null;
     }
 
     /**Prints list of valid commands
      */
-    public void printHelp(){
+    private void printHelp(){
         System.out.println("help: shows list of commands");
         System.out.println("end: advances turn & moves next player");
         System.out.println("buy: buys property on current space if possible");
@@ -67,7 +70,7 @@ public class TextController implements GameEventListener {
      * fails: space is not a property space, player is not rich enough, or property has an owner: prints appropriate
      * error statement
      */
-    public void buy(){
+    private void buy(){
         Player currentPlayer = board.getCurrentPlayer();
         Space currentSpace1 = board.getSpace(currentPlayer.getPosition());
 
@@ -101,7 +104,7 @@ public class TextController implements GameEventListener {
 
     /**Prints name of current players
      */
-    public void showPlayers(){
+    private void showPlayers(){
         System.out.println("Print names:");
         Player[] players = board.getPlayers();
         for (Player p : players) {
@@ -113,7 +116,7 @@ public class TextController implements GameEventListener {
      * fails: if player name does not exist. Prints error statement
      * @param playerName name of player inputted
      */
-    public void showPlayerStats(String playerName){
+    private void showPlayerStats(String playerName){
         Player[] players = board.getPlayers();
         Player player1 = null;
         for (Player p : players) {
@@ -132,7 +135,7 @@ public class TextController implements GameEventListener {
 
     /**Prints properties of the current player. Names only.
      */
-    public void showProperties(Player player){
+    private void showProperties(Player player){
         System.out.print("Properties: ");
         HashSet<Property> properties = player.getProperties();
         int propertySize = properties.size();
@@ -180,7 +183,7 @@ public class TextController implements GameEventListener {
      * This function is called at the start of monopoly game, and at the end of a turn.
      * @return true if the player is allowed to input commands on this turn
      */
-    public boolean startTurn(){
+    private boolean startTurn(){
         Player currentPlayer2 = board.getCurrentPlayer();
         System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
         System.out.println("Current money: $" + currentPlayer2.getMoney());
@@ -216,7 +219,7 @@ public class TextController implements GameEventListener {
      * list of commands: help, buy, show, show [player name], properties,property [property name], end, quit
      *
      */
-    public boolean parseCommand(String command) {
+    private boolean parseCommand(String command) {
         String[] splitCommand = command.split("\\s");
         String firstWord = splitCommand[0];
         String secondWord = null;
@@ -226,11 +229,11 @@ public class TextController implements GameEventListener {
         switch (firstWord) {
             case "help":
                 printHelp();
-                return false;
+                break;
 
             case "buy":
                 buy();
-                return false;
+                break;
 
             case "show":
                 //print a player's stats
@@ -242,15 +245,15 @@ public class TextController implements GameEventListener {
                 else {
                     showPlayers();
                 }
-                return false;
+                break;
 
             case "properties":
                 showProperties(board.getCurrentPlayer());
-                return false;
+                break;
 
             case "property":
                 showPropertyStats(secondWord);
-                return false;
+                break;
 
             case "end":
                 System.out.println("Ending turn.");
@@ -258,13 +261,14 @@ public class TextController implements GameEventListener {
                 return true;
 
             case "quit":
-                System.out.println("Quiting game.");
+                System.out.println("Quitting game.");
                 System.exit(0);
-                return false;
+                break;
             default:
-                System.out.println("Invalid command. Type help for a command list");
-                return false;
+                System.out.println("Invalid command. Type help for a command list.");
+                break;
         }
+        return false;
     }
 
     public void playGame(Board board) {

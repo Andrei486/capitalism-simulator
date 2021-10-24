@@ -9,7 +9,7 @@ public class RentEvent extends EventObject {
     private int rentPaid;
 
     /**
-     * Constructs a prototypical Event.
+     * Constructs an Event corresponding to a player paying rent on a property.
      *
      * @param player the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
@@ -41,7 +41,7 @@ public class RentEvent extends EventObject {
      * @return the player
      */
     @Override
-    public Object getSource() {
+    public Player getSource() {
         return (Player) super.getSource();
     }
 }

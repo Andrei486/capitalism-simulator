@@ -13,7 +13,7 @@ public class Board implements GameEventListener{
     private Player currentPlayer;
     private Queue<Player> nextTurns;
     private DiceRoller diceRoller;
-    private int BOARD_SIZE;
+    private int boardSize;
     private int bankruptPlayers;
     private HashSet<GameEventListener> gameListeners;
 
@@ -86,7 +86,7 @@ public class Board implements GameEventListener{
     public void movePlayer(Player player) {
         diceRoller.roll();
         int newPosition = diceRoller.getTotal() + player.getPosition();
-        newPosition = newPosition % BOARD_SIZE;
+        newPosition = newPosition % boardSize;
         player.setPosition(newPosition);
         this.getSpace(newPosition).onEndTurn(player);
     }
@@ -118,7 +118,7 @@ public class Board implements GameEventListener{
      * Initializes the spaces on the board, creating properties as needed.
      */
     private void initializeBoard() {
-        BOARD_SIZE = 40;
+        boardSize = 40;
         Property property;
         this.spaces = new Space[40];
         this.properties = new Property[22];

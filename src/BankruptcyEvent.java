@@ -6,7 +6,7 @@ import java.util.EventObject;
  */
 public class BankruptcyEvent extends EventObject {
     /**
-     * Constructs a prototypical Event.
+     * Constructs an Event corresponding to a Player going bankrupt.
      *
      * @param player the object on which the Event initially occurred
      * @throws IllegalArgumentException if source is null
@@ -16,11 +16,11 @@ public class BankruptcyEvent extends EventObject {
     }
 
     /**
-     * Gets the player who has gon bankrupt.
+     * Gets the player who has gone bankrupt.
      * @return the player
      */
     @Override
-    public Object getSource() {
+    public Player getSource() {
         return (Player) super.getSource();
     }
 }
