@@ -292,19 +292,19 @@ public class TextController implements GameEventListener {
         int numPlayers = 0;
         Scanner in = new Scanner(System.in);
         System.out.println("Welcome to Monopoly!");
-        System.out.print("How many players are there?\n>");
+        System.out.print("How many players are there?\n> ");
         while(numPlayers <= 1){
             try{
                 numPlayers = in.nextInt();
                 if(numPlayers <= 0){
-                    System.out.print("Please input a positive number greater than 1.\n>");
+                    System.out.print("Please input a positive number greater than 1.\n> ");
                 }
                 else if(numPlayers == 1){
-                    System.out.print("Please enter more than one player.\n>");
+                    System.out.print("Please enter more than one player.\n> ");
                 }
 
             }catch(InputMismatchException e){
-                System.out.print("Please input a whole, positive number greater than 1.\n>");
+                System.out.print("Please input a whole, positive number greater than 1.\n> ");
                 in.nextLine();
             }
         }
