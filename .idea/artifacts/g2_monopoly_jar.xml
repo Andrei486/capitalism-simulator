@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="g2-monopoly:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/g2_monopoly_jar</output-path>
+    <root id="archive" name="g2-monopoly.jar">
+      <element id="module-output" name="g2-monopoly" />
+      <element id="module-source" name="g2-monopoly" />
+    </root>
+  </artifact>
+</component>
