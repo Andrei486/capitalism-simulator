@@ -72,15 +72,15 @@ public class TextController implements GameEventListener {
      */
     private void buy(){
         Player currentPlayer = board.getCurrentPlayer();
-        Space currentSpace1 = board.getSpace(currentPlayer.getPosition());
+        Space currentSpace = board.getSpace(currentPlayer.getPosition());
 
         //if space is not a property space
-        if (!(currentSpace1 instanceof PropertySpace)) {
+        if (!(currentSpace instanceof PropertySpace)) {
             System.out.println("You are not on a property. You cannot buy right now.");
             return;
         }
 
-        PropertySpace currentPropertySpace = (PropertySpace) currentSpace1;
+        PropertySpace currentPropertySpace = (PropertySpace) currentSpace;
         Property currentProperty = currentPropertySpace.getProperty();
 
         // if property is owned
@@ -118,19 +118,19 @@ public class TextController implements GameEventListener {
      */
     private void showPlayerStats(String playerName){
         Player[] players = board.getPlayers();
-        Player player1 = null;
+        Player player = null;
         for (Player p : players) {
             if (playerName.equals(p.getName())) {
-                player1 = p;
+                player = p;
             }
         }
-        if (player1 == null) {
+        if (player == null) {
             System.out.println("There is no player named " + playerName);
             return;
         }
-        System.out.println("Player name: " + player1.getName());
-        System.out.println("Money: $" + player1.getMoney());
-        showProperties(player1);
+        System.out.println("Player name: " + player.getName());
+        System.out.println("Money: $" + player.getMoney());
+        showProperties(player);
     }
 
     /**Prints properties of the current player. Names only.
@@ -157,11 +157,11 @@ public class TextController implements GameEventListener {
      * @param propertyName name of property
      */
     public void showPropertyStats(String propertyName){
-        Property[] properties1 = board.getProperties();
+        Property[] properties = board.getProperties();
         Property thisProperty = null;
 
         if (propertyName != null) {
-            for (Property p : properties1) {
+            for (Property p : properties) {
                 if (propertyName.equals(p.getName())) {
                     thisProperty = p;
                 }
@@ -184,12 +184,12 @@ public class TextController implements GameEventListener {
      * @return true if the player is allowed to input commands on this turn
      */
     private boolean startTurn(){
-        Player currentPlayer2 = board.getCurrentPlayer();
-        System.out.println("- " + currentPlayer2.getName() + "'s turn! -");
-        System.out.println("Current money: $" + currentPlayer2.getMoney());
+        Player currentPlayer = board.getCurrentPlayer();
+        System.out.println("- " + currentPlayer.getName() + "'s turn! -");
+        System.out.println("Current money: $" + currentPlayer.getMoney());
 
-        board.movePlayer(currentPlayer2);
-        Space currentSpace2 = board.getSpace(currentPlayer2.getPosition());
+        board.movePlayer(currentPlayer);
+        Space currentSpace = board.getSpace(currentPlayer.getPosition());
 
 
         System.out.println("Rolling dice to move: rolled a total of " + board.getDiceRoller().getTotal());
@@ -197,7 +197,7 @@ public class TextController implements GameEventListener {
             System.out.println("Rolled doubles!");
         }
         System.out.print("Moved to: ");
-        System.out.println(currentSpace2.getDescription());
+        System.out.println(currentSpace.getDescription());
 
         if (rentEvent != null) {
             printRentEvent(rentEvent);
@@ -276,7 +276,6 @@ public class TextController implements GameEventListener {
 
         Scanner playerInput = new Scanner(System.in);
         String command;
-        boolean canInput;
         while (!board.isGameOver()) {
             if (startTurn()) {
                 do {
