@@ -33,6 +33,9 @@ public class TurnOrder {
      * @param isDouble true if the current player rolled doubles, false otherwise
      */
     public void advanceTurnOrder(boolean isDouble) {
+        if (currentPlayer.getIsBankrupt()) {
+            currentPlayer = nextTurns.remove();
+        }
         if (!isDouble) {
             nextTurns.add(currentPlayer);
             currentPlayer = nextTurns.remove();
@@ -41,5 +44,6 @@ public class TurnOrder {
         while (currentPlayer.getIsBankrupt()) {
             currentPlayer = nextTurns.remove();
         }
+        //TODO check if the later check is necessary once GUI testing begins
     }
 }

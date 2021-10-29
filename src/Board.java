@@ -78,7 +78,7 @@ public class Board implements GameEventListener{
      * Rolls the dice and moves a Player by the amount rolled.
      * @param player the Player to move.
      */
-    public void movePlayer(Player player) {
+    private void movePlayer(Player player) {
         diceRoller.roll();
         int newPosition = diceRoller.getTotal() + player.getPosition();
         newPosition = newPosition % boardSize;
@@ -92,6 +92,7 @@ public class Board implements GameEventListener{
      */
     public void advanceTurn() {
         turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
+        movePlayer(turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -169,8 +170,8 @@ public class Board implements GameEventListener{
      */
     @Override
     public void handlePayRent(RentEvent e) {
-        for (GameEventListener l: gameViews) {
-            l.handlePayRent(e);
+        for (MonopolyView view: gameViews) {
+            view.handlePayRent(e);
         }
     }
 
@@ -181,8 +182,9 @@ public class Board implements GameEventListener{
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
         bankruptPlayers++;
-        for (GameEventListener l: gameViews) {
-            l.handleBankruptcy(e);
+        for (MonopolyView view: gameViews) {
+            view.handleBankruptcy(e);
         }
+        turnOrder.advanceTurnOrder(false);
     }
 }
