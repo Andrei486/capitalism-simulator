@@ -43,8 +43,8 @@ public abstract class SpacePanel extends JPanel {
      * @param p player whose ID is to be added
      */
     public void addPlayer(Player p){
-        int playerNumber = p.getPlayerNumber() - 1;
-        playerLabels[playerNumber].setText("P" + p.getPlayerNumber());
+        int playerNumber = p.getPlayerNumber();
+        playerLabels[playerNumber].setText(p.getName());
     }
 
     /**
@@ -52,7 +52,7 @@ public abstract class SpacePanel extends JPanel {
      * @param p player whose ID is to be removed
      */
     public void removePlayer(Player p){
-        int playerNumber = p.getPlayerNumber() - 1;
+        int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(" ");
     }
 
