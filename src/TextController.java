@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * A class providing a text-based interface for users to play the game.
  */
-public class TextController implements GameEventListener {
+public class TextController implements MonopolyView {
     private Board board;
     private RentEvent rentEvent;
     private BankruptcyEvent bankruptcyEvent;
@@ -313,7 +313,17 @@ public class TextController implements GameEventListener {
         Board board = new Board(numPlayers);
 
         TextController tc = new TextController(board);
-        board.addGameListener(tc);
+        board.addGameView(tc);
         tc.playGame(board);
+    }
+
+    @Override
+    public void handleMovePlayer(Board board, Player player, int oldPosition) {
+
+    }
+
+    @Override
+    public void handleBuyProperty(Board board, Player player) {
+
     }
 }

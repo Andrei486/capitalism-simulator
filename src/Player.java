@@ -1,6 +1,7 @@
 import java.util.HashSet;
 
 /**
+ * The Player class represents a player on the board, storing all information such as name and money.
  * @author Sebastian Lionais s#101157892
  */
 public class Player {
@@ -11,6 +12,8 @@ public class Player {
     private int position;
     private boolean isBankrupt;
     private Board board;
+    private int playerNumber;
+    private static int nextPlayerNumber = 0;
     private static final int STARTING_MONEY = 1500;
 
     /**
@@ -25,6 +28,8 @@ public class Player {
         this.position = 0;
         this.isBankrupt = false;
         this.properties = new HashSet<>();
+        this.playerNumber = nextPlayerNumber;
+        nextPlayerNumber++;
     }
 
     /**
@@ -71,6 +76,12 @@ public class Player {
     public int getMoney() {
         return this.money;
     }
+
+    /**
+     * Gets a unique value that identifies the player.
+     * @return the integer value which identifies the player
+     */
+    public int getPlayerNumber() {return this.playerNumber;}
 
     /**
      * Gets the set of properties the player owns.
