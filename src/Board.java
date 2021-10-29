@@ -80,10 +80,14 @@ public class Board implements GameEventListener{
      */
     private void movePlayer(Player player) {
         diceRoller.roll();
+        int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();
         newPosition = newPosition % boardSize;
         player.setPosition(newPosition);
         this.getSpace(newPosition).onEndTurn(player);
+        for (MonopolyView view: gameViews) {
+            view.handleMovePlayer(this, player, oldPosition);
+        }
     }
 
     /**
