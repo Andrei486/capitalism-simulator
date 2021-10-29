@@ -1,6 +1,4 @@
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -10,12 +8,11 @@ public class Board implements GameEventListener{
     private Space[] spaces;
     private Player[] players;
     private Property[] properties;
-    private Player currentPlayer;
-    private Queue<Player> nextTurns;
+    private TurnOrder turnOrder;
     private DiceRoller diceRoller;
     private int boardSize;
     private int bankruptPlayers;
-    private HashSet<GameEventListener> gameListeners;
+    private HashSet<MonopolyView> gameViews;
 
     /**
      * Constructs a board with the specified number of players.
@@ -25,15 +22,13 @@ public class Board implements GameEventListener{
         initializeBoard();
         bankruptPlayers = 0;
         this.players = new Player[nPlayers];
-        nextTurns = new LinkedList<>();
         diceRoller = new DiceRoller();
         for (int i = 0; i < nPlayers; i++) {
             Player player = new Player("P" + (i + 1), this);
             this.players[i] = player;
-            nextTurns.add(player);
         }
-        this.currentPlayer = nextTurns.remove();
-        this.gameListeners = new HashSet<>();
+        this.turnOrder = new TurnOrder(players);
+        this.gameViews = new HashSet<>();
     }
 
     /**
@@ -50,7 +45,7 @@ public class Board implements GameEventListener{
      * @return Player who is currently moving
      */
     public Player getCurrentPlayer() {
-        return this.currentPlayer;
+        return this.turnOrder.getCurrentPlayer();
     }
 
     /**
@@ -83,12 +78,16 @@ public class Board implements GameEventListener{
      * Rolls the dice and moves a Player by the amount rolled.
      * @param player the Player to move.
      */
-    public void movePlayer(Player player) {
+    private void movePlayer(Player player) {
         diceRoller.roll();
+        int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();
         newPosition = newPosition % boardSize;
         player.setPosition(newPosition);
         this.getSpace(newPosition).onEndTurn(player);
+        for (MonopolyView view: gameViews) {
+            view.handleMovePlayer(this, player, oldPosition);
+        }
     }
 
     /**
@@ -96,14 +95,8 @@ public class Board implements GameEventListener{
      * If player rolls a double, player gets another turn.
      */
     public void advanceTurn() {
-        if (!getDiceRoller().isDouble()) {
-            nextTurns.add(currentPlayer);
-            currentPlayer = nextTurns.remove();
-        }
-        //remove any bankrupt players from the turn order without giving them a turn
-        while (currentPlayer.getIsBankrupt()) {
-            currentPlayer = nextTurns.remove();
-        }
+        turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
+        movePlayer(turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -160,41 +153,42 @@ public class Board implements GameEventListener{
     }
 
     /**
-     * Adds a GameEventListener to the gameListener Hashset.
-     * @param l the GameEventListener to be added
+     * Adds a MonopolyView to the set of registered views.
+     * @param view the MonopolyView to be added
      */
-    public void addGameListener(GameEventListener l) {
-        gameListeners.add(l);
+    public void addGameView(MonopolyView view) {
+        gameViews.add(view);
     }
 
     /**
-     * Remove a GameEventListener from the gameListener Hashset.
-     * @param l the GameEventListener to be removed
+     * Remove a MonopolyView from the set of registered views.
+     * @param view the MonopolyView to be removed
      */
-    public void removeGameListener(GameEventListener l) {
-        gameListeners.remove(l);
+    public void removeGameView(MonopolyView view) {
+        gameViews.remove(view);
     }
 
     /**
-     * Sends the RentEvent to all the GameEventListener in the gameListener Hashset.
+     * Sends the RentEvent to all registered views.
      * @param e the event to be sent out
      */
     @Override
     public void handlePayRent(RentEvent e) {
-        for (GameEventListener l: gameListeners) {
-            l.handlePayRent(e);
+        for (MonopolyView view: gameViews) {
+            view.handlePayRent(e);
         }
     }
 
     /**
-     * Sends the BankruptcyEvent to all the GameEventListener in the gameListener Hashset.
+     * Sends the BankruptcyEvent to all registered views.
      * @param e the event to be sent out
      */
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
         bankruptPlayers++;
-        for (GameEventListener l: gameListeners) {
-            l.handleBankruptcy(e);
+        for (MonopolyView view: gameViews) {
+            view.handleBankruptcy(e);
         }
+        turnOrder.advanceTurnOrder(false);
     }
 }
