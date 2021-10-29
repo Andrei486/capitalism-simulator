@@ -3,6 +3,6 @@
  * @author Sebastian Lionais 101157892
  */
 public interface GameEventListener {
-    public void handlePayRent(RentEvent e);
-    public void handleBankruptcy(BankruptcyEvent e);
+    void handlePayRent(RentEvent e);
+    void handleBankruptcy(BankruptcyEvent e);
 }
