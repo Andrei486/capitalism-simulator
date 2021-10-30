@@ -5,7 +5,8 @@ import java.util.Scanner;
 /**
  * A class providing a text-based interface for users to play the game.
  */
-public class TextController implements MonopolyView {
+/*
+public class TextController {
     private Board board;
     private RentEvent rentEvent;
     private BankruptcyEvent bankruptcyEvent;
@@ -13,7 +14,7 @@ public class TextController implements MonopolyView {
     /**Default constructor for TextController
      * @param board the board to be used for the monopoly game
      * */
-    public TextController(Board board){
+   /* public TextController(Board board){
         this.board = board;
         this.rentEvent = null;
         this.bankruptcyEvent = null;
@@ -22,7 +23,7 @@ public class TextController implements MonopolyView {
     /**Prints statement that displays rent being paid
      * @param e the rent event that occurred
      * */
-    @Override
+    /*@Override
     public void handlePayRent(RentEvent e) {
         rentEvent = e;
     }
@@ -40,7 +41,7 @@ public class TextController implements MonopolyView {
     /**Prints statement that displays player being bankrupted
      * @param e the bankruptcy event that occurred
      * */
-    @Override
+    /*@Override
     public void handleBankruptcy(BankruptcyEvent e) {
         bankruptcyEvent = e;
     }
@@ -53,7 +54,7 @@ public class TextController implements MonopolyView {
 
     /**Prints list of valid commands
      */
-    private void printHelp(){
+    /*private void printHelp(){
         System.out.println("help: shows list of commands");
         System.out.println("end: advances turn & moves next player");
         System.out.println("buy: buys property on current space if possible");
@@ -70,7 +71,7 @@ public class TextController implements MonopolyView {
      * fails: space is not a property space, player is not rich enough, or property has an owner: prints appropriate
      * error statement
      */
-    private void buy(){
+    /*private void buy(){
         Player currentPlayer = board.getCurrentPlayer();
         Space currentSpace = board.getSpace(currentPlayer.getPosition());
 
@@ -104,7 +105,7 @@ public class TextController implements MonopolyView {
 
     /**Prints name of current players
      */
-    private void showPlayers(){
+   /* private void showPlayers(){
         System.out.println("Print names:");
         Player[] players = board.getPlayers();
         for (Player p : players) {
@@ -116,7 +117,7 @@ public class TextController implements MonopolyView {
      * fails: if player name does not exist. Prints error statement
      * @param playerName name of player inputted
      */
-    private void showPlayerStats(String playerName){
+   /* private void showPlayerStats(String playerName){
         Player[] players = board.getPlayers();
         Player player = null;
         for (Player p : players) {
@@ -135,7 +136,7 @@ public class TextController implements MonopolyView {
 
     /**Prints properties of the current player. Names only.
      */
-    private void showProperties(Player player){
+    /*private void showProperties(Player player){
         System.out.print("Properties: ");
         HashSet<Property> properties = player.getProperties();
         int propertySize = properties.size();
@@ -156,7 +157,7 @@ public class TextController implements MonopolyView {
      * fails: if the name of the property does not exist. Prints error statement.
      * @param propertyName name of property
      */
-    public void showPropertyStats(String propertyName){
+   /* public void showPropertyStats(String propertyName){
         Property[] properties = board.getProperties();
         Property thisProperty = null;
 
@@ -183,7 +184,7 @@ public class TextController implements MonopolyView {
      * This function is called at the start of monopoly game, and at the end of a turn.
      * @return true if the player is allowed to input commands on this turn
      */
-    private boolean startTurn(){
+    /*private boolean startTurn(){
         Player currentPlayer = board.getCurrentPlayer();
         System.out.println("- " + currentPlayer.getName() + "'s turn! -");
         System.out.println("Current money: $" + currentPlayer.getMoney());
@@ -219,7 +220,7 @@ public class TextController implements MonopolyView {
      * list of commands: help, buy, show, show [player name], properties,property [property name], end, quit
      *
      */
-    private boolean parseCommand(String command) {
+    /*private boolean parseCommand(String command) {
         String[] splitCommand = command.split("\\s");
         String firstWord = splitCommand[0];
         String secondWord = null;
@@ -327,3 +328,4 @@ public class TextController implements MonopolyView {
 
     }
 }
+*/
