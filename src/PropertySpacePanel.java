@@ -61,7 +61,6 @@ public class PropertySpacePanel extends SpacePanel{
 
         f.setVisible(true);
         f.pack();
-
     }
 
     public static void main(String[] args) {
