@@ -55,5 +55,4 @@ public abstract class SpacePanel extends JPanel {
         int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(" ");
     }
-
 }
