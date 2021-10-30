@@ -12,8 +12,11 @@ public class PropertySpacePanel extends SpacePanel{
 
         super();
 
-        infoButton = new JButton("Property Information");
-        bottomPanel.add(infoButton);
+        infoButton = new JButton("i");
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(infoButton, BorderLayout.EAST);
+
+        bottomLabel.setText(String.format("%s", property.getName()));
 
         Color c;
         this.property = property;

@@ -10,7 +10,7 @@ public class Board {
     private Property[] properties;
     private TurnOrder turnOrder;
     private DiceRoller diceRoller;
-    private int boardSize;
+    public static final int BOARD_SIZE = 40;
     private int bankruptPlayers;
     private HashSet<MonopolyView> gameViews;
 
@@ -82,7 +82,7 @@ public class Board {
         diceRoller.roll();
         int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();
-        newPosition = newPosition % boardSize;
+        newPosition = newPosition % BOARD_SIZE;
         player.setPosition(newPosition);
         this.getSpace(newPosition).onEndTurn(player);
         for (MonopolyView view: gameViews) {
@@ -111,7 +111,6 @@ public class Board {
      * Initializes the spaces on the board, creating properties as needed.
      */
     private void initializeBoard() {
-        boardSize = 40;
         Property property;
         this.spaces = new Space[40];
         this.properties = new Property[22];
