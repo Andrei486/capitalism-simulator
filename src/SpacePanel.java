@@ -9,18 +9,26 @@ public abstract class SpacePanel extends JPanel {
     private JLabel[] playerLabels;
     protected JPanel topPanel;
     protected JPanel bottomPanel;
+    protected JLabel topLabel;
+    protected JLabel bottomLabel;
     /**
      * Default constructor for Space Panel
      */
     public SpacePanel(){
         super(new BorderLayout());
         JPanel centerPanel = new JPanel(new GridLayout(2,4));
+        centerPanel.setBackground(Color.LIGHT_GRAY);
+        this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         topPanel = new JPanel();
-        topPanel.setSize(new Dimension(200,200));
-        topPanel.add(new JLabel(" "));
+        topLabel = new JLabel(" ");
+        topLabel.setFont(new Font(Font.SERIF, Font.PLAIN, 10));
+        topPanel.add(topLabel);
 
         bottomPanel = new JPanel();
+        bottomLabel = new JLabel(" ");
+        bottomLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
+        bottomPanel.add(bottomLabel);
 
         add(topPanel, BorderLayout.NORTH);
         add(centerPanel,BorderLayout.CENTER);
@@ -32,10 +40,9 @@ public abstract class SpacePanel extends JPanel {
             playerLabels[i] = new JLabel();
             playerLabels[i].setText(" ");
             centerPanel.add(playerLabels[i]);
-
         }
 
-        setSize(200,200);
+        this.setPreferredSize(new Dimension(110, 110));
     }
 
     /**

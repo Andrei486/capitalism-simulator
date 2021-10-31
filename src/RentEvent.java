@@ -12,6 +12,8 @@ public class RentEvent extends EventObject {
      * Constructs an Event corresponding to a player paying rent on a property.
      *
      * @param player the object on which the Event initially occurred
+     * @param rentPaid
+     * @param property
      * @throws IllegalArgumentException if source is null
      */
     public RentEvent(Player player, int rentPaid, Property property) {

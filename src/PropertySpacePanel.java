@@ -8,19 +8,15 @@ public class PropertySpacePanel extends SpacePanel{
     private JButton infoButton;
 
 
-    public  PropertySpacePanel(Property property) {
+    public PropertySpacePanel(Property property) {
 
-     super();
+        super();
 
-     infoButton = new JButton("Property Information");
-     bottomPanel.add(infoButton);
+        infoButton = new JButton("i");
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(infoButton, BorderLayout.EAST);
 
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        f.setMinimumSize(new Dimension(300,450));
-
-        f.add(this);
+        bottomLabel.setText(String.format("%s", property.getName()));
 
         Color c;
         this.property = property;
@@ -58,15 +54,5 @@ public class PropertySpacePanel extends SpacePanel{
                 JOptionPane.showMessageDialog(null, property.toString());
             }
         });
-
-        f.setVisible(true);
-        f.pack();
-    }
-
-    public static void main(String[] args) {
-
-        Property p = new Property("Boardwalk Avenue", 400, ColorGroup.BLUE);
-
-        new PropertySpacePanel(p);
     }
 }

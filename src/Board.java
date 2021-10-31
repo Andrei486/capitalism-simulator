@@ -4,13 +4,13 @@ import java.util.HashSet;
  * Class representing a Monopoly board. Provides methods that allow
  * player turns to be advanced and players to move along the board.
  */
-public class Board implements GameEventListener{
+public class Board {
     private Space[] spaces;
     private Player[] players;
     private Property[] properties;
     private TurnOrder turnOrder;
     private DiceRoller diceRoller;
-    private int boardSize;
+    public static final int BOARD_SIZE = 40;
     private int bankruptPlayers;
     private HashSet<MonopolyView> gameViews;
 
@@ -82,11 +82,11 @@ public class Board implements GameEventListener{
         diceRoller.roll();
         int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();
-        newPosition = newPosition % boardSize;
+        newPosition = newPosition % BOARD_SIZE;
         player.setPosition(newPosition);
         this.getSpace(newPosition).onEndTurn(player);
         for (MonopolyView view: gameViews) {
-            view.handleMovePlayer(this, player, oldPosition);
+            view.handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
         }
     }
 
@@ -111,7 +111,6 @@ public class Board implements GameEventListener{
      * Initializes the spaces on the board, creating properties as needed.
      */
     private void initializeBoard() {
-        boardSize = 40;
         Property property;
         this.spaces = new Space[40];
         this.properties = new Property[22];
@@ -172,7 +171,6 @@ public class Board implements GameEventListener{
      * Sends the RentEvent to all registered views.
      * @param e the event to be sent out
      */
-    @Override
     public void handlePayRent(RentEvent e) {
         for (MonopolyView view: gameViews) {
             view.handlePayRent(e);
@@ -183,7 +181,6 @@ public class Board implements GameEventListener{
      * Sends the BankruptcyEvent to all registered views.
      * @param e the event to be sent out
      */
-    @Override
     public void handleBankruptcy(BankruptcyEvent e) {
         bankruptPlayers++;
         for (MonopolyView view: gameViews) {
