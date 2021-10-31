@@ -13,6 +13,7 @@ public class PropertySpacePanel extends SpacePanel{
         super();
 
         infoButton = new JButton("i");
+        infoButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
         topPanel.setLayout(new BorderLayout());
         topPanel.add(infoButton, BorderLayout.EAST);
 

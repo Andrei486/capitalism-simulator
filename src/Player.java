@@ -41,6 +41,7 @@ public class Player {
         this.loseMoney(property.getCost());
         property.setOwner(this);
         this.properties.add(property);
+        board.handleBuyEvent(new BuyEvent(this));
     }
 
     /**
