@@ -29,6 +29,7 @@ public class Board {
         }
         this.turnOrder = new TurnOrder(players);
         this.gameViews = new HashSet<>();
+        this.movePlayer(this.turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -187,5 +188,11 @@ public class Board {
             view.handleBankruptcy(e);
         }
         turnOrder.advanceTurnOrder(false);
+    }
+
+    public void handleBuyEvent(BuyEvent e) {
+        for (MonopolyView view: gameViews) {
+            view.handleBuy(e);
+        }
     }
 }
