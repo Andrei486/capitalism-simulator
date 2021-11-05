@@ -42,4 +42,24 @@ public class DiceRollerTest {
     }
 
 
+    /**
+     *test the get dice method
+     */
+    @Test
+    public void getDice() {
+        dice = new DiceRoller();
+        dice.forceRoll(5,5);
+        int[] arr = new int[]{5, 5};
+        assertArrayEquals(arr, dice.getDice());
+    }
+
+    /**
+     * test the get total method
+     */
+    @Test
+    public void getTotal() {
+        dice = new DiceRoller();
+        dice.forceRoll(5,5);
+        assertEquals(10, dice.getTotal());
+    }
 }
