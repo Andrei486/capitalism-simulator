@@ -1,3 +1,5 @@
+import org.junit.Before;
+
 import static org.junit.Assert.*;
 
 /**
@@ -7,13 +9,15 @@ import static org.junit.Assert.*;
 public class PropertyTest {
     Property property;
 
+    @Before
+    public void setUp(){
+        property = new Property("house",100,ColorGroup.GREEN);
+    }
     /**
      * tests constructor of property
      */
     @org.junit.Test
     public void testConstructor() {
-        assertNull(property);
-        property = new Property("house", 100, ColorGroup.GREEN);
         assertNotNull(property);
     }
 
@@ -22,7 +26,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void getCost() {
-        property = new Property("house",100,ColorGroup.GREEN);
         assertEquals(100,property.getCost());
     }
 
@@ -31,7 +34,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void getName() {
-        property = new Property("house",100,ColorGroup.GREEN);
         assertEquals("house", property.getName());
     }
 
@@ -40,7 +42,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void getRent() {
-        property = new Property("house",100,ColorGroup.GREEN);
         assertEquals(200, property.getRent());
     }
 
@@ -49,7 +50,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void getColorGroup() {
-        property = new Property("house",100,ColorGroup.GREEN);
         assertEquals(ColorGroup.GREEN, property.getColorGroup());
     }
 
@@ -58,7 +58,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void testgetsetOwner() {
-        property = new Property("house",100,ColorGroup.GREEN);
         assertNull(property.getOwner());
         Player jim = new Player("jim", new Board(3));
         property.setOwner(jim);
@@ -70,7 +69,6 @@ public class PropertyTest {
      */
     @org.junit.Test
     public void testToString() {
-        property = new Property("house",100,ColorGroup.GREEN);
         String sb = "Property: house\n" +
                 "Color:    Green\n" +
                 "Cost:     $100\n" +

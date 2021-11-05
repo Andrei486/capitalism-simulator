@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -9,13 +10,16 @@ import static org.junit.Assert.*;
 public class DiceRollerTest {
     DiceRoller dice;
 
+    @Before
+    public void setUp(){
+        dice = new DiceRoller();
+    }
 
     /**
      * test random roll between 2-12
      */
     @Test
     public void roll() {
-        dice = new DiceRoller();
         dice.roll();
         assertTrue(2 <= dice.getTotal() && dice.getTotal() <= 12);
     }
@@ -25,7 +29,6 @@ public class DiceRollerTest {
      */
     @Test
     public void forceRoll() {
-        dice = new DiceRoller();
         dice.forceRoll(5,6);
         assertEquals(11, dice.getTotal());
     }
@@ -36,7 +39,6 @@ public class DiceRollerTest {
      */
     @Test
     public void isDouble() {
-        dice = new DiceRoller();
         dice.forceRoll(6,6);
         assertTrue(dice.isDouble());
     }
@@ -47,7 +49,6 @@ public class DiceRollerTest {
      */
     @Test
     public void getDice() {
-        dice = new DiceRoller();
         dice.forceRoll(5,5);
         int[] arr = new int[]{5, 5};
         assertArrayEquals(arr, dice.getDice());
@@ -58,8 +59,9 @@ public class DiceRollerTest {
      */
     @Test
     public void getTotal() {
-        dice = new DiceRoller();
         dice.forceRoll(5,5);
         assertEquals(10, dice.getTotal());
     }
+
+
 }
