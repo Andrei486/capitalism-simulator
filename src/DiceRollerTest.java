@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 public class DiceRollerTest {
     DiceRoller dice;
 
+
     /**
      * test random roll between 2-12
      */

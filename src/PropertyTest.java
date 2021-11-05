@@ -76,6 +76,7 @@ public class PropertyTest {
                 "Cost:     $100\n" +
                 "Rent:     $200\n" +
                 "Not owned";
+
         assertEquals(sb, property.toString());
         Player jim = new Player("jim", new Board(3));
         property.setOwner(jim);
