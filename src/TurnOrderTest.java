@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests the functionality of the TurnOrder Class.
+ * Assumes Board functions.
  * @author Sebastian Lionais 101157892
  */
 public class TurnOrderTest {

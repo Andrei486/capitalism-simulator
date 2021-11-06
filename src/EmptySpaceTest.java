@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests the functionality of the EmptySpace Class.
+ * Assumes Player class functions.
  * @author Sebastian Lionais 101157892
  */
 public class EmptySpaceTest {
@@ -40,7 +41,8 @@ public class EmptySpaceTest {
     @Test
     public void testOnEndTurn() {
         Player player = new Player("player", new Board(4));
+        int previousMoney = player.getMoney();
         emptySpace.onEndTurn(player);
-        assertEquals(1500, player.getMoney());
+        assertEquals(previousMoney, player.getMoney());
     }
 }

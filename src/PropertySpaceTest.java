@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * Tests the functionality of the PropertySpace Class.
+ * Assumes Board, Player, and Property classes function.
  * @author Sebastian Lionais 101157892
  */
 public class PropertySpaceTest {
@@ -47,8 +48,9 @@ public class PropertySpaceTest {
      */
     @Test
     public void testOnEndTurnNotOwned() {
+        int previousMoney = p1.getMoney();
         propertySpace.onEndTurn(p1);
-        assertEquals(1500, p1.getMoney());
+        assertEquals(previousMoney, p1.getMoney());
     }
 
     /**
@@ -57,9 +59,10 @@ public class PropertySpaceTest {
      */
     @Test
     public void testOnEndTurnOwnedByCurrentPlayer() {
+        int previousMoney = p1.getMoney();
         property.setOwner(p1);
         propertySpace.onEndTurn(p1);
-        assertEquals(1500, p1.getMoney());
+        assertEquals(previousMoney, p1.getMoney());
     }
 
     /**
@@ -69,10 +72,12 @@ public class PropertySpaceTest {
     @Test
     public void testOnEndTurnNotOwnedByCurrentPlayer() {
         Player p2 = new Player("p2", board);
+        int previousMoney = p1.getMoney();
+        int previousMoney2 = p2.getMoney();
         property.setOwner(p1);
         propertySpace.onEndTurn(p2);
-        assertEquals(2300, p1.getMoney());
-        assertEquals(700, p2.getMoney());
+        assertEquals(previousMoney + property.getRent(), p1.getMoney());
+        assertEquals(previousMoney2 - property.getRent(), p2.getMoney());
     }
 
     /**
@@ -96,7 +101,7 @@ public class PropertySpaceTest {
      */
     @Test
     public void testGetDescriptionOwned() {
-        p1.buy(property);
+        property.setOwner(p1);
         StringBuilder sb = new StringBuilder();
 
         sb.append("Property: Test\n");
