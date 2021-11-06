@@ -1,3 +1,5 @@
+import org.junit.Test;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
@@ -16,7 +18,7 @@ public class PlayerTest {
     /**
      * Creates objects for use in tests.
      */
-    @org.junit.Before
+    @Before
     public void setup() {
         board = new Board(1); //need a board to create players, but the board will not be tested here
         //a non-null board is needed to send events
@@ -30,7 +32,7 @@ public class PlayerTest {
     /**
      * Tests that all model information is updated when a player buys a property.
      */
-    @org.junit.Test
+    @Test
     public void buy() {
         int previousMoney = p1.getMoney();
         p1.buy(property1);
@@ -44,7 +46,7 @@ public class PlayerTest {
      * Tests that rent payments are correctly transferred from player to player,
      * and that resulting bankruptcies occur when needed.
      */
-    @org.junit.Test
+    @Test
     public void payRent() {
         p1.buy(property1);
         int initialMoney1 = p1.getMoney();
@@ -68,7 +70,7 @@ public class PlayerTest {
     /**
      * Tests that the player name getter functions correctly.
      */
-    @org.junit.Test
+    @Test
     public void getName() {
         Assert.assertEquals("P1", p1.getName());
         Assert.assertEquals("P2", p2.getName());
@@ -78,7 +80,7 @@ public class PlayerTest {
      * Tests that the player money getter functions correctly, and that starting money is equal and nonzero.
      * A specific value is not tested because the starting money may change.
      */
-    @org.junit.Test
+    @Test
     public void getMoney() {
         Assert.assertNotEquals(0, p1.getMoney());
         Assert.assertTrue(p1.getMoney() == p2.getMoney());
@@ -88,7 +90,7 @@ public class PlayerTest {
      * Tests whether player numbers are correctly assigned on creation and retrieved.
      * Player numbers should be assigned in ascending order.
      */
-    @org.junit.Test
+    @Test
     public void getPlayerNumber() {
         Assert.assertEquals(p2.getPlayerNumber(), p1.getPlayerNumber() + 1);
     }
@@ -96,7 +98,7 @@ public class PlayerTest {
     /**
      * Tests that player properties are properly retrieved.
      */
-    @org.junit.Test
+    @Test
     public void getProperties() {
         Assert.assertEquals(0, p1.getProperties().size());
         p1.buy(property1);
@@ -108,7 +110,7 @@ public class PlayerTest {
      * Tests that players properly lose money and that loseMoney's return value accurately reflects whether
      * the player went bankrupt.
      */
-    @org.junit.Test
+    @Test
     public void loseMoney() {
         int initialMoney = p1.getMoney();
         boolean wentBankrupt = p1.loseMoney(initialMoney - 1);
@@ -125,7 +127,7 @@ public class PlayerTest {
     /**
      * Tests that players gain money properly.
      */
-    @org.junit.Test
+    @Test
     public void gainMoney() {
         int initialMoney = p1.getMoney();
         p1.gainMoney(100);
@@ -135,7 +137,7 @@ public class PlayerTest {
     /**
      * Tests that player position is correctly initialized, set and retrieved.
      */
-    @org.junit.Test
+    @Test
     public void setPosition() {
         //test initial positions
         Assert.assertEquals(0, p1.getPosition());
@@ -150,7 +152,7 @@ public class PlayerTest {
      * Tests that players are properly marked as bankrupt, and that all necessary information is updated,
      * including money, status and properties.
      */
-    @org.junit.Test
+    @Test
     public void bankrupt() {
         Assert.assertFalse(p1.getIsBankrupt());
         p1.buy(property1);
