@@ -18,12 +18,14 @@ public class DiceRollerTest {
     }
 
     /**
-     * test random roll between 2-12
+     * test random roll between 2-12. tests the roll method 2000 times to make sure all values from 2-12 get reached
      */
     @Test
     public void roll() {
-        dice.roll();
-        assertTrue(2 <= dice.getTotal() && dice.getTotal() <= 12);
+        for(int i = 0; i < 2000; ++i){
+            dice.roll();
+            assertTrue(2 <= dice.getTotal() && dice.getTotal() <= 12);
+        }
     }
 
     /**
