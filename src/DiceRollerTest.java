@@ -1,15 +1,17 @@
 import org.junit.Before;
 import org.junit.Test;
-
 import static org.junit.Assert.*;
 
 /**
- * @author Mohammad Alkhaledi 101162465
  * Test class for testing methods in diceroller class
+ * @author Mohammad Alkhaledi 101162465
  */
 public class DiceRollerTest {
     DiceRoller dice;
 
+    /**
+     *initializes a DiceRoller variable for testing
+     */
     @Before
     public void setUp(){
         dice = new DiceRoller();

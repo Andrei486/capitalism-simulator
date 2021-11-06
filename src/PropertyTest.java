@@ -1,14 +1,17 @@
 import org.junit.Before;
-
+import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * @author Mohammad Alkhaledi 101162465
  * Test class for testing all methods in the Property class
+ * @author Mohammad Alkhaledi 101162465
  */
 public class PropertyTest {
     Property property;
 
+    /**
+     * initializes a Property for testing purposes
+     */
     @Before
     public void setUp(){
         property = new Property("house",100,ColorGroup.GREEN);
@@ -16,7 +19,7 @@ public class PropertyTest {
     /**
      * tests constructor of property
      */
-    @org.junit.Test
+    @Test
     public void testConstructor() {
         assertNotNull(property);
     }
@@ -24,7 +27,7 @@ public class PropertyTest {
     /**
      *tests the getter of cost attribute
      */
-    @org.junit.Test
+    @Test
     public void getCost() {
         assertEquals(100,property.getCost());
     }
@@ -32,7 +35,7 @@ public class PropertyTest {
     /**
      *tests the getter of name attribute
      */
-    @org.junit.Test
+    @Test
     public void getName() {
         assertEquals("house", property.getName());
     }
@@ -40,7 +43,7 @@ public class PropertyTest {
     /**
      *tests the rent value given by getrent
      */
-    @org.junit.Test
+    @Test
     public void getRent() {
         assertEquals(200, property.getRent());
     }
@@ -48,7 +51,7 @@ public class PropertyTest {
     /**
      *tests the getter of ColourGroup attribute
      */
-    @org.junit.Test
+    @Test
     public void getColorGroup() {
         assertEquals(ColorGroup.GREEN, property.getColorGroup());
     }
@@ -56,7 +59,7 @@ public class PropertyTest {
     /**
      *tests the getter/setter of owner attribute
      */
-    @org.junit.Test
+    @Test
     public void testgetsetOwner() {
         assertNull(property.getOwner());
         Player jim = new Player("jim", new Board(3));
@@ -67,7 +70,7 @@ public class PropertyTest {
     /**
      *tests the toString() method call
      */
-    @org.junit.Test
+    @Test
     public void testToString() {
         String sb = "Property: house\n" +
                 "Color:    Green\n" +
