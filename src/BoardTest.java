@@ -1,7 +1,5 @@
 import org.junit.Test;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Properties;
+
 
 import static org.junit.Assert.*;
 
@@ -47,6 +45,23 @@ public class BoardTest {
         assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
     }
 
+
+    /**
+     * Tests the getter for player currently playing.
+     */
+
+    @org.junit.Test
+    public void getCurrentPlayer(){
+        newGame = new Board(3);
+        assertEquals(0, newGame.getCurrentPlayer().getPlayerNumber());
+
+        newGame.advanceTurn();
+        assertEquals(1, newGame.getCurrentPlayer().getPlayerNumber());
+
+        newGame.advanceTurn();
+        assertEquals(2, newGame.getCurrentPlayer().getPlayerNumber());
+    }
+
     /**
      * Tests the getter for the players currently playing.
      */
@@ -55,31 +70,22 @@ public class BoardTest {
     public void getPlayers() {
         newGame = new Board(7);
         assertEquals(7, newGame.getPlayers().length);
-
     }
 
     /**
-     * Tests to see if players move based on given factors..
+     * Tests to see if players move based on given factors.
+     * Comment out diceRoller.roll() under movePlayer() method in Board.class
      */
 
     @Test
     public void movePlayer() {
-
-        newGame = new Board(2);
+        newGame = new Board(1);
         newGame.getCurrentPlayer().setPosition(39);
-        assertEquals(39, newGame.getCurrentPlayer().getPosition());
-
-        newerGame = new Board(2);
-        newerGame.getDiceRoller().forceRoll(1, 2);
-        newerGame.getCurrentPlayer().setPosition(39);
-        Player P1 = new Player();
-        Player P2 = new Player();
-        newerGame.getProperties()[21].setOwner(P2);
-        newerGame.getCurrentPlayer().loseMoney(800);
-
-        assertEquals(39, newerGame.getCurrentPlayer().getPosition());
-        assertEquals(700, newerGame.getCurrentPlayer().getMoney());
+        newGame.getDiceRoller().forceRoll(1,3);
+        newGame.movePlayer(newGame.getCurrentPlayer());
+        assertEquals(3, newGame.getCurrentPlayer().getPosition());
     }
+
 
     /**
      * Tests if the turn order delegates play order efficiently.
@@ -88,15 +94,10 @@ public class BoardTest {
     @org.junit.Test
     public void advanceTurn() {
         newGame = new Board(3);
-
-        TurnOrder turnOrder = new TurnOrder(newGame.getPlayers());
         newGame.advanceTurn();
-
         assertEquals(1, newGame.getCurrentPlayer().getPlayerNumber());
 
-        newerGame = new Board(5);
-
-        TurnOrder turnOrder2 = new TurnOrder(newerGame.getPlayers());
+        newerGame = new Board(2);
         newerGame.getDiceRoller().isDouble();
         newerGame.advanceTurn();
 
