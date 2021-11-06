@@ -1,6 +1,4 @@
 import org.junit.Test;
-
-
 import static org.junit.Assert.*;
 
 /**
@@ -26,6 +24,29 @@ public class BoardTest {
     }
 
     /**
+     * Tests that board initialized properly.
+     */
+
+    @org.junit.Test
+    public void testBoard(){
+        newGame = new Board(3);
+        assertEquals(22, newGame.getProperties().length);
+        assertEquals(3, newGame.getPlayers().length);
+        assertEquals(1500, newGame.getCurrentPlayer().getMoney());
+    }
+
+    /**
+     * Tests if the getDiceRoller method is not null.
+     */
+
+    @org.junit.Test
+    public void getDiceRoller(){
+        newGame = new Board(3);
+        newGame.getDiceRoller().roll();
+        assertNotNull(newGame.getDiceRoller());
+    }
+
+    /**
      * Tests the getter for the properties on the board.
      */
 
@@ -44,7 +65,6 @@ public class BoardTest {
         newGame = new Board(2);
         assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
     }
-
 
     /**
      * Tests the getter for player currently playing.
@@ -102,5 +122,17 @@ public class BoardTest {
         newerGame.advanceTurn();
 
         assertEquals(4, newerGame.getCurrentPlayer().getPlayerNumber());
+    }
+
+    /**
+     * Tests if the game ends after all players but one go bankrupt.
+     */
+
+    @org.junit.Test
+    public void isGameOver(){
+        newGame = new Board(2);
+        newGame.getCurrentPlayer().loseMoney(1500);
+        assertEquals(true, newGame.isGameOver());
+
     }
 }
