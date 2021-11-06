@@ -101,7 +101,5 @@ public class BoardTest {
         newerGame.advanceTurn();
 
         assertEquals(4, newerGame.getCurrentPlayer().getPlayerNumber());
-
-
     }
 }
