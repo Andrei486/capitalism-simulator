@@ -74,7 +74,7 @@ public class BoardTest {
 
     /**
      * Tests to see if players move based on given factors.
-     * Comment out diceRoller.roll() under movePlayer() method in Board.class
+     * Comment out diceRoller.roll() under movePlayer() method in Board.class for this test
      */
 
     @Test
