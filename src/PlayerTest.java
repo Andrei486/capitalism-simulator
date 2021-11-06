@@ -113,14 +113,14 @@ public class PlayerTest {
     @Test
     public void loseMoney() {
         int initialMoney = p1.getMoney();
-        boolean wentBankrupt = p1.loseMoney(initialMoney - 1);
-        Assert.assertTrue(wentBankrupt);
+        int lostMoney = p1.loseMoney(initialMoney - 1);
+        Assert.assertEquals(initialMoney - 1, lostMoney);
         Assert.assertEquals(1, p1.getMoney());
-        wentBankrupt = p1.loseMoney(1); //players go bankrupt if they are at 0$ or less
-        Assert.assertFalse(wentBankrupt);
+        lostMoney = p1.loseMoney(3); //players go bankrupt if they are at 0$ or less
+        Assert.assertEquals(1, lostMoney);
         Assert.assertEquals(0, p1.getMoney());
-        wentBankrupt = p1.loseMoney(2); //player money should not be reduced beyond 0
-        Assert.assertFalse(wentBankrupt);
+        lostMoney = p1.loseMoney(2); //player money should not be reduced beyond 0
+        Assert.assertEquals(0, lostMoney);
         Assert.assertEquals(0, p1.getMoney());
     }
 

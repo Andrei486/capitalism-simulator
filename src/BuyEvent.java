@@ -11,6 +11,10 @@ public class BuyEvent extends EventObject {
         super(player);
     }
 
+    /**
+     * Gets the player who bought a property.
+     * @return Player that created the BuyEvent and bought the property
+     */
     @Override
     public Player getSource() {
         return (Player) super.getSource();

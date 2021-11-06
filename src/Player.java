@@ -50,16 +50,9 @@ public class Player {
      * @param property the property that determines the rent and owner
      */
     public void payRent(Property property) {
-        int rent = property.getRent();
-        if (this.loseMoney(rent)) {
-            property.getOwner().gainMoney(rent);
-            this.board.handlePayRent(new RentEvent(this, rent, property));
-        }
-        else {
-            property.getOwner().gainMoney(this.money);
-            this.board.handlePayRent(new RentEvent(this, this.money, property));
-            this.money = 0;
-        }
+        int amountPaid = this.loseMoney(property.getRent());
+        property.getOwner().gainMoney(amountPaid);
+        this.board.handlePayRent(new RentEvent(this, amountPaid, property));
     }
 
     /**
@@ -94,17 +87,19 @@ public class Player {
 
     /**
      * Takes money from the player, bankrupts the player if they do not have the money to pay.
+     * The player cannot pay more money than would cause them to go below 0$.
      * @param money the money to be paid
-     * @return true if the player could pay, false if they bankrupted
+     * @return integer value representing the actual money paid
      */
-    public boolean loseMoney(int money) {
+    public int loseMoney(int money) {
         if (money < this.money) {
             this.money -= money;
-            return true;
+            return money; //the full amount was paid
         }
         else{
+            int amountPaid = this.money;
             this.bankrupt();
-            return false;
+            return amountPaid; //all the player's remaining money was paid
         }
     }
 
@@ -142,6 +137,7 @@ public class Player {
         }
         this.properties.clear();
         this.isBankrupt = true;
+        this.money = 0;
         board.handleBankruptcy(new BankruptcyEvent(this));
     }
 

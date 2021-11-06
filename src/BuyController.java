@@ -1,6 +1,10 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class that interfaces between BoardView and Board to handle
+ * buying properties.
+ */
 public class BuyController implements ActionListener {
     private Board board;
 
