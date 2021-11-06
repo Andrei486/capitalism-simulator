@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PropertySpacePanel extends SpacePanel{
-    private Property property;
     private JButton infoButton;
 
 
@@ -20,7 +19,6 @@ public class PropertySpacePanel extends SpacePanel{
         bottomLabel.setText(String.format("%s", property.getName()));
 
         Color c;
-        this.property = property;
         ColorGroup cg = property.getColorGroup();
 
         if(cg == ColorGroup.BROWN){
