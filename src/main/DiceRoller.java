@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Using the Random util library to simulate rolling dice with a limit of 1 - 6 per die.
  *

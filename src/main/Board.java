@@ -1,3 +1,5 @@
+package main;
+
 import java.util.HashSet;
 
 /**
@@ -79,7 +81,7 @@ public class Board {
      * Rolls the dice and moves a Player by the amount rolled.
      * @param player the Player to move.
      */
-    void movePlayer(Player player) {
+    public void movePlayer(Player player) {
         diceRoller.roll();
         int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();
@@ -190,6 +192,10 @@ public class Board {
         turnOrder.advanceTurnOrder(false);
     }
 
+    /**
+     * Sends the BuyEvent to all registered views.
+     * @param e the event to be sent out
+     */
     public void handleBuyEvent(BuyEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleBuy(e);

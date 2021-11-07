@@ -1,12 +1,22 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Class for displaying a property space on the GUI.
+ * @author Waleed Majbour
+ */
 public class PropertySpacePanel extends SpacePanel{
     private JButton infoButton;
 
 
+    /**
+     * Constructs a panel for a given property.
+     * @param property the property to make a GUI panel for
+     */
     public PropertySpacePanel(Property property) {
 
         super();

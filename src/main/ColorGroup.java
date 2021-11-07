@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Enum representing a color group of properties.
  */

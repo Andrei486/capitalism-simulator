@@ -1,7 +1,8 @@
+package main;
+
 /**
  * This class implements the property space class, which extends the space class.
  * Represents a space with a property on it.
- * Milestone 1
  * @author Mohammad Alkhaledi
  * */
 public class PropertySpace extends Space {

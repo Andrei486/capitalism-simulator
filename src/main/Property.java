@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Class representing a Monopoly property that can be bought and owned by a player.
  * @author Andrei Popescu, 101143798

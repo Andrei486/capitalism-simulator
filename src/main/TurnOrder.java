@@ -1,3 +1,5 @@
+package main;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -44,6 +46,5 @@ public class TurnOrder {
         while (currentPlayer.getIsBankrupt()) {
             currentPlayer = nextTurns.remove();
         }
-        //TODO check if the later check is necessary once GUI testing begins
     }
 }

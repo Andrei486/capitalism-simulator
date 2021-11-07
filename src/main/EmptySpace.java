@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Class representing an empty space on the board, such as Free Parking.
  * When the player lands on one of these spaces, nothing happens.

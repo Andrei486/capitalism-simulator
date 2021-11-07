@@ -1,3 +1,5 @@
+package main;
+
 import java.util.EventObject;
 
 public class BuyEvent extends EventObject {

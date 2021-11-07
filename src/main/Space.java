@@ -1,3 +1,5 @@
+package main;
+
 /**
  * Class representing a space on a Monopoly board.
  * Base class for all different space types.

@@ -1,3 +1,5 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -73,8 +75,10 @@ public class BoardView extends JFrame implements MonopolyView {
         diceRollLabels[0] = new JLabel();
         diceRollLabels[1] = new JLabel();
         totalRollLabel = new JLabel();
+        centerPanel.add(new JLabel("Dice rolls: "));
         centerPanel.add(diceRollLabels[0]);
         centerPanel.add(diceRollLabels[1]);
+        centerPanel.add(new JLabel("Dice total: "));
         centerPanel.add(totalRollLabel);
         updateDiceLabels();
 

@@ -1,7 +1,9 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-
-import static org.junit.Assert.*;
+import main.*;
 
 /**
  * Tests the functionality of the TurnOrder Class.
@@ -27,7 +29,7 @@ public class TurnOrderTest {
      */
     @Test
     public void testGetCurrentPlayer() {
-        assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -36,13 +38,13 @@ public class TurnOrderTest {
     @Test
     public void testAdvanceTurnOrderNormal() {
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
 
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
 
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -52,13 +54,13 @@ public class TurnOrderTest {
     @Test
     public void testAdvanceTurnOrderDouble() {
         turnOrder.advanceTurnOrder(true);
-        assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
 
         turnOrder.advanceTurnOrder(true);
-        assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[0], turnOrder.getCurrentPlayer());
 
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -68,7 +70,7 @@ public class TurnOrderTest {
     public void testAdvanceTurnOrderBankrupt() {
         board.getPlayers()[1].loseMoney(1500);
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
     }
 
     /**
@@ -78,10 +80,10 @@ public class TurnOrderTest {
     @Test
     public void testAdvanceTurnOrderBankruptDouble() {
         turnOrder.advanceTurnOrder(false);
-        assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[1], turnOrder.getCurrentPlayer());
         board.getPlayers()[1].loseMoney(1500);
         turnOrder.advanceTurnOrder(true);
-        assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
+        Assert.assertEquals(board.getPlayers()[2], turnOrder.getCurrentPlayer());
 
     }
 }
