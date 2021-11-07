@@ -16,6 +16,10 @@ public class BoardView extends JFrame implements MonopolyView {
     private JLabel totalRollLabel;
     private JButton buyButton;
 
+    /**
+     * Construct a BoardView to represent a Board, initializing all UI elements.
+     * @param board the Board that should be displayed
+     */
     public BoardView(Board board) {
         super();
         this.board = board;
@@ -30,6 +34,7 @@ public class BoardView extends JFrame implements MonopolyView {
         c.gridheight = 1;
         c.fill = GridBagConstraints.BOTH;
 
+        //create the spaces on the board and position them
         for (int i = 0; i < Board.BOARD_SIZE; i++) {
             int[] position = getGridPosition(i);
             SpacePanel panel;
@@ -46,10 +51,12 @@ public class BoardView extends JFrame implements MonopolyView {
             spacePanels[i] = panel;
         }
 
+        //place the players at their current positions
         for (Player player : this.board.getPlayers()) {
             spacePanels[player.getPosition()].addPlayer(player);
         }
 
+        //create player information labels for names & money
         JPanel gridCenterPanel = new JPanel(new BorderLayout());
         JPanel playerInfoPanel = new JPanel(new FlowLayout());
         playerInfoLabels = new JLabel[this.board.getPlayers().length];
@@ -60,8 +67,8 @@ public class BoardView extends JFrame implements MonopolyView {
         updatePlayerLabels();
         gridCenterPanel.add(playerInfoPanel, BorderLayout.NORTH);
 
+        //create labels for dice rolls and total
         JPanel centerPanel = new JPanel(new FlowLayout());
-
         diceRollLabels = new JLabel[2];
         diceRollLabels[0] = new JLabel();
         diceRollLabels[1] = new JLabel();
@@ -71,6 +78,7 @@ public class BoardView extends JFrame implements MonopolyView {
         centerPanel.add(totalRollLabel);
         updateDiceLabels();
 
+        //create buttons to buy properties and end turn
         buyButton = new JButton();
         buyButton.setText("Buy");
         buyButton.addActionListener(new BuyController(this.board));
@@ -91,6 +99,7 @@ public class BoardView extends JFrame implements MonopolyView {
         c.fill = GridBagConstraints.BOTH;
         gridPanel.add(gridCenterPanel, c);
 
+        //fit the entire board in a scroll pane in case the board is too large for the screen
         JScrollPane gridScrollPane = new JScrollPane(gridPanel);
         gridScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
         gridScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -102,9 +111,9 @@ public class BoardView extends JFrame implements MonopolyView {
     }
 
     /**
-     *
-     * @param position
-     * @return
+     * Gets the grid coordinates (on a 10x10 GridBagLayout) of a board space by index position.
+     * @param position the position of the space on the board (0 is GO, increases clockwise)
+     * @return array of 2 integers, respectively the x and y coordinates to use on a GridBagLayout
      */
     private int[] getGridPosition(int position) {
         int x;
@@ -126,6 +135,9 @@ public class BoardView extends JFrame implements MonopolyView {
         return coordinates;
     }
 
+    /**
+     * Updates the player labels, including player money values and player status (acting/bankrupt).
+     */
     private void updatePlayerLabels() {
         for (int i = 0; i < playerInfoLabels.length; i++) {
             Player player = board.getPlayers()[i];
@@ -141,12 +153,19 @@ public class BoardView extends JFrame implements MonopolyView {
         }
     }
 
+    /**
+     * Updates the dice roll labels to show the most recent numbers rolled and the total.
+     */
     private void updateDiceLabels() {
         diceRollLabels[0].setText(String.valueOf(this.board.getDiceRoller().getDice()[0]));
         diceRollLabels[1].setText(String.valueOf(this.board.getDiceRoller().getDice()[1]));
         totalRollLabel.setText(String.valueOf(this.board.getDiceRoller().getTotal()));
     }
 
+    /**
+     * Updates the status of the buy button, enabling it or disabling it depending on whether
+     * the current player is able to buy a property.
+     */
     private void updateBuyButton() {
         buyButton.setEnabled(true);
 
@@ -173,6 +192,11 @@ public class BoardView extends JFrame implements MonopolyView {
         }
     }
 
+    /**
+     * Updates the board display in response to a player moving.
+     * This includes moving the player along the board spaces and updating information.
+     * @param e MovePlayerEvent representing the movement
+     */
     @Override
     public void handleMovePlayer(MovePlayerEvent e) {
         Player player = e.getPlayer();
@@ -183,17 +207,30 @@ public class BoardView extends JFrame implements MonopolyView {
         updateBuyButton();
     }
 
+    /**
+     * Updates the board display in response to a player buying a property.
+     * @param e BuyEvent representing the transaction
+     */
     @Override
     public void handleBuy(BuyEvent e) {
         updatePlayerLabels();
         updateBuyButton();
     }
 
+    /**
+     * Updates the board display in response to a player paying rent on a property.
+     * @param e RentEvent representing the transaction
+     */
     @Override
     public void handlePayRent(RentEvent e) {
         updatePlayerLabels();
     }
 
+    /**
+     * Updates the board display in response to a player going bankrupt.
+     * Also ends the game if there is only one player left, showing a message with the winner's name.
+     * @param e BankruptcyEvent representing the bankruptcy that occurred
+     */
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
         updatePlayerLabels();
