@@ -115,13 +115,13 @@ public class BoardTest {
     public void advanceTurn() {
         newGame = new Board(3);
         newGame.advanceTurn();
-        assertEquals(1, newGame.getCurrentPlayer().getPlayerNumber());
+        assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
 
         newerGame = new Board(2);
-        newerGame.getDiceRoller().isDouble();
+        newerGame.getDiceRoller().forceRoll(1,1);
         newerGame.advanceTurn();
 
-        assertEquals(4, newerGame.getCurrentPlayer().getPlayerNumber());
+        assertEquals(newerGame.getPlayers()[0], newerGame.getCurrentPlayer());
     }
 
     /**
@@ -130,9 +130,13 @@ public class BoardTest {
 
     @org.junit.Test
     public void isGameOver(){
-        newGame = new Board(2);
+        newGame = new Board(3);
         newGame.getCurrentPlayer().loseMoney(1500);
-        assertEquals(true, newGame.isGameOver());
+        assertFalse(newGame.isGameOver());
+        newGame.advanceTurn();
+        newGame.getCurrentPlayer().loseMoney(1500);
+        assertTrue(newGame.isGameOver());
+
 
     }
 }
