@@ -15,7 +15,7 @@ public class BuyEvent extends EventObject {
 
     /**
      * Gets the player who bought a property.
-     * @return layer that created the uyEvent and bought the property
+     * @return Player that created the BuyEvent and bought the property
      */
     @Override
     public Player getSource() {

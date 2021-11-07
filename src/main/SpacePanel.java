@@ -19,7 +19,6 @@ public abstract class SpacePanel extends JPanel {
     public SpacePanel(){
         super(new BorderLayout());
         JPanel centerPanel = new JPanel(new GridLayout(2,4));
-//        centerPanel.setBackground(Color.LIGHT_GRAY);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         topPanel = new JPanel();

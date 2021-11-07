@@ -58,7 +58,7 @@ public class Property {
 
     /**
      * Gets the current owner of this property.
-     * @return the layer that owns this property
+     * @return the Player that owns this property
      */
     public Player getOwner() {
         return this.owner;
@@ -66,7 +66,7 @@ public class Property {
 
     /**
      * Sets the current owner of this property.
-     * @param p the layer who should own this property
+     * @param p the Player who should own this property
      */
     public void setOwner(Player p) {
         this.owner = p;

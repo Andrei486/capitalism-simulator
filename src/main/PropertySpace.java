@@ -26,7 +26,7 @@ public class PropertySpace extends Space {
     /**
      * Resolves forced effects resulting from player landing on the space.
      * Players landing on a property space owned by another player must pay rent.
-     * @param p the layer landing on this space
+     * @param p the Player landing on this space
      */
     public void onEndTurn(Player p){
         // if player is not the owner of property and property has an owner

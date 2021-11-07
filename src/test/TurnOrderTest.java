@@ -5,8 +5,6 @@ import org.junit.Test;
 import org.junit.Before;
 import main.*;
 
-import static org.junit.Assert.*;
-
 /**
  * Tests the functionality of the TurnOrder Class.
  * Assumes Board functions.
