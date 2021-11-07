@@ -1,5 +1,9 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import main.*;
 
 /**
  * @author Waleed Majbour 101144882
@@ -30,9 +34,9 @@ public class BoardTest {
     @org.junit.Test
     public void testBoard(){
         newGame = new Board(3);
-        assertEquals(22, newGame.getProperties().length);
-        assertEquals(3, newGame.getPlayers().length);
-        assertEquals(1500, newGame.getCurrentPlayer().getMoney());
+        Assert.assertEquals(22, newGame.getProperties().length);
+        Assert.assertEquals(3, newGame.getPlayers().length);
+        Assert.assertEquals(1500, newGame.getCurrentPlayer().getMoney());
     }
 
     /**
@@ -53,7 +57,7 @@ public class BoardTest {
     @org.junit.Test
     public void getProperties() {
         newGame = new Board(2);
-        assertEquals(22, newGame.getProperties().length);
+        Assert.assertEquals(22, newGame.getProperties().length);
     }
 
     /**
@@ -63,7 +67,7 @@ public class BoardTest {
     @org.junit.Test
     public void getSpace() {
         newGame = new Board(2);
-        assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
+        Assert.assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
     }
 
     /**
@@ -73,13 +77,19 @@ public class BoardTest {
     @org.junit.Test
     public void getCurrentPlayer(){
         newGame = new Board(3);
-        assertEquals(0, newGame.getCurrentPlayer().getPlayerNumber());
+        Assert.assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
 
+        newGame.getDiceRoller().forceRoll(1, 2);
         newGame.advanceTurn();
-        assertEquals(1, newGame.getCurrentPlayer().getPlayerNumber());
+        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
 
+        newGame.getDiceRoller().forceRoll(1, 2);
         newGame.advanceTurn();
-        assertEquals(2, newGame.getCurrentPlayer().getPlayerNumber());
+        Assert.assertEquals(newGame.getPlayers()[2], newGame.getCurrentPlayer());
+
+        newGame.getDiceRoller().forceRoll(1, 2);
+        newGame.advanceTurn();
+        Assert.assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
     }
 
     /**
@@ -89,21 +99,20 @@ public class BoardTest {
     @org.junit.Test
     public void getPlayers() {
         newGame = new Board(7);
-        assertEquals(7, newGame.getPlayers().length);
+        Assert.assertEquals(7, newGame.getPlayers().length);
     }
 
     /**
      * Tests to see if players move based on given factors.
-     * Comment out diceRoller.roll() under movePlayer() method in Board.class for this test
      */
 
     @Test
     public void movePlayer() {
         newGame = new Board(1);
         newGame.getCurrentPlayer().setPosition(39);
-        newGame.getDiceRoller().forceRoll(1,3);
         newGame.movePlayer(newGame.getCurrentPlayer());
-        assertEquals(3, newGame.getCurrentPlayer().getPosition());
+        int totalRoll = newGame.getDiceRoller().getTotal();
+        Assert.assertEquals(totalRoll - 1, newGame.getCurrentPlayer().getPosition());
     }
 
 
@@ -113,15 +122,13 @@ public class BoardTest {
 
     @org.junit.Test
     public void advanceTurn() {
-        newGame = new Board(3);
+        newGame = new Board(2);
         newGame.advanceTurn();
-        assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
+        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
 
-        newerGame = new Board(2);
-        newerGame.getDiceRoller().forceRoll(1,1);
-        newerGame.advanceTurn();
-
-        assertEquals(newerGame.getPlayers()[0], newerGame.getCurrentPlayer());
+        newGame.getDiceRoller().forceRoll(1,1);
+        newGame.advanceTurn();
+        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
     }
 
     /**

@@ -1,7 +1,9 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
-
-import static org.junit.Assert.*;
+import main.*;
 
 /**
  * Tests the functionality of the EmptySpace Class.
@@ -24,7 +26,7 @@ public class EmptySpaceTest {
      */
     @Test
     public void testGetName() {
-        assertEquals("", emptySpace.getName());
+        Assert.assertEquals("", emptySpace.getName());
     }
 
     /**
@@ -32,7 +34,7 @@ public class EmptySpaceTest {
      */
     @Test
     public void testGetDescription() {
-        assertEquals("Empty space", emptySpace.getDescription());
+        Assert.assertEquals("Empty space", emptySpace.getDescription());
     }
 
     /**
@@ -43,6 +45,6 @@ public class EmptySpaceTest {
         Player player = new Player("player", new Board(4));
         int previousMoney = player.getMoney();
         emptySpace.onEndTurn(player);
-        assertEquals(previousMoney, player.getMoney());
+        Assert.assertEquals(previousMoney, player.getMoney());
     }
 }

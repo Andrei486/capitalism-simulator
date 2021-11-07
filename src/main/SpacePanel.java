@@ -1,9 +1,11 @@
+package main;
+
 import javax.swing.*;
 import java.awt.*;
 
 /**
  * @author Mohammad ALkhaledi 101162465
- * implements Space panel, which is a template for any space on the board
+ * implements SpacePanel, which is a template for any space on the board
  */
 public abstract class SpacePanel extends JPanel {
     private JLabel[] playerLabels;
@@ -12,12 +14,12 @@ public abstract class SpacePanel extends JPanel {
     protected JLabel topLabel;
     protected JLabel bottomLabel;
     /**
-     * Default constructor for Space Panel
+     * Default constructor for SpacePanel
      */
     public SpacePanel(){
         super(new BorderLayout());
         JPanel centerPanel = new JPanel(new GridLayout(2,4));
-        centerPanel.setBackground(Color.LIGHT_GRAY);
+//        centerPanel.setBackground(Color.LIGHT_GRAY);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         topPanel = new JPanel();
@@ -38,8 +40,11 @@ public abstract class SpacePanel extends JPanel {
 
         for(int i = 0; i < playerLabels.length; ++i){
             playerLabels[i] = new JLabel();
-            playerLabels[i].setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 9));
+            playerLabels[i].setFont(new Font(Font.SANS_SERIF, Font.BOLD, 9));
             playerLabels[i].setText(" ");
+            playerLabels[i].setHorizontalAlignment(SwingConstants.CENTER);
+            playerLabels[i].setForeground(Color.WHITE);
+            playerLabels[i].setBackground(Color.BLACK);
             centerPanel.add(playerLabels[i]);
         }
 
@@ -53,6 +58,7 @@ public abstract class SpacePanel extends JPanel {
     public void addPlayer(Player p){
         int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(p.getName());
+        playerLabels[playerNumber].setOpaque(true);
     }
 
     /**
@@ -62,5 +68,6 @@ public abstract class SpacePanel extends JPanel {
     public void removePlayer(Player p){
         int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(" ");
+        playerLabels[playerNumber].setOpaque(false);
     }
 }

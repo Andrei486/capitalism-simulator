@@ -1,3 +1,5 @@
+package main;
+
 import java.util.EventObject;
 
 /**
@@ -12,8 +14,8 @@ public class RentEvent extends EventObject {
      * Constructs an Event corresponding to a player paying rent on a property.
      *
      * @param player the object on which the Event initially occurred
-     * @param rentPaid
-     * @param property
+     * @param rentPaid the actual amount of money paid as rent
+     * @param property the property on which rent was paid
      * @throws IllegalArgumentException if source is null
      */
     public RentEvent(Player player, int rentPaid, Property property) {

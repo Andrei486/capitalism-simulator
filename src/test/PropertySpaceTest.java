@@ -1,5 +1,9 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.Before;
+import main.*;
 
 import static org.junit.Assert.*;
 
@@ -31,7 +35,7 @@ public class PropertySpaceTest {
      */
     @Test
     public void testGetProperty() {
-        assertEquals(property, propertySpace.getProperty());
+        Assert.assertEquals(property, propertySpace.getProperty());
     }
 
     /**
@@ -39,7 +43,7 @@ public class PropertySpaceTest {
      */
     @Test
     public void testGetName() {
-        assertEquals("Test", propertySpace.getName());
+        Assert.assertEquals("Test", propertySpace.getName());
     }
 
     /**
@@ -50,7 +54,7 @@ public class PropertySpaceTest {
     public void testOnEndTurnNotOwned() {
         int previousMoney = p1.getMoney();
         propertySpace.onEndTurn(p1);
-        assertEquals(previousMoney, p1.getMoney());
+        Assert.assertEquals(previousMoney, p1.getMoney());
     }
 
     /**
@@ -62,7 +66,7 @@ public class PropertySpaceTest {
         int previousMoney = p1.getMoney();
         property.setOwner(p1);
         propertySpace.onEndTurn(p1);
-        assertEquals(previousMoney, p1.getMoney());
+        Assert.assertEquals(previousMoney, p1.getMoney());
     }
 
     /**
@@ -76,8 +80,8 @@ public class PropertySpaceTest {
         int previousMoney2 = p2.getMoney();
         property.setOwner(p1);
         propertySpace.onEndTurn(p2);
-        assertEquals(previousMoney + property.getRent(), p1.getMoney());
-        assertEquals(previousMoney2 - property.getRent(), p2.getMoney());
+        Assert.assertEquals(previousMoney + property.getRent(), p1.getMoney());
+        Assert.assertEquals(previousMoney2 - property.getRent(), p2.getMoney());
     }
 
     /**
@@ -93,7 +97,7 @@ public class PropertySpaceTest {
         sb.append("Rent:     $800\n");
         sb.append("Not owned");
 
-        assertEquals(sb.toString(), propertySpace.getDescription());
+        Assert.assertEquals(sb.toString(), propertySpace.getDescription());
     }
 
     /**
@@ -110,6 +114,6 @@ public class PropertySpaceTest {
         sb.append("Rent:     $800\n");
         sb.append("Owned by p1");
 
-        assertEquals(sb.toString(), propertySpace.getDescription());
+        Assert.assertEquals(sb.toString(), propertySpace.getDescription());
     }
 }

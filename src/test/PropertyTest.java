@@ -1,5 +1,9 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import main.*;
 import static org.junit.Assert.*;
 
 /**
@@ -14,7 +18,7 @@ public class PropertyTest {
      */
     @Before
     public void setUp(){
-        property = new Property("house",100,ColorGroup.GREEN);
+        property = new Property("house",100, ColorGroup.GREEN);
     }
     /**
      * tests constructor of property
@@ -29,7 +33,7 @@ public class PropertyTest {
      */
     @Test
     public void getCost() {
-        assertEquals(100,property.getCost());
+        Assert.assertEquals(100,property.getCost());
     }
 
     /**
@@ -37,23 +41,23 @@ public class PropertyTest {
      */
     @Test
     public void getName() {
-        assertEquals("house", property.getName());
+        Assert.assertEquals("house", property.getName());
     }
 
     /**
-     *tests the rent value given by getrent
+     *tests the rent value given by getRent
      */
     @Test
     public void getRent() {
-        assertEquals(200, property.getRent());
+        Assert.assertEquals(200, property.getRent());
     }
 
     /**
-     *tests the getter of ColourGroup attribute
+     *tests the getter of ColorGroup attribute
      */
     @Test
     public void getColorGroup() {
-        assertEquals(ColorGroup.GREEN, property.getColorGroup());
+        Assert.assertEquals(ColorGroup.GREEN, property.getColorGroup());
     }
 
     /**
@@ -64,7 +68,7 @@ public class PropertyTest {
         assertNull(property.getOwner());
         Player jim = new Player("jim", new Board(3));
         property.setOwner(jim);
-        assertEquals(jim, property.getOwner());
+        Assert.assertEquals(jim, property.getOwner());
     }
 
     /**
@@ -78,7 +82,7 @@ public class PropertyTest {
                 "Rent:     $200\n" +
                 "Not owned";
 
-        assertEquals(sb, property.toString());
+        Assert.assertEquals(sb, property.toString());
         Player jim = new Player("jim", new Board(3));
         property.setOwner(jim);
         String sb2 = "Property: house\n" +
@@ -86,6 +90,6 @@ public class PropertyTest {
                 "Cost:     $100\n" +
                 "Rent:     $200\n" +
                 "Owned by jim";
-        assertEquals(sb2, property.toString());
+        Assert.assertEquals(sb2, property.toString());
     }
 }

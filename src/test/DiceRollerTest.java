@@ -1,9 +1,13 @@
+package test;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import main.*;
 
 /**
- * Test class for testing methods in diceroller class
+ * Test class for testing methods in Diceroller class
  * @author Mohammad Alkhaledi 101162465
  */
 public class DiceRollerTest {
@@ -34,7 +38,7 @@ public class DiceRollerTest {
     @Test
     public void forceRoll() {
         dice.forceRoll(5,6);
-        assertEquals(11, dice.getTotal());
+        Assert.assertEquals(11, dice.getTotal());
     }
 
 
@@ -55,7 +59,7 @@ public class DiceRollerTest {
     public void getDice() {
         dice.forceRoll(5,5);
         int[] arr = new int[]{5, 5};
-        assertArrayEquals(arr, dice.getDice());
+        Assert.assertArrayEquals(arr, dice.getDice());
     }
 
     /**
@@ -64,7 +68,7 @@ public class DiceRollerTest {
     @Test
     public void getTotal() {
         dice.forceRoll(5,5);
-        assertEquals(10, dice.getTotal());
+        Assert.assertEquals(10, dice.getTotal());
     }
 
 
