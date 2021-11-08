@@ -79,7 +79,8 @@ public class Board {
      * Rolls the dice and moves a Player by the amount rolled.
      * @param player the Player to move.
      */
-    void movePlayer(Player player) {
+
+    public void movePlayer(Player player) {
         diceRoller.roll();
         int oldPosition = player.getPosition();
         int newPosition = diceRoller.getTotal() + player.getPosition();

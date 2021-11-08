@@ -21,7 +21,7 @@ public class Player {
      * @param name the name of the player
      * @param board the board the player is playing on
      */
-    public Player (String name, Board board) {
+    public Player(String name, Board board) {
         this.name = name;
         this.board = board;
         this.money = STARTING_MONEY;
