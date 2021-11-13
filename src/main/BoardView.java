@@ -43,7 +43,11 @@ public class BoardView extends JFrame implements MonopolyView {
             Space space = this.board.getSpace(i);
             if (space instanceof PropertySpace) {
                 Property property = ((PropertySpace) space).getProperty();
-                panel = new PropertySpacePanel(property);
+                if (property instanceof RealEstate) {
+                    panel = new RealEstateSpacePanel((RealEstate) property);
+                } else {
+                    panel = null; //handle other types of properties here
+                }
             } else {
                 panel = new EmptySpacePanel();
             }

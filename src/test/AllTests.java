@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
         EmptySpaceTest.class,
         PlayerTest.class,
         PropertySpaceTest.class,
-        PropertyTest.class,
+        RealEstateTest.class,
         TurnOrderTest.class
 })
 public class AllTests {
