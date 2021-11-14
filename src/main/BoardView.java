@@ -255,6 +255,11 @@ public class BoardView extends JFrame implements MonopolyView {
         }
     }
 
+    @Override
+    public void handleBuyHouse(BuyHouseEvent e) {
+        //TODO implement
+    }
+
     public static void main(String[] args) {
         boolean isInputValid = false;
         int playerCount = 0;

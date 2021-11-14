@@ -22,7 +22,8 @@ public class PropertySpaceTest {
      */
     @Before
     public void setup() {
-        property = new RealEstate("Test", 400, ColorGroup.BLUE);
+        property = new RealEstate("Test", 400,
+                ColorGroup.BLUE, new RealEstateGroup(ColorGroup.BLUE));
         propertySpace = new PropertySpace(property);
         board = new Board(4);
         p1 = new Player("p1", board);
@@ -92,7 +93,7 @@ public class PropertySpaceTest {
         sb.append("Property: Test\n");
         sb.append("Color:    Blue\n");
         sb.append("Cost:     $400\n");
-        sb.append("Rent:     $800\n");
+        sb.append("Rent:     $100\n");
         sb.append("Not owned");
 
         Assert.assertEquals(sb.toString(), propertySpace.getDescription());
@@ -109,7 +110,7 @@ public class PropertySpaceTest {
         sb.append("Property: Test\n");
         sb.append("Color:    Blue\n");
         sb.append("Cost:     $400\n");
-        sb.append("Rent:     $800\n");
+        sb.append("Rent:     $100\n");
         sb.append("Owned by p1");
 
         Assert.assertEquals(sb.toString(), propertySpace.getDescription());

@@ -1,5 +1,6 @@
 package main;
 
+import java.util.HashMap;
 import java.util.HashSet;
 
 /**
@@ -147,8 +148,13 @@ public class Board {
                 "Pacific Avenue", "North Carolina Avenue", "Pennsylvania Avenue",
                 "Park Place", "Boardwalk"
         };
+        HashMap<ColorGroup, RealEstateGroup> groups = new HashMap<>();
+        for (ColorGroup c: ColorGroup.values()) {
+            groups.put(c, new RealEstateGroup(c));
+        }
         for (int i = 0; i < propertyIndices.length; i++) {
-            property = new RealEstate(propertyNames[i], propertyCosts[i], propertyColors[i]);
+            property = new RealEstate(propertyNames[i], propertyCosts[i],
+                    propertyColors[i], groups.get(propertyColors[i]));
             this.properties[i] = property;
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }
@@ -199,6 +205,12 @@ public class Board {
     public void handleBuyEvent(BuyEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleBuy(e);
+        }
+    }
+
+    public void handleBuyHouseEvent(BuyHouseEvent e) {
+        for (MonopolyView view: gameViews) {
+            view.handleBuyHouse(e);
         }
     }
 }

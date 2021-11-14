@@ -47,6 +47,17 @@ public class Player {
     }
 
     /**
+     * Buys a house on the given RealEstate, subtracting the cost from the player's money.
+     * Assumes that this is a valid operation: that is, the player owns the property and can afford the house.
+     * @param realEstate the RealEstate to build a house on
+     */
+    public void buyHouse(RealEstate realEstate) {
+        this.loseMoney(realEstate.getHouseCost());
+        realEstate.addHouse();
+        board.handleBuyHouseEvent(new BuyHouseEvent(this, realEstate));
+    }
+
+    /**
      * Pays the rent of the property to the player the owns it, if this player lacks the money to do so it gives
      * the other player the rest of their money. In both cases a rent event is created and handled by board.
      * @param property the property that determines the rent and owner

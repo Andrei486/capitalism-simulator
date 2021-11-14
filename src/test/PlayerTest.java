@@ -16,6 +16,8 @@ public class PlayerTest {
     public Player p2;
     public Property property1;
     public Property property2;
+    public RealEstate realEstate1;
+    public RealEstate realEstate2;
     public Board board;
 
     /**
@@ -28,8 +30,12 @@ public class PlayerTest {
         //create test objects
         p1 = new Player("P1", board); //p1 will own properties
         p2 = new Player("P2", board); //p2 will never own properties
-        property1 = new RealEstate("Property 1", 300, ColorGroup.BLUE);
-        property2 = new RealEstate("Property 2", 1000, ColorGroup.BROWN);
+        property1 = new RealEstate("Property 1", 300,
+                ColorGroup.BLUE, new RealEstateGroup(ColorGroup.BLUE));
+        property2 = new RealEstate("Property 2", 1000,
+                ColorGroup.BROWN, new RealEstateGroup(ColorGroup.BROWN));
+        realEstate1 = (RealEstate) property1;
+        realEstate2 = (RealEstate) property2;
     }
 
     /**
@@ -43,6 +49,17 @@ public class PlayerTest {
         Assert.assertEquals(previousMoney - 300, p1.getMoney());
         Assert.assertEquals(property1.getOwner(), p1);
         //event send is not tested here
+    }
+
+    /**
+     * Tests that model information is updated when a player buys a house.
+     */
+    @Test
+    public void buyHouse() {
+        int previousMoney = p1.getMoney();
+        p1.buyHouse(realEstate1);
+        Assert.assertEquals(1, realEstate1.getHouses());
+        Assert.assertEquals(previousMoney - realEstate1.getHouseCost(), p1.getMoney());
     }
 
     /**
@@ -60,6 +77,7 @@ public class PlayerTest {
         Assert.assertEquals(initialMoney1 + property1.getRent(), p1.getMoney());
         Assert.assertEquals(initialMoney2 - property1.getRent(), p2.getMoney());
 
+        p2.loseMoney(p2.getMoney() - 1); //leave P2 with 1$
         p1.buy(property2);
         initialMoney1 = p1.getMoney();
         initialMoney2 = p2.getMoney();

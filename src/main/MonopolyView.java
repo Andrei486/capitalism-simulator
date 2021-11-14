@@ -9,4 +9,5 @@ public interface MonopolyView {
     void handleBuy(BuyEvent e);
     void handlePayRent(RentEvent e);
     void handleBankruptcy(BankruptcyEvent e);
+    void handleBuyHouse(BuyHouseEvent e);
 }
