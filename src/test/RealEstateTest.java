@@ -105,6 +105,9 @@ public class RealEstateTest {
         property.addHouse();
         Assert.assertFalse(property.canAddHouse()); //can't add more houses yet, need to balance houses
         Assert.assertTrue(property2.canAddHouse()); //can add house
+        p.loseMoney(p.getMoney() - 1);
+        Assert.assertFalse(property.canAddHouse()); //can't afford
+        Assert.assertFalse(property2.canAddHouse()); //can't afford
     }
 
     /**

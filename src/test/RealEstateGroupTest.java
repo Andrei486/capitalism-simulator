@@ -66,5 +66,8 @@ public class RealEstateGroupTest {
         property.addHouse();
         Assert.assertFalse(group.canAddHouse(property)); //can't add more houses yet, need to balance houses
         Assert.assertTrue(group.canAddHouse(property2)); //can add house
+        p.loseMoney(p.getMoney() - 1);
+        Assert.assertFalse(group.canAddHouse(property)); //can't afford
+        Assert.assertFalse(group.canAddHouse(property2)); //can't afford
     }
 }
