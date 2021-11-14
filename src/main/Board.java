@@ -148,7 +148,7 @@ public class Board {
                 "Park Place", "Boardwalk"
         };
         for (int i = 0; i < propertyIndices.length; i++) {
-            property = new Property(propertyNames[i], propertyCosts[i], propertyColors[i]);
+            property = new RealEstate(propertyNames[i], propertyCosts[i], propertyColors[i]);
             this.properties[i] = property;
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }

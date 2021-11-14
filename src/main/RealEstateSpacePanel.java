@@ -9,15 +9,15 @@ import java.awt.event.ActionListener;
  * Class for displaying a property space on the GUI.
  * @author Waleed Majbour
  */
-public class PropertySpacePanel extends SpacePanel{
+public class RealEstateSpacePanel extends SpacePanel{
     private JButton infoButton;
 
 
     /**
      * Constructs a panel for a given property.
-     * @param property the property to make a GUI panel for
+     * @param realEstate the property to make a GUI panel for
      */
-    public PropertySpacePanel(Property property) {
+    public RealEstateSpacePanel(RealEstate realEstate) {
 
         super();
 
@@ -26,10 +26,10 @@ public class PropertySpacePanel extends SpacePanel{
         topPanel.setLayout(new BorderLayout());
         topPanel.add(infoButton, BorderLayout.EAST);
 
-        bottomLabel.setText(String.format("%s", property.getName()));
+        bottomLabel.setText(String.format("%s", realEstate.getName()));
 
         Color c;
-        ColorGroup cg = property.getColorGroup();
+        ColorGroup cg = realEstate.getColorGroup();
 
         if(cg == ColorGroup.BROWN){
             c = new Color(139,69,19);
@@ -60,7 +60,7 @@ public class PropertySpacePanel extends SpacePanel{
         infoButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, property.toString());
+                JOptionPane.showMessageDialog(null, realEstate.toString());
             }
         });
     }

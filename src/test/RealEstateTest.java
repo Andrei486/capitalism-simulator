@@ -7,21 +7,21 @@ import main.*;
 import static org.junit.Assert.*;
 
 /**
- * Test class for testing all methods in the Property class
+ * Test class for testing all methods in the RealEstate class
  * @author Mohammad Alkhaledi 101162465
  */
-public class PropertyTest {
-    Property property;
+public class RealEstateTest {
+    RealEstate property;
 
     /**
-     * initializes a Property for testing purposes
+     * initializes a RealEstate for testing purposes
      */
     @Before
     public void setUp(){
-        property = new Property("house",100, ColorGroup.GREEN);
+        property = new RealEstate("house",100, ColorGroup.GREEN);
     }
     /**
-     * tests constructor of property
+     * Tests constructor of RealEstate
      */
     @Test
     public void testConstructor() {

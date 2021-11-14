@@ -28,8 +28,8 @@ public class PlayerTest {
         //create test objects
         p1 = new Player("P1", board); //p1 will own properties
         p2 = new Player("P2", board); //p2 will never own properties
-        property1 = new Property("roperty 1", 300, ColorGroup.BLUE);
-        property2 = new Property("roperty 2", 1000, ColorGroup.BROWN);
+        property1 = new RealEstate("Property 1", 300, ColorGroup.BLUE);
+        property2 = new RealEstate("Property 2", 1000, ColorGroup.BROWN);
     }
 
     /**

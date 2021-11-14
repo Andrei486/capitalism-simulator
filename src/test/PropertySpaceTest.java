@@ -17,12 +17,12 @@ public class PropertySpaceTest {
     private Player p1;
 
     /**
-     * Initiates the Property that the PropertySpace needs to be able to initiate,
+     * Initiates the RealEstate that the PropertySpace needs to be able to initiate,
      * then initiates PropertySpace.
      */
     @Before
     public void setup() {
-        property = new Property("Test", 400, ColorGroup.BLUE);
+        property = new RealEstate("Test", 400, ColorGroup.BLUE);
         propertySpace = new PropertySpace(property);
         board = new Board(4);
         p1 = new Player("p1", board);
