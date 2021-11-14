@@ -24,15 +24,16 @@ public class JailSpace extends Space{
      * If player is passing by:
      * do nothing
      * @param p the Player currently on this space
+     * TO DO Needs to throw JailEvent
      */
     @Override
     public void onEndTurn(Player p) {
         if(p.getJailTimer() > 0){
             p.setJailTimer(p.getJailTimer()-1);
-        }
-        else{
-            p.loseMoney(50);
 
+            if(p.getJailTimer() == 0){
+                p.loseMoney(50);
+            }
         }
     }
 

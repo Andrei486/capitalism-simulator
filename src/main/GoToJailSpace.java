@@ -21,6 +21,7 @@ public class GoToJailSpace extends Space{
     /**
      * Sends the player to jail.
      * @param p the Player landing on this space
+     * TO DO Needs to throw JailEvent
      */
     @Override
     public void onEndTurn(Player p) {
