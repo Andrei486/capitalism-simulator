@@ -37,6 +37,9 @@ public class BoardTest {
         Assert.assertEquals(22, newGame.getProperties().length);
         Assert.assertEquals(3, newGame.getPlayers().length);
         Assert.assertEquals(1500, newGame.getCurrentPlayer().getMoney());
+        RealEstate realEstate = (RealEstate) (newGame.getProperties()[0]);
+        Assert.assertEquals(18, realEstate.getHouseCost());
+        Assert.assertEquals(0, realEstate.getHouses());
     }
 
     /**
@@ -123,6 +126,7 @@ public class BoardTest {
     @org.junit.Test
     public void advanceTurn() {
         newGame = new Board(2);
+        newGame.getDiceRoller().forceRoll(1,2);
         newGame.advanceTurn();
         Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
 

@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
         PlayerTest.class,
         PropertySpaceTest.class,
         RealEstateTest.class,
+        RealEstateGroupTest.class,
         TurnOrderTest.class
 })
 public class AllTests {
