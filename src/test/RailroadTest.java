@@ -97,7 +97,7 @@ public class RailroadTest {
      * Tests the rent value given by getRent() is unaffected by the ownership of none Railroads
      */
     @Test
-    public void testGetRentOtherOtherPropertyOwned() {
+    public void testGetRentOtherPropertyOwned() {
         Player player = new Player("Bill", new Board(3));
         player.gainMoney(1000);
         player.buy(railroad);

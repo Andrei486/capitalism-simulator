@@ -5,7 +5,7 @@ package main;
  * @author Sebastian Lionais 101157892
  */
 public class Railroad extends Property{
-private static final int RAILROAD_COST = 200;
+    private static final int RAILROAD_COST = 200;
 
     /**
      * Creates a new property with a given cost and color.
