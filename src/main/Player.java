@@ -10,6 +10,8 @@ public class Player {
 
     private String name;
     private int money;
+    private int jailTimer;
+    private int lastSpacesMoved;
     private HashSet<Property> properties;
     private int position;
     private boolean isBankrupt;
@@ -31,6 +33,8 @@ public class Player {
         this.isBankrupt = false;
         this.properties = new HashSet<>();
         this.playerNumber = nextPlayerNumber;
+        this.jailTimer = 0;
+        this.lastSpacesMoved = 0;
         nextPlayerNumber++;
     }
 
@@ -126,7 +130,9 @@ public class Player {
      * @param position an integer that represents the position of the player
      */
     public void setPosition(int position) {
+        int oldPosition = this.position;
         this.position = position;
+        board.handleMovePlayer(new MovePlayerEvent(board,this,oldPosition));
     }
 
     /**
@@ -150,4 +156,34 @@ public class Player {
     public boolean getIsBankrupt() {
         return this.isBankrupt;
     }
+
+    /**
+     * @return returns turns left in prison
+     */
+    public int getJailTimer() {
+        return jailTimer;
+    }
+
+    /**
+     * @param jailTimer number of turns to be spent in jail
+     */
+    public void setJailTimer(int jailTimer) {
+        this.jailTimer = jailTimer;
+    }
+
+    /**
+     * @return last spaces moved
+     */
+    public int getLastSpacesMoved() {
+        return lastSpacesMoved;
+    }
+
+    /**
+     * @param lastSpacesMoved last spaces moved
+     */
+    public void setLastSpacesMoved(int lastSpacesMoved) {
+        this.lastSpacesMoved = lastSpacesMoved;
+    }
+
+
 }

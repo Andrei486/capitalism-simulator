@@ -83,14 +83,23 @@ public class Board {
      */
     public void movePlayer(Player player) {
         diceRoller.roll();
-        int oldPosition = player.getPosition();
-        int newPosition = diceRoller.getTotal() + player.getPosition();
-        newPosition = newPosition % BOARD_SIZE;
-        player.setPosition(newPosition);
-        this.getSpace(newPosition).onEndTurn(player);
-        for (MonopolyView view: gameViews) {
-            view.handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
+        if(player.getJailTimer() > 0){
+            if (diceRoller.isDouble()){
+                player.setJailTimer(0);
+            }
+            else{
+                this.getSpace(player.getPosition()).onEndTurn(player);
+            }
         }
+        else{
+            int oldPosition = player.getPosition();
+            int newPosition = diceRoller.getTotal() + player.getPosition();
+            newPosition = newPosition % BOARD_SIZE;
+            player.setPosition(newPosition);
+            this.getSpace(newPosition).onEndTurn(player);
+            handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
+        }
+
     }
 
     /**
@@ -117,7 +126,7 @@ public class Board {
         Property property;
         this.spaces = new Space[40];
         this.properties = new Property[22];
-        int[] emptyIndices = {0, 2, 4, 5, 7, 10, 12, 15, 17, 20, 22, 25, 28, 30, 33, 35, 36, 38};
+        int[] emptyIndices = {0, 2, 4, 5, 7, 12, 15, 17, 20, 22, 25, 28, 33, 35, 36, 38};
         for (int i : emptyIndices) {
             this.spaces[i] = new EmptySpace();
         }
@@ -127,6 +136,10 @@ public class Board {
         int[] propertyCosts = {60, 60, 100, 100, 120, 140, 140, 160, 180, 180, 200,
                 220, 220, 240, 260, 260, 280, 300, 300, 320, 350, 400
         };
+        int[] jailIndices = {10, 30};
+        this.spaces[jailIndices[0]] = new JailSpace("Jail", jailIndices[0]);
+        this.spaces[jailIndices[1]] = new GoToJailSpace("Go to Jail", (JailSpace) this.spaces[jailIndices[0]]);
+
         ColorGroup[] propertyColors = {
                 ColorGroup.BROWN, ColorGroup.BROWN,
                 ColorGroup.LIGHT_BLUE, ColorGroup.LIGHT_BLUE, ColorGroup.LIGHT_BLUE,
@@ -170,6 +183,14 @@ public class Board {
         gameViews.remove(view);
     }
 
+    /**Sends the MovePlayerEvent to current listeners
+     * @param e the event to be sent out
+     */
+    public void handleMovePlayer(MovePlayerEvent e){
+        for (MonopolyView view: gameViews) {
+            view.handleMovePlayer(e);
+        }
+    }
     /**
      * Sends the RentEvent to all registered views.
      * @param e the event to be sent out
