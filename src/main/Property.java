@@ -12,6 +12,7 @@ public abstract class Property {
 
     /**
      * Creates a new property with a given cost and color.
+     * @param name the name of the property
      * @param cost the cost to buy the new property
      */
     public Property(String name, int cost) {
