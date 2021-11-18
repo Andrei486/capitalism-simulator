@@ -2,6 +2,8 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Mohammad ALkhaledi 101162465
@@ -16,7 +18,7 @@ public abstract class SpacePanel extends JPanel {
     /**
      * Default constructor for SpacePanel
      */
-    public SpacePanel(){
+    public SpacePanel(Space space){
         super(new BorderLayout());
         JPanel centerPanel = new JPanel(new GridLayout(2,4));
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -24,7 +26,8 @@ public abstract class SpacePanel extends JPanel {
         topPanel = new JPanel();
         topLabel = new JLabel(" ");
         topLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
-        topPanel.add(topLabel);
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(topLabel, BorderLayout.CENTER);
 
         bottomPanel = new JPanel();
         bottomLabel = new JLabel(" ");
@@ -34,6 +37,17 @@ public abstract class SpacePanel extends JPanel {
         add(topPanel, BorderLayout.NORTH);
         add(centerPanel,BorderLayout.CENTER);
         add(bottomPanel,BorderLayout.SOUTH);
+
+        JButton infoButton = new JButton("i");
+        infoButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
+        topPanel.add(infoButton, BorderLayout.EAST);
+
+        infoButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, space.getDescription());
+            }
+        });
 
         playerLabels = new JLabel[8];
 
@@ -68,5 +82,12 @@ public abstract class SpacePanel extends JPanel {
         int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(" ");
         playerLabels[playerNumber].setOpaque(false);
+    }
+
+    /**
+     * Update this space panel.
+     */
+    public void update() {
+
     }
 }

@@ -69,5 +69,14 @@ public class RealEstateGroupTest {
         p.loseMoney(p.getMoney() - 1);
         Assert.assertFalse(group.canAddHouse(property)); //can't afford
         Assert.assertFalse(group.canAddHouse(property2)); //can't afford
+        p.gainMoney(1500);
+        for (int i = 0; i < 4; i++) {
+            property.addHouse();
+        }
+        for (int i = 0; i < 4; i++) {
+            property2.addHouse();
+        }
+        Assert.assertFalse(group.canAddHouse(property)); //max houses already
+        Assert.assertTrue(group.canAddHouse(property2)); //one more house left
     }
 }

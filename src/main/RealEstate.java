@@ -23,6 +23,7 @@ public class RealEstate extends Property{
         super(name, cost);
         this.colorGroup = colorGroup;
         this.group = group;
+        this.houses = 0;
         this.group.addRealEstate(this);
     }
 
@@ -90,9 +91,15 @@ public class RealEstate extends Property{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Property: " + this.name + "\n");
-        sb.append("Color:    " + this.getColorGroup() + "\n");
-        sb.append("Cost:     $" + this.getCost() + "\n");
-        sb.append("Rent:     $" + this.getRent() + "\n");
+        sb.append("Color: " + this.getColorGroup() + "\n");
+        sb.append("Cost: $" + this.getCost() + "\n");
+        sb.append("House cost: $" + this.getHouseCost() + "\n");
+        sb.append("Rent: $" + this.getRent() + "\n");
+        if (this.getHouses() == 5) {
+            sb.append("Hotel built\n");
+        } else {
+            sb.append(this.getHouses() + " houses built\n");
+        }
         if (this.getOwner() == null) {
             sb.append("Not owned");
         } else {

@@ -11,8 +11,8 @@ public class BuyController implements ActionListener {
     private Board board;
 
     /**
-     * Constructs EndTurnController object.
-     * @param board the board the EndTurnController is connecting to
+     * Constructs BuyController object.
+     * @param board the board the BuyController is connecting to
      */
     public BuyController(Board board) {
         this.board = board;

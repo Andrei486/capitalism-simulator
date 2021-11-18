@@ -9,8 +9,8 @@ public class JailSpacePanel extends SpacePanel{
     /**
      * Adds text to panel to indicate it's jail
      */
-    public JailSpacePanel(){
-        super();
+    public JailSpacePanel(JailSpace space){
+        super(space);
         topLabel.setText("JAIL");
     }
 }
