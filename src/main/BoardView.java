@@ -200,7 +200,7 @@ public class BoardView extends JFrame implements MonopolyView {
 
         //enable/disable the buy house button
         Player currentPlayer = board.getCurrentPlayer();
-        buyHouseButton.setEnabled(!currentPlayer.getHouseBuyProperties().isEmpty());
+        buyHouseButton.setEnabled(!currentPlayer.getBuildableProperties().isEmpty());
 
         //enable/disable the buy property button
         buyButton.setEnabled(true);
@@ -254,22 +254,14 @@ public class BoardView extends JFrame implements MonopolyView {
     }
 
     /**
-     * Updates the board display in response to a player buying a property.
-     * @param e BuyEvent representing the transaction
+     * Updates the board display in response to a player's money changing.
+     * @param e The UpdateMoneyEvent representing the transaction
      */
     @Override
-    public void handleBuy(BuyEvent e) {
+    public void handleUpdateMoney(UpdateMoneyEvent e) {
         updatePlayerLabels();
         updateBuyButtons();
-    }
-
-    /**
-     * Updates the board display in response to a player paying rent on a property.
-     * @param e RentEvent representing the transaction
-     */
-    @Override
-    public void handlePayRent(RentEvent e) {
-        updatePlayerLabels();
+        updateJailButton();
     }
 
     /**

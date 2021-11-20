@@ -6,8 +6,7 @@ package main;
  */
 public interface MonopolyView {
     void handleMovePlayer(MovePlayerEvent e);
-    void handleBuy(BuyEvent e);
-    void handlePayRent(RentEvent e);
+    void handleUpdateMoney(UpdateMoneyEvent e);
     void handleBankruptcy(BankruptcyEvent e);
     void handleBuyHouse(BuyHouseEvent e);
 }

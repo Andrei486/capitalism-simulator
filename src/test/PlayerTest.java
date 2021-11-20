@@ -180,7 +180,6 @@ public class PlayerTest {
         p1.bankrupt();
         Assert.assertEquals(0, p1.getProperties().size());
         Assert.assertEquals(null, property1.getOwner());
-        Assert.assertEquals(0, p1.getMoney());
         Assert.assertTrue(p1.getIsBankrupt());
     }
 }
