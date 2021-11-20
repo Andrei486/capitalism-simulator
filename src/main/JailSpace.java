@@ -32,7 +32,7 @@ public class JailSpace extends Space{
             p.setJailTimer(p.getJailTimer()-1);
 
             if(p.getJailTimer() == 0){
-                p.loseMoney(50);
+                p.loseMoney(Board.EXIT_JAIL_COST);
             }
         }
     }

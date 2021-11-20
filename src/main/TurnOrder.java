@@ -33,18 +33,27 @@ public class TurnOrder {
      * act again instead.
      * In either case, any bankrupt players are automatically skipped.
      * @param isDouble true if the current player rolled doubles, false otherwise
+     * @return true if the same player is moving again, false otherwise
      */
-    public void advanceTurnOrder(boolean isDouble) {
+    public boolean advanceTurnOrder(boolean isDouble) {
+        boolean samePlayer = true;
         if (currentPlayer.getIsBankrupt()) {
             currentPlayer = nextTurns.remove();
+            samePlayer = false;
         }
-        if (!isDouble) {
+
+        if (!isDouble || currentPlayer.getJailTimer() > 0) {
             nextTurns.add(currentPlayer);
             currentPlayer = nextTurns.remove();
+            samePlayer = false;
         }
+
         //remove any bankrupt players from the turn order without giving them a turn
         while (currentPlayer.getIsBankrupt()) {
             currentPlayer = nextTurns.remove();
+            samePlayer = false;
         }
+
+        return samePlayer;
     }
 }

@@ -13,6 +13,6 @@ public class GoToJailSpacePanel extends SpacePanel{
      */
     public GoToJailSpacePanel(GoToJailSpace space){
         super(space);
-        topLabel.setText("GO TO JAIL");
+        bottomLabel.setText("GO TO JAIL");
     }
 }

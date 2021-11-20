@@ -7,7 +7,6 @@ package main;
  */
 public class GoToJailSpace extends Space{
     private JailSpace jail;
-    private static final int TURNS_IN_JAIL = 3;
     /**
      * Constructor for an abstract Space with only a name.
      *
@@ -25,7 +24,7 @@ public class GoToJailSpace extends Space{
      */
     @Override
     public void onEndTurn(Player p) {
-        p.setJailTimer(TURNS_IN_JAIL);
+        p.setJailTimer(Board.TURNS_IN_JAIL);
         p.setPosition(jail.getPosition());
     }
 

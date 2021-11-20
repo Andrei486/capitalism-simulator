@@ -2,6 +2,8 @@ package main;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -13,9 +15,13 @@ public class Board {
     private Property[] properties;
     private TurnOrder turnOrder;
     private DiceRoller diceRoller;
+    private int jailPosition;
     public static final int BOARD_SIZE = 40;
     private int bankruptPlayers;
+    private int consecutiveDoubles;
     private HashSet<MonopolyView> gameViews;
+    public static final int TURNS_IN_JAIL = 3;
+    public static final int EXIT_JAIL_COST = 50;
 
     /**
      * Constructs a board with the specified number of players.
@@ -33,6 +39,7 @@ public class Board {
         this.turnOrder = new TurnOrder(players);
         this.gameViews = new HashSet<>();
         this.movePlayer(this.turnOrder.getCurrentPlayer());
+        this.consecutiveDoubles = 0;
     }
 
     /**
@@ -84,26 +91,34 @@ public class Board {
      */
     public void movePlayer(Player player) {
         diceRoller.roll();
-        if(player.getJailTimer() > 0){
-            if (diceRoller.isDouble()){
-                player.setJailTimer(0);
+        consecutiveDoubles = (diceRoller.isDouble()) ? consecutiveDoubles + 1 : 0;
+
+        int oldPosition = player.getPosition();
+
+        if (consecutiveDoubles == 3) {
+            player.setJailTimer(Board.TURNS_IN_JAIL);
+            player.setPosition(jailPosition);
+            consecutiveDoubles = 0;
+        } else {
+            if(player.getJailTimer() > 0){
+                if (diceRoller.isDouble()){
+                    player.setJailTimer(0);
+                }
+                else {
+                    this.getSpace(oldPosition).onEndTurn(player);
+                }
             }
             else{
-                this.getSpace(player.getPosition()).onEndTurn(player);
+                int newPosition = diceRoller.getTotal() + player.getPosition();
+                newPosition = newPosition % BOARD_SIZE;
+                for (int i = 0; i < getDiceRoller().getTotal(); i++) {
+                    this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(getCurrentPlayer());
+                }
+                player.setPosition(newPosition);
+                this.getSpace(newPosition).onEndTurn(player);
             }
         }
-        else{
-            int oldPosition = player.getPosition();
-            int newPosition = diceRoller.getTotal() + player.getPosition();
-            newPosition = newPosition % BOARD_SIZE;
-            for (int i = 0; i < getDiceRoller().getTotal(); i++) {
-                this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(getCurrentPlayer());
-            }
-            player.setPosition(newPosition);
-            this.getSpace(newPosition).onEndTurn(player);
-            handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
-        }
-
+        handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
     }
 
     /**
@@ -111,7 +126,10 @@ public class Board {
      * If player rolls a double, player gets another turn.
      */
     public void advanceTurn() {
-        turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
+        boolean samePlayer = turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
+        if (!samePlayer) {
+            consecutiveDoubles = 0;
+        }
         movePlayer(turnOrder.getCurrentPlayer());
     }
 
@@ -129,8 +147,7 @@ public class Board {
     private void initializeBoard() {
         Property property;
         this.spaces = new Space[40];
-        this.properties = new Property[22];
-        int[] emptyIndices = {2, 4, 5, 7, 12, 15, 17, 20, 22, 25, 28, 33, 35, 36, 38};
+        int[] emptyIndices = {2, 4, 7, 12, 17, 20, 22, 28, 33, 36, 38};
         for (int i : emptyIndices) {
             this.spaces[i] = new EmptySpace();
         }
@@ -140,8 +157,11 @@ public class Board {
         int[] propertyCosts = {60, 60, 100, 100, 120, 140, 140, 160, 180, 180, 200,
                 220, 220, 240, 260, 260, 280, 300, 300, 320, 350, 400
         };
+        int[] railroadIndices = {5, 15, 25, 35};
         int[] jailIndices = {10, 30};
+        jailPosition = 10;
         int[] goIndices = {0};
+        this.properties = new Property[propertyIndices.length + railroadIndices.length];
         this.spaces[jailIndices[0]] = new JailSpace("Jail", jailIndices[0]);
         this.spaces[jailIndices[1]] = new GoToJailSpace("Go to Jail", (JailSpace) this.spaces[jailIndices[0]]);
         this.spaces[goIndices[0]] = new GoSpace("Go");
@@ -166,6 +186,7 @@ public class Board {
                 "Pacific Avenue", "North Carolina Avenue", "Pennsylvania Avenue",
                 "Park Place", "Boardwalk"
         };
+        String[] railroadNames = {"Reading Railroad", "Pennsylvania Railroad", "B.&O. Railroad", "Short Line"};
         HashMap<ColorGroup, RealEstateGroup> groups = new HashMap<>();
         for (ColorGroup c: ColorGroup.values()) {
             groups.put(c, new RealEstateGroup(c));
@@ -175,6 +196,12 @@ public class Board {
                     propertyColors[i], groups.get(propertyColors[i]));
             this.properties[i] = property;
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
+        }
+
+        for (int i = 0; i < railroadIndices.length; i++) {
+            property = new Railroad(railroadNames[i]);
+            this.properties[i + propertyIndices.length] = property;
+            this.spaces[railroadIndices[i]] = new PropertySpace(property);
         }
     }
 
