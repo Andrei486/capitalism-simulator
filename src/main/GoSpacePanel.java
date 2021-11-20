@@ -1,5 +1,8 @@
 package main;
 
 public class GoSpacePanel extends SpacePanel{
-    public GoSpacePanel() {super();}
+    public GoSpacePanel() {
+        super();
+        bottomLabel.setText("GO");
+    }
 }

@@ -96,12 +96,12 @@ public class Board {
             int oldPosition = player.getPosition();
             int newPosition = diceRoller.getTotal() + player.getPosition();
             newPosition = newPosition % BOARD_SIZE;
-            player.setPosition(newPosition);
-            this.getSpace(newPosition).onEndTurn(player);
-            handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
             for (int i = 0; i < getDiceRoller().getTotal(); i++) {
                 this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(getCurrentPlayer());
             }
+            player.setPosition(newPosition);
+            this.getSpace(newPosition).onEndTurn(player);
+            handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
         }
 
     }
