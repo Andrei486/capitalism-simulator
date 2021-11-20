@@ -91,9 +91,11 @@ public class PropertySpaceTest {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Property: Test\n");
-        sb.append("Color:    Blue\n");
-        sb.append("Cost:     $400\n");
-        sb.append("Rent:     $100\n");
+        sb.append("Color: Blue\n");
+        sb.append("Cost: $400\n");
+        sb.append("House cost: $120\n");
+        sb.append("Rent: $100\n");
+        sb.append("0 houses built\n");
         sb.append("Not owned");
 
         Assert.assertEquals(sb.toString(), propertySpace.getDescription());
@@ -108,9 +110,11 @@ public class PropertySpaceTest {
         StringBuilder sb = new StringBuilder();
 
         sb.append("Property: Test\n");
-        sb.append("Color:    Blue\n");
-        sb.append("Cost:     $400\n");
-        sb.append("Rent:     $100\n");
+        sb.append("Color: Blue\n");
+        sb.append("Cost: $400\n");
+        sb.append("House cost: $120\n");
+        sb.append("Rent: $100\n");
+        sb.append("0 houses built\n");
         sb.append("Owned by p1");
 
         Assert.assertEquals(sb.toString(), propertySpace.getDescription());

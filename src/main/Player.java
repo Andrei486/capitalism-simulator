@@ -182,5 +182,20 @@ public class Player {
         this.jailTimer = jailTimer;
     }
 
-
+    /**
+     * Gets all the player's real estate properties on which buying a house is currently allowed.
+     * @return HashSet of RealEstates on which a house can be bought.
+     */
+    public HashSet<RealEstate> getHouseBuyProperties() {
+        HashSet<RealEstate> houseBuyProperties = new HashSet<>();
+        for (Property property : this.properties) {
+            if (property instanceof RealEstate) {
+                RealEstate realEstate = (RealEstate) property;
+                if (realEstate.canAddHouse()) {
+                    houseBuyProperties.add(realEstate);
+                }
+            }
+        }
+        return houseBuyProperties;
+    }
 }

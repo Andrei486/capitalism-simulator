@@ -11,7 +11,7 @@ public class RealEstateGroup {
     private Set<RealEstate> realEstates;
     private ColorGroup color;
     private boolean ownedBySamePlayer; //true if all properties are owned by the same (non-null) player
-    private final static int MAX_HOUSES = 5; //max number of houses on any given property
+    public final static int MAX_HOUSES = 5; //max number of houses on any given property
 
     /**
      * Creates a RealEstateGroup for properties of a given color, to which properties can be added.
@@ -65,7 +65,10 @@ public class RealEstateGroup {
      * @return true if a house can be bought by the owner, false if there is no owner or a house cannot be bought
      */
     public boolean canAddHouse(RealEstate r) {
-        if (r.getOwner() == null || !ownedBySamePlayer || r.getOwner().getMoney() <= r.getHouseCost()) {
+        if (r.getOwner() == null
+                || !ownedBySamePlayer
+                || r.getOwner().getMoney() <= r.getHouseCost()
+                || r.getHouses() == MAX_HOUSES) {
             return false;
         }
         int maxHousesInGroup = 0;

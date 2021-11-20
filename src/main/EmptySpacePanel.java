@@ -1,7 +1,7 @@
 package main;
 
 public class EmptySpacePanel extends SpacePanel {
-    public EmptySpacePanel() {
-        super();
+    public EmptySpacePanel(EmptySpace space) {
+        super(space);
     }
 }
