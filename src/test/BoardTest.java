@@ -34,7 +34,7 @@ public class BoardTest {
     @org.junit.Test
     public void testBoard(){
         newGame = new Board(3);
-        Assert.assertEquals(22, newGame.getProperties().length);
+        Assert.assertEquals(26, newGame.getProperties().length);
         Assert.assertEquals(3, newGame.getPlayers().length);
         Assert.assertEquals(1500, newGame.getCurrentPlayer().getMoney());
         RealEstate realEstate = (RealEstate) (newGame.getProperties()[0]);
@@ -60,7 +60,7 @@ public class BoardTest {
     @org.junit.Test
     public void getProperties() {
         newGame = new Board(2);
-        Assert.assertEquals(22, newGame.getProperties().length);
+        Assert.assertEquals(26, newGame.getProperties().length);
     }
 
     /**
