@@ -2,8 +2,6 @@ package main;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -118,7 +116,7 @@ public class Board {
                 this.getSpace(newPosition).onEndTurn(player);
             }
         }
-        handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
+        handleMovePlayerEvent(new MovePlayerEvent(this, player, oldPosition));
     }
 
     /**
@@ -224,18 +222,9 @@ public class Board {
     /**Sends the MovePlayerEvent to current listeners
      * @param e the event to be sent out
      */
-    public void handleMovePlayer(MovePlayerEvent e){
+    public void handleMovePlayerEvent(MovePlayerEvent e){
         for (MonopolyView view: gameViews) {
             view.handleMovePlayer(e);
-        }
-    }
-    /**
-     * Sends the RentEvent to all registered views.
-     * @param e the event to be sent out
-     */
-    public void handlePayRent(RentEvent e) {
-        for (MonopolyView view: gameViews) {
-            view.handlePayRent(e);
         }
     }
 
@@ -243,7 +232,7 @@ public class Board {
      * Sends the BankruptcyEvent to all registered views.
      * @param e the event to be sent out
      */
-    public void handleBankruptcy(BankruptcyEvent e) {
+    public void handleBankruptcyEvent(BankruptcyEvent e) {
         bankruptPlayers++;
         for (MonopolyView view: gameViews) {
             view.handleBankruptcy(e);
@@ -251,13 +240,9 @@ public class Board {
         turnOrder.advanceTurnOrder(false);
     }
 
-    /**
-     * Sends the BuyEvent to all registered views.
-     * @param e the event to be sent out
-     */
-    public void handleBuyEvent(BuyEvent e) {
+    public void handleUpdateMoneyEvent(UpdateMoneyEvent e) {
         for (MonopolyView view: gameViews) {
-            view.handleBuy(e);
+            view.handleUpdateMoney(e);
         }
     }
 

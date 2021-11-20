@@ -30,8 +30,8 @@ public class BuyHouseController implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Player currentPlayer = board.getCurrentPlayer();
-        RealEstate[] buyHouseProperties = currentPlayer.getHouseBuyProperties()
-                .toArray(new RealEstate[currentPlayer.getHouseBuyProperties().size()]);
+        RealEstate[] buyHouseProperties = currentPlayer.getBuildableProperties()
+                .toArray(new RealEstate[currentPlayer.getBuildableProperties().size()]);
         if (buyHouseProperties.length == 0) { //should not be allowed to happen, but if it does, do nothing
             return;
         }

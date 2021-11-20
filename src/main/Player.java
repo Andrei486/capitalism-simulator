@@ -11,7 +11,6 @@ public class Player {
     private String name;
     private int money;
     private int jailTimer;
-    private int lastSpacesMoved;
     private HashSet<Property> properties;
     private int position;
     private boolean isBankrupt;
@@ -34,7 +33,6 @@ public class Player {
         this.properties = new HashSet<>();
         this.playerNumber = nextPlayerNumber;
         this.jailTimer = 0;
-        this.lastSpacesMoved = 0;
         nextPlayerNumber++;
     }
 
@@ -44,10 +42,10 @@ public class Player {
      * @param property the property that is being bought
      */
     public void buy (Property property) {
-        this.loseMoney(property.getCost());
         property.setOwner(this);
         this.properties.add(property);
-        board.handleBuyEvent(new BuyEvent(this));
+        this.loseMoney(property.getCost());
+
     }
 
     /**
@@ -69,7 +67,6 @@ public class Player {
     public void payRent(Property property) {
         int amountPaid = this.loseMoney(property.getRent());
         property.getOwner().gainMoney(amountPaid);
-        this.board.handlePayRent(new RentEvent(this, amountPaid, property));
     }
 
     /**
@@ -111,10 +108,13 @@ public class Player {
     public int loseMoney(int money) {
         if (money < this.money) {
             this.money -= money;
+            board.handleUpdateMoneyEvent(new UpdateMoneyEvent(this));
             return money; //the full amount was paid
         }
         else{
             int amountPaid = this.money;
+            this.money = 0;
+            board.handleUpdateMoneyEvent(new UpdateMoneyEvent(this));
             this.bankrupt();
             return amountPaid; //all the player's remaining money was paid
         }
@@ -126,6 +126,7 @@ public class Player {
      */
     public void gainMoney(int money) {
         this.money += money;
+        board.handleUpdateMoneyEvent(new UpdateMoneyEvent(this));
     }
 
     /**
@@ -143,7 +144,7 @@ public class Player {
     public void setPosition(int position) {
         int oldPosition = this.position;
         this.position = position;
-        board.handleMovePlayer(new MovePlayerEvent(board,this,oldPosition));
+        board.handleMovePlayerEvent(new MovePlayerEvent(board,this,oldPosition));
     }
 
     /**
@@ -156,8 +157,7 @@ public class Player {
         }
         this.properties.clear();
         this.isBankrupt = true;
-        this.money = 0;
-        board.handleBankruptcy(new BankruptcyEvent(this));
+        board.handleBankruptcyEvent(new BankruptcyEvent(this));
     }
 
     /**
@@ -186,7 +186,7 @@ public class Player {
      * Gets all the player's real estate properties on which buying a house is currently allowed.
      * @return HashSet of RealEstates on which a house can be bought.
      */
-    public HashSet<RealEstate> getHouseBuyProperties() {
+    public HashSet<RealEstate> getBuildableProperties() {
         HashSet<RealEstate> houseBuyProperties = new HashSet<>();
         for (Property property : this.properties) {
             if (property instanceof RealEstate) {
