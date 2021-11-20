@@ -182,19 +182,5 @@ public class Player {
         this.jailTimer = jailTimer;
     }
 
-    /**
-     * @return last spaces moved
-     */
-    public int getLastSpacesMoved() {
-        return lastSpacesMoved;
-    }
-
-    /**
-     * @param lastSpacesMoved last spaces moved
-     */
-    public void setLastSpacesMoved(int lastSpacesMoved) {
-        this.lastSpacesMoved = lastSpacesMoved;
-    }
-
 
 }

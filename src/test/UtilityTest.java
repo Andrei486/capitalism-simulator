@@ -44,7 +44,7 @@ public class UtilityTest {
         Player P2 = new Player("P2", board);
         utility.setOwner(P1);
         board.advanceTurn();
-        P2.setLastSpacesMoved(4);
+        dice.forceRoll(1,3);
         assertEquals(16, utility.getRent());
     }
 
@@ -56,7 +56,7 @@ public class UtilityTest {
         utility2 = new Utility("Electricity", 150);
         utility2.setOwner(P2);
         board.advanceTurn();
-        P2.setLastSpacesMoved(4);
+        dice.forceRoll(1,3);
         assertEquals(40, utility.getRent());
     }
 

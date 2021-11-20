@@ -6,7 +6,7 @@ import main.*;
  * @author  Waleed Majbour 101144882
  */
 public class Utility extends Property{
-    private static final int UTILITY_COST = 150;
+    private DiceRoller dice;
 
     /**
      * Creates a new property with a given cost and color.
@@ -15,7 +15,7 @@ public class Utility extends Property{
      * @param cost the cost to buy the new property
      */
     public Utility(String name, int cost) {
-        super(name, UTILITY_COST);
+        super(name, cost);
     }
 
     /**
@@ -30,10 +30,10 @@ public class Utility extends Property{
                utilitiesOwned++;
 
                if(utilitiesOwned == 1){
-                   return getOwner().getLastSpacesMoved() * 4;
+                   return dice.getTotal() * 4;
                }
                if(utilitiesOwned == 2){
-                   return getOwner().getLastSpacesMoved() * 10;
+                   return dice.getTotal() * 10;
                }
            }
        }
