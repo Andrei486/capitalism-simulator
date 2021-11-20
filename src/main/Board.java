@@ -96,6 +96,9 @@ public class Board {
             int oldPosition = player.getPosition();
             int newPosition = diceRoller.getTotal() + player.getPosition();
             newPosition = newPosition % BOARD_SIZE;
+            for (int i = 0; i < getDiceRoller().getTotal(); i++) {
+                this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(getCurrentPlayer());
+            }
             player.setPosition(newPosition);
             this.getSpace(newPosition).onEndTurn(player);
             handleMovePlayer(new MovePlayerEvent(this, player, oldPosition));
@@ -127,7 +130,7 @@ public class Board {
         Property property;
         this.spaces = new Space[40];
         this.properties = new Property[22];
-        int[] emptyIndices = {0, 2, 4, 5, 7, 12, 15, 17, 20, 22, 25, 28, 33, 35, 36, 38};
+        int[] emptyIndices = {2, 4, 5, 7, 12, 15, 17, 20, 22, 25, 28, 33, 35, 36, 38};
         for (int i : emptyIndices) {
             this.spaces[i] = new EmptySpace();
         }
@@ -138,8 +141,10 @@ public class Board {
                 220, 220, 240, 260, 260, 280, 300, 300, 320, 350, 400
         };
         int[] jailIndices = {10, 30};
+        int[] goIndices = {0};
         this.spaces[jailIndices[0]] = new JailSpace("Jail", jailIndices[0]);
         this.spaces[jailIndices[1]] = new GoToJailSpace("Go to Jail", (JailSpace) this.spaces[jailIndices[0]]);
+        this.spaces[goIndices[0]] = new GoSpace("Go");
 
         ColorGroup[] propertyColors = {
                 ColorGroup.BROWN, ColorGroup.BROWN,

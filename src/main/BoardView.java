@@ -54,6 +54,9 @@ public class BoardView extends JFrame implements MonopolyView {
             }  else if (space instanceof GoToJailSpace){
                 panel = new GoToJailSpacePanel((GoToJailSpace) space);
             }
+            else if(space instanceof GoSpace){
+                panel = new GoSpacePanel();
+            }
             else {
                 panel = new EmptySpacePanel((EmptySpace) space);
             }
