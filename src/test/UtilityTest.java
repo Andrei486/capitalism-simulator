@@ -14,13 +14,13 @@ import static org.junit.Assert.*;
 public class UtilityTest {
     private Utility utility, utility2;
     private DiceRoller dice;
-    Board board = new Board(2);
+    Board board;
 
     @Before
     public void setVars(){
-        utility = new Utility("Water Works", 150);
-        dice = new DiceRoller();
-
+        board = new Board(2);
+        utility = new Utility("Water Works", board.getDiceRoller());
+        dice = board.getDiceRoller();
     }
 
     @Test
@@ -42,9 +42,10 @@ public class UtilityTest {
     public void getRentOne() {
         Player P1 = new Player("P1", board);
         Player P2 = new Player("P2", board);
-        utility.setOwner(P1);
+        P1.gainMoney(400);
+        P1.buy(utility);
         board.advanceTurn();
-        dice.forceRoll(1,3);
+        board.getDiceRoller().forceRoll(1,3);
         assertEquals(16, utility.getRent());
     }
 
@@ -52,9 +53,10 @@ public class UtilityTest {
     public void getRentTwo() {
         Player P1 = new Player("P1", board);
         Player P2 = new Player("P2", board);
-        utility.setOwner(P1);
-        utility2 = new Utility("Electricity", 150);
-        utility2.setOwner(P2);
+        utility2 = new Utility("Electricity", board.getDiceRoller());
+        P1.gainMoney(5000);
+        P1.buy(utility);
+        P1.buy(utility2);
         board.advanceTurn();
         dice.forceRoll(1,3);
         assertEquals(40, utility.getRent());

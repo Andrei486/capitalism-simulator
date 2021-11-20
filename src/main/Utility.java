@@ -7,15 +7,16 @@ import main.*;
  */
 public class Utility extends Property{
     private DiceRoller dice;
+    private final static int UTILITY_COST = 150;
 
     /**
      * Creates a new property with a given cost and color.
      *
      * @param name the name of the property
-     * @param cost the cost to buy the new property
      */
-    public Utility(String name, int cost) {
-        super(name, cost);
+    public Utility(String name, DiceRoller dice) {
+        super(name, UTILITY_COST);
+        this.dice = dice;
     }
 
     /**
@@ -28,15 +29,14 @@ public class Utility extends Property{
        for(Property property: getOwner().getProperties()){
            if(property instanceof Utility){
                utilitiesOwned++;
-
-               if(utilitiesOwned == 1){
-                   return dice.getTotal() * 4;
-               }
-               if(utilitiesOwned == 2){
-                   return dice.getTotal() * 10;
-               }
            }
        }
+        if(utilitiesOwned == 1){
+            return dice.getTotal() * 4;
+        }
+        if(utilitiesOwned == 2){
+            return dice.getTotal() * 10;
+        }
         return 0;
 
     }
