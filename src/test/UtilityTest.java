@@ -83,3 +83,4 @@ public class UtilityTest {
         assertEquals(sb, utility.toString());
     }
 }
+
