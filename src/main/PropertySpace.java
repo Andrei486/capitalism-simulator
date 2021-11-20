@@ -29,7 +29,8 @@ public class PropertySpace extends Space {
      * @param p the Player landing on this space
      */
     public void onEndTurn(Player p){
-        // if player is not the owner of property and property has an owner
+        // if player is not the owner of property and property has an owner,
+        // then pay rent and end turn
         if(!(p.equals(property.getOwner())) && (property.getOwner() != null)) {
             p.payRent(property);
         }

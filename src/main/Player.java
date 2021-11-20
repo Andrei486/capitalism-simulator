@@ -25,7 +25,7 @@ public class Player {
      * @param name the name of the player
      * @param board the board the player is playing on
      */
-    public Player (String name, Board board) {
+    public Player(String name, Board board) {
         this.name = name;
         this.board = board;
         this.money = STARTING_MONEY;
@@ -180,20 +180,6 @@ public class Player {
      */
     public void setJailTimer(int jailTimer) {
         this.jailTimer = jailTimer;
-    }
-
-    /**
-     * @return last spaces moved
-     */
-    public int getLastSpacesMoved() {
-        return lastSpacesMoved;
-    }
-
-    /**
-     * @param lastSpacesMoved last spaces moved
-     */
-    public void setLastSpacesMoved(int lastSpacesMoved) {
-        this.lastSpacesMoved = lastSpacesMoved;
     }
 
     /**
