@@ -11,6 +11,6 @@ public class JailSpacePanel extends SpacePanel{
      */
     public JailSpacePanel(JailSpace space){
         super(space);
-        topLabel.setText("JAIL");
+        bottomLabel.setText("JAIL");
     }
 }

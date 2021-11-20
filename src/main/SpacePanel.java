@@ -72,6 +72,11 @@ public abstract class SpacePanel extends JPanel {
         int playerNumber = p.getPlayerNumber();
         playerLabels[playerNumber].setText(p.getName());
         playerLabels[playerNumber].setOpaque(true);
+        if (p.getJailTimer() == 0) {
+            playerLabels[playerNumber].setBackground(Color.BLACK);
+        } else {
+            playerLabels[playerNumber].setBackground(Color.RED);
+        }
     }
 
     /**

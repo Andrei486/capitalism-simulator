@@ -18,6 +18,7 @@ public class BoardView extends JFrame implements MonopolyView {
     private JLabel totalRollLabel;
     private JButton buyButton;
     private JButton buyHouseButton;
+    private JButton jailButton;
 
     /**
      * Construct a BoardView to represent a Board, initializing all UI elements.
@@ -47,7 +48,7 @@ public class BoardView extends JFrame implements MonopolyView {
                 if (property instanceof RealEstate) {
                     panel = new RealEstateSpacePanel((PropertySpace) space);
                 } else {
-                    panel = null; //handle other types of properties here
+                    panel = new PropertySpacePanel((PropertySpace) space);
                 }
             } else if (space instanceof JailSpace){
                 panel = new JailSpacePanel((JailSpace) space);
@@ -55,7 +56,7 @@ public class BoardView extends JFrame implements MonopolyView {
                 panel = new GoToJailSpacePanel((GoToJailSpace) space);
             }
             else if(space instanceof GoSpace){
-                panel = new GoSpacePanel();
+                panel = new GoSpacePanel((GoSpace) space);
             }
             else {
                 panel = new EmptySpacePanel((EmptySpace) space);
@@ -106,6 +107,13 @@ public class BoardView extends JFrame implements MonopolyView {
         buyHouseButton.setMnemonic('H'); //button can also be pressed by Alt+H
         centerPanel.add(buyHouseButton);
         updateBuyButtons();
+
+        jailButton = new JButton();
+        jailButton.setText("Exit Jail");
+        jailButton.setMnemonic('J'); //button can also be pressed by Alt+J
+        jailButton.addActionListener(new ExitJailController(this.board));
+        centerPanel.add(jailButton);
+        updateJailButton();
 
         JButton endTurnButton = new JButton();
         endTurnButton.setText("End Turn");
@@ -216,6 +224,20 @@ public class BoardView extends JFrame implements MonopolyView {
     }
 
     /**
+     * Enables or disables the "Exit Jail" button. The button is disabled if the current player
+     * is not in jail or cannot afford to pay their way out.
+     */
+    public void updateJailButton() {
+        Player player = board.getCurrentPlayer();
+        jailButton.setEnabled(false);
+        if (player.getJailTimer() > 0
+                && player.getJailTimer() < Board.TURNS_IN_JAIL
+                && player.getMoney() > Board.EXIT_JAIL_COST) {
+            jailButton.setEnabled(true);
+        }
+    }
+
+    /**
      * Updates the board display in response to a player moving.
      * This includes moving the player along the board spaces and updating information.
      * @param e MovePlayerEvent representing the movement
@@ -228,6 +250,7 @@ public class BoardView extends JFrame implements MonopolyView {
         updatePlayerLabels();
         updateDiceLabels();
         updateBuyButtons();
+        updateJailButton();
     }
 
     /**
@@ -274,6 +297,7 @@ public class BoardView extends JFrame implements MonopolyView {
     public void handleBuyHouse(BuyHouseEvent e) {
         updatePlayerLabels();
         updateBuyButtons();
+        updateJailButton();
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }
