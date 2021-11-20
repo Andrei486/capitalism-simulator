@@ -134,17 +134,24 @@ public class RealEstateTest {
     @Test
     public void testToString() {
         String sb = "Property: property1\n" +
-                "Color:    Green\n" +
-                "Cost:     $100\n" +
-                "Rent:     $25\n" +
+                "Color: Green\n" +
+                "Cost: $100\n" +
+                "House cost: $30\n" +
+                "Rent: $25\n" +
+                "0 houses built\n" +
                 "Not owned";
 
         Assert.assertEquals(sb, property.toString());
         property.setOwner(p);
+        for (int i = 0; i < 5; i++) {
+            property.addHouse();
+        }
         String sb2 = "Property: property1\n" +
-                "Color:    Green\n" +
-                "Cost:     $100\n" +
-                "Rent:     $25\n" +
+                "Color: Green\n" +
+                "Cost: $100\n" +
+                "House cost: $30\n" +
+                "Rent: $150\n" +
+                "Hotel built\n" +
                 "Owned by P1";
         Assert.assertEquals(sb2, property.toString());
     }

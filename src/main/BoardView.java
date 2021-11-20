@@ -17,6 +17,7 @@ public class BoardView extends JFrame implements MonopolyView {
     private JLabel[] diceRollLabels;
     private JLabel totalRollLabel;
     private JButton buyButton;
+    private JButton buyHouseButton;
 
     /**
      * Construct a BoardView to represent a Board, initializing all UI elements.
@@ -44,18 +45,17 @@ public class BoardView extends JFrame implements MonopolyView {
             if (space instanceof PropertySpace) {
                 Property property = ((PropertySpace) space).getProperty();
                 if (property instanceof RealEstate) {
-                    panel = new RealEstateSpacePanel((RealEstate) property);
+                    panel = new RealEstateSpacePanel((PropertySpace) space);
                 } else {
                     panel = null; //handle other types of properties here
                 }
-            }else if(space instanceof JailSpace){
-                panel = new JailSpacePanel();
-            }
-            else if(space instanceof GoToJailSpace){
-                panel = new GoToJailSpacePanel();
+            } else if (space instanceof JailSpace){
+                panel = new JailSpacePanel((JailSpace) space);
+            }  else if (space instanceof GoToJailSpace){
+                panel = new GoToJailSpacePanel((GoToJailSpace) space);
             }
             else {
-                panel = new EmptySpacePanel();
+                panel = new EmptySpacePanel((EmptySpace) space);
             }
             c.gridx = position[0];
             c.gridy = position[1];
@@ -97,7 +97,12 @@ public class BoardView extends JFrame implements MonopolyView {
         buyButton.setText("Buy");
         buyButton.addActionListener(new BuyController(this.board));
         centerPanel.add(buyButton);
-        updateBuyButton();
+        buyHouseButton = new JButton();
+        buyHouseButton.setText("Buy House");
+        buyHouseButton.addActionListener(new BuyHouseController(this.board));
+        buyHouseButton.setMnemonic('H'); //button can also be pressed by Alt+H
+        centerPanel.add(buyHouseButton);
+        updateBuyButtons();
 
         JButton endTurnButton = new JButton();
         endTurnButton.setText("End Turn");
@@ -180,10 +185,14 @@ public class BoardView extends JFrame implements MonopolyView {
      * Updates the status of the buy button, enabling it or disabling it depending on whether
      * the current player is able to buy a property.
      */
-    private void updateBuyButton() {
-        buyButton.setEnabled(true);
+    private void updateBuyButtons() {
 
+        //enable/disable the buy house button
         Player currentPlayer = board.getCurrentPlayer();
+        buyHouseButton.setEnabled(!currentPlayer.getHouseBuyProperties().isEmpty());
+
+        //enable/disable the buy property button
+        buyButton.setEnabled(true);
         Space currentSpace = board.getSpace(currentPlayer.getPosition());
 
         //if space is not a property space
@@ -197,12 +206,9 @@ public class BoardView extends JFrame implements MonopolyView {
 
         if (currentProperty.getOwner() != null) {
             buyButton.setEnabled(false);
-            return;
-        }
-        //if player does not have more than the cost of the property
-        else if (currentPlayer.getMoney() <= currentProperty.getCost()) {
+        } else if (currentPlayer.getMoney() <= currentProperty.getCost()) {
+            //if player does not have more than the cost of the property
             buyButton.setEnabled(false);
-            return;
         }
     }
 
@@ -218,7 +224,7 @@ public class BoardView extends JFrame implements MonopolyView {
         this.spacePanels[player.getPosition()].addPlayer(player);
         updatePlayerLabels();
         updateDiceLabels();
-        updateBuyButton();
+        updateBuyButtons();
     }
 
     /**
@@ -228,7 +234,7 @@ public class BoardView extends JFrame implements MonopolyView {
     @Override
     public void handleBuy(BuyEvent e) {
         updatePlayerLabels();
-        updateBuyButton();
+        updateBuyButtons();
     }
 
     /**
@@ -263,7 +269,11 @@ public class BoardView extends JFrame implements MonopolyView {
 
     @Override
     public void handleBuyHouse(BuyHouseEvent e) {
-        //TODO implement
+        updatePlayerLabels();
+        updateBuyButtons();
+        for (SpacePanel panel: spacePanels) {
+            panel.update(); //maybe update only specific panels?
+        }
     }
 
     public static void main(String[] args) {
