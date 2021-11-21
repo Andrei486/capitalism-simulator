@@ -16,6 +16,8 @@ public class Player {
     private boolean isBankrupt;
     private Board board;
     private int playerNumber;
+    private boolean isAI;
+    private PlayerAI playerAI;
     private static int nextPlayerNumber = 0;
     private static final int STARTING_MONEY = 1500;
 
@@ -24,7 +26,7 @@ public class Player {
      * @param name the name of the player
      * @param board the board the player is playing on
      */
-    public Player(String name, Board board) {
+    public Player(String name, Board board, boolean isAI) {
         this.name = name;
         this.board = board;
         this.money = STARTING_MONEY;
@@ -34,6 +36,16 @@ public class Player {
         this.playerNumber = nextPlayerNumber;
         this.jailTimer = 0;
         nextPlayerNumber++;
+        this.isAI = isAI;
+        if (this.isAI) {
+            this.playerAI = new PlayerAI(this, this.board);
+        } else {
+            this.playerAI = null;
+        }
+    }
+
+    public Player(String name, Board board) {
+        this(name, board, false);
     }
 
     /**
@@ -46,6 +58,14 @@ public class Player {
         this.properties.add(property);
         this.loseMoney(property.getCost());
         board.handleBuyEvent(new BuyEvent(this, property));
+    }
+
+    public boolean canBuy(Property property) {
+        return (property.getOwner() == null && money > property.getCost());
+    }
+
+    public boolean canExitJail() {
+        return (jailTimer > 0 && money > Board.EXIT_JAIL_COST);
     }
 
     /**
@@ -197,5 +217,13 @@ public class Player {
             }
         }
         return houseBuyProperties;
+    }
+
+    public boolean isAI() {
+        return isAI;
+    }
+
+    public PlayerAI getPlayerAI() {
+        return playerAI;
     }
 }
