@@ -23,20 +23,33 @@ public class Board {
 
     /**
      * Constructs a board with the specified number of players.
-     * @param nPlayers integer number of players
+     * @param totalPlayers integer number of players (including AI)
      */
-    public Board(int nPlayers) {
+    public Board(int totalPlayers, int nAI) {
+        int nPlayers = totalPlayers - nAI;
         diceRoller = new DiceRoller();
         initializeBoard();
         bankruptPlayers = 0;
-        this.players = new Player[nPlayers];
+        this.players = new Player[totalPlayers];
         for (int i = 0; i < nPlayers; i++) {
             Player player = new Player("P" + (i + 1), this);
             this.players[i] = player;
         }
-        this.turnOrder = new TurnOrder(players);
+        for (int i = 0; i < nAI; i++) {
+            Player player = new Player("AI" + (i + 1), this, true);
+            this.players[i + nPlayers] = player;
+        }
+        this.turnOrder = new TurnOrder(this.players);
         this.gameViews = new HashSet<>();
         this.consecutiveDoubles = 0;
+//        if (nAI == totalPlayers) {
+//            getCurrentPlayer().getPlayerAI().doTurn();
+//            advanceTurn();
+//        }
+    }
+
+    public Board(int nPlayers) {
+        this(nPlayers, 0);
     }
 
     /**
@@ -123,11 +136,16 @@ public class Board {
      * If player rolls a double, player gets another turn.
      */
     public void advanceTurn() {
-        boolean samePlayer = turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
-        if (!samePlayer) {
-            consecutiveDoubles = 0;
-        }
-        handleNewTurnEvent(new NewTurnEvent(this));
+        do {
+            boolean samePlayer = turnOrder.advanceTurnOrder(getDiceRoller().isDouble());
+            if (!samePlayer) {
+                consecutiveDoubles = 0;
+            }
+            handleNewTurnEvent(new NewTurnEvent(this));
+            if (getCurrentPlayer().isAI()) {
+                getCurrentPlayer().getPlayerAI().doTurn();
+            }
+        } while (getCurrentPlayer().isAI());
     }
 
     /**

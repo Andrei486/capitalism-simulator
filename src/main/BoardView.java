@@ -227,12 +227,7 @@ public class BoardView extends JFrame implements MonopolyView {
         PropertySpace currentPropertySpace = (PropertySpace) currentSpace;
         Property currentProperty = currentPropertySpace.getProperty();
 
-        if (currentProperty.getOwner() != null) {
-            buyButton.setEnabled(false);
-        } else if (currentPlayer.getMoney() <= currentProperty.getCost()) {
-            //if player does not have more than the cost of the property
-            buyButton.setEnabled(false);
-        }
+        buyButton.setEnabled(currentPlayer.canBuy(currentProperty));
     }
 
     /**
@@ -315,10 +310,10 @@ public class BoardView extends JFrame implements MonopolyView {
     public void handleNewTurn(NewTurnEvent e) {
         updatePlayerLabels();
         updateBuyButtons();
-        updateJailButton();
         buyButton.setEnabled(false);
         endTurnButton.setEnabled(false);
         movePlayerButton.setEnabled(true);
+        jailButton.setEnabled(false);
     }
 
     @Override
@@ -342,14 +337,36 @@ public class BoardView extends JFrame implements MonopolyView {
                     isInputValid = true;
                 } else {
                     JOptionPane.showMessageDialog(null,
-                            String.format("The number of players must be between 2 and 8 (inclusive)."));
+                            "The number of players must be between 2 and 8 (inclusive).");
                 }
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null,
                         String.format("%s is not a valid number of players.", playerCountString));
             }
         }
-        Board board = new Board(playerCount);
+        isInputValid = false;
+        int aiCount = 0;
+        while (!isInputValid) {
+            String playerCountString = JOptionPane.showInputDialog(
+                    String.format("Please enter the number of AI players (up to %d)", playerCount));
+            if (playerCountString == null) {
+                System.exit(0);
+            }
+            try {
+                aiCount = Integer.parseInt(playerCountString);
+                if (0 <= aiCount && aiCount <= playerCount) {
+                    isInputValid = true;
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            String.format("The number of AIs must be between 0 and %d (inclusive).", playerCount));
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        String.format("%s is not a valid number of AIs.", playerCountString));
+            }
+        }
+
+        Board board = new Board(playerCount, aiCount);
         new BoardView(board);
     }
 }
