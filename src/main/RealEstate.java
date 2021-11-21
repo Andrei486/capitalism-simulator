@@ -7,7 +7,8 @@ package main;
 public class RealEstate extends Property{
 
     private ColorGroup colorGroup;
-    private static final float RENT_MULTIPLIER = 0.25f;
+    private static final float BASE_RENT_MULTIPLIER = 0.75f;
+    private static final float HOUSE_RENT_MULTIPLIER = 0.5f;
     private static final float HOUSE_COST_MULTIPLIER = 0.3f;
     private int houses;
     private RealEstateGroup group;
@@ -35,7 +36,7 @@ public class RealEstate extends Property{
     @Override
     public int getRent() {
         //rent is 25% of base cost plus 25% per house (hotel counts as 5 houses)
-        return (int) (this.cost * RENT_MULTIPLIER * (houses + 1));
+        return (int) (this.cost * (BASE_RENT_MULTIPLIER + houses * HOUSE_RENT_MULTIPLIER));
     }
 
     /**
@@ -50,6 +51,9 @@ public class RealEstate extends Property{
     public void setOwner(Player p) {
         super.setOwner(p);
         group.updateOwnership();
+        if (p == null) {
+            houses = 0; //reset houses when someone goes bankrupt and returns the property
+        }
     }
 
     /**

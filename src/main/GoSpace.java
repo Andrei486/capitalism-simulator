@@ -12,13 +12,6 @@ public class GoSpace extends Space {
     }
 
     /**
-     * Resolves forced effects as a result of a given player landing on this space.
-     * @param p the Player landing on this space
-     */
-    @Override
-    public void onEndTurn(Player p) {return;}
-
-    /**
      * Gives the player $200 when passing this Space
      * @param p the Player landing on this space
      */

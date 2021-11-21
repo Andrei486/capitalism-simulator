@@ -9,4 +9,6 @@ public interface MonopolyView {
     void handleUpdateMoney(UpdateMoneyEvent e);
     void handleBankruptcy(BankruptcyEvent e);
     void handleBuyHouse(BuyHouseEvent e);
+    void handleNewTurn(NewTurnEvent e);
+    void handleBuy(BuyEvent e);
 }

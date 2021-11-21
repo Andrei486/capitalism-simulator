@@ -11,14 +11,16 @@ import java.awt.*;
  */
 public class BoardView extends JFrame implements MonopolyView {
 
-    private Board board;
-    private SpacePanel[] spacePanels;
-    private JLabel[] playerInfoLabels;
-    private JLabel[] diceRollLabels;
-    private JLabel totalRollLabel;
-    private JButton buyButton;
-    private JButton buyHouseButton;
-    private JButton jailButton;
+    private final Board board;
+    private final SpacePanel[] spacePanels;
+    private final JLabel[] playerInfoLabels;
+    private final JLabel[] diceRollLabels;
+    private final JLabel totalRollLabel;
+    private final JButton buyButton;
+    private final JButton buyHouseButton;
+    private final JButton jailButton;
+    private final JButton movePlayerButton;
+    private final JButton endTurnButton;
 
     /**
      * Construct a BoardView to represent a Board, initializing all UI elements.
@@ -99,6 +101,7 @@ public class BoardView extends JFrame implements MonopolyView {
         //create buttons to buy properties and end turn
         buyButton = new JButton();
         buyButton.setText("Buy");
+        buyButton.setMnemonic('B');
         buyButton.addActionListener(new BuyController(this.board));
         centerPanel.add(buyButton);
         buyHouseButton = new JButton();
@@ -115,10 +118,19 @@ public class BoardView extends JFrame implements MonopolyView {
         centerPanel.add(jailButton);
         updateJailButton();
 
-        JButton endTurnButton = new JButton();
+        movePlayerButton = new JButton();
+        movePlayerButton.setText("Roll Dice");
+        movePlayerButton.setMnemonic('R'); //button can also be pressed by Alt+J
+        movePlayerButton.addActionListener(new MovePlayerController(this.board));
+        centerPanel.add(movePlayerButton);
+        movePlayerButton.setEnabled(true);
+
+        endTurnButton = new JButton();
         endTurnButton.setText("End Turn");
+        endTurnButton.setMnemonic('E');
         endTurnButton.addActionListener(new EndTurnController(this.board));
         centerPanel.add(endTurnButton);
+        endTurnButton.setEnabled(false);
         gridCenterPanel.add(centerPanel, BorderLayout.CENTER);
 
         c = new GridBagConstraints();
@@ -247,10 +259,11 @@ public class BoardView extends JFrame implements MonopolyView {
         Player player = e.getPlayer();
         this.spacePanels[e.getOldPosition()].removePlayer(player);
         this.spacePanels[player.getPosition()].addPlayer(player);
-        updatePlayerLabels();
         updateDiceLabels();
         updateBuyButtons();
         updateJailButton();
+        endTurnButton.setEnabled(true);
+        movePlayerButton.setEnabled(false);
     }
 
     /**
@@ -283,6 +296,9 @@ public class BoardView extends JFrame implements MonopolyView {
             JOptionPane.showMessageDialog(this, String.format("%s won!", winner.getName()));
             System.exit(0);
         }
+        for (SpacePanel panel: spacePanels) {
+            panel.update(); //maybe update only specific panels?
+        }
     }
 
     @Override
@@ -290,6 +306,23 @@ public class BoardView extends JFrame implements MonopolyView {
         updatePlayerLabels();
         updateBuyButtons();
         updateJailButton();
+        for (SpacePanel panel: spacePanels) {
+            panel.update(); //maybe update only specific panels?
+        }
+    }
+
+    @Override
+    public void handleNewTurn(NewTurnEvent e) {
+        updatePlayerLabels();
+        updateBuyButtons();
+        updateJailButton();
+        buyButton.setEnabled(false);
+        endTurnButton.setEnabled(false);
+        movePlayerButton.setEnabled(true);
+    }
+
+    @Override
+    public void handleBuy(BuyEvent e) {
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }
