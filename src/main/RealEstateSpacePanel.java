@@ -78,6 +78,7 @@ public class RealEstateSpacePanel extends PropertySpacePanel{
      */
     @Override
     public void update() {
+        super.update();
         int houses = realEstate.getHouses();
         Color color = (houses == 5) ? HOTEL_COLOR : HOUSE_COLOR;
         for (int i = 0; i < 4; i++) {

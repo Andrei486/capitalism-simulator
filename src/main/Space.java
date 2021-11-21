@@ -28,7 +28,9 @@ public abstract class Space {
      * Resolves forced effects as a result of a given player landing on this space.
      * @param p the Player landing on this space
      */
-    public abstract void onEndTurn(Player p);
+    public void onEndTurn(Player p) {
+        return;
+    }
 
     /**
      * Resolves forced effects as a result of a given player passing over this space.

@@ -25,7 +25,8 @@ public abstract class SpacePanel extends JPanel {
 
         topPanel = new JPanel();
         topLabel = new JLabel(" ");
-        topLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 10));
+        topLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 10));
+        topLabel.setHorizontalAlignment(SwingConstants.CENTER);
         topPanel.setLayout(new BorderLayout());
         topPanel.add(topLabel, BorderLayout.CENTER);
 
