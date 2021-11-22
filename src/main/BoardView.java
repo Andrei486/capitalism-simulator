@@ -97,7 +97,6 @@ public class BoardView extends JFrame implements MonopolyView {
         centerPanel.add(diceRollLabels[1]);
         centerPanel.add(new JLabel("Dice total: "));
         centerPanel.add(totalRollLabel);
-        updateDiceLabels();
 
         //create buttons to buy properties and end turn
         buyButton = new JButton();
@@ -210,9 +209,10 @@ public class BoardView extends JFrame implements MonopolyView {
      * Updates the dice roll labels to show the most recent numbers rolled and the total.
      */
     private void updateDiceLabels() {
-        diceRollLabels[0].setText(String.valueOf(this.board.getDiceRoller().getDice()[0]));
-        diceRollLabels[1].setText(String.valueOf(this.board.getDiceRoller().getDice()[1]));
-        totalRollLabel.setText(String.valueOf(this.board.getDiceRoller().getTotal()));
+        DiceRoller dice = this.board.getDiceRoller();
+        diceRollLabels[0].setText(String.valueOf(dice.getDice()[0]));
+        diceRollLabels[1].setText(String.valueOf(dice.getDice()[1]));
+        totalRollLabel.setText(String.valueOf(dice.getTotal()));
     }
 
     /**
@@ -280,7 +280,7 @@ public class BoardView extends JFrame implements MonopolyView {
         this.spacePanels[e.getOldPosition()].removePlayer(player);
         this.spacePanels[player.getPosition()].addPlayer(player);
         updateDiceLabels();
-        if (board.getCurrentPlayer().isAI()) {
+        if (player.isAI()) {
             return; //keep buttons disabled
         }
         updateBuyButtons();
