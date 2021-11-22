@@ -361,12 +361,6 @@ public class BoardView extends JFrame implements MonopolyView {
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }
-        if (board.getCurrentPlayer().isAI()) {
-            return; //keep buttons disabled
-        }
-        updatePlayerLabels();
-        updateBuyButtons();
-        updateJailButton();
     }
 
     /**
