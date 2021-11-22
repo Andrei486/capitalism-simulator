@@ -2,6 +2,7 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * @author Waleed Majbour 101144882
@@ -149,7 +150,17 @@ public class BoardView extends JFrame implements MonopolyView {
 
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setTitle("g2-monopoly");
         this.setVisible(true);
+
+        //the game needs to be started automatically if there are only AIs
+        //if done in the constructor, the GUI can be properly updated as the game goes on due to how AWT works
+        if (board.isAllRemainingAI()) {
+            JOptionPane.showMessageDialog(this,
+                    "All players are AI players. Press OK to begin the game.");
+            board.getCurrentPlayer().getPlayerAI().doTurn();
+            board.advanceTurn();
+        }
     }
 
     /**
@@ -204,6 +215,14 @@ public class BoardView extends JFrame implements MonopolyView {
         totalRollLabel.setText(String.valueOf(this.board.getDiceRoller().getTotal()));
     }
 
+    private void disableAllButtons() {
+        buyButton.setEnabled(false);
+        buyHouseButton.setEnabled(false);
+        endTurnButton.setEnabled(false);
+        jailButton.setEnabled(false);
+        movePlayerButton.setEnabled(false);
+    }
+
     /**
      * Updates the status of the buy button, enabling it or disabling it depending on whether
      * the current player is able to buy a property.
@@ -234,14 +253,9 @@ public class BoardView extends JFrame implements MonopolyView {
      * Enables or disables the "Exit Jail" button. The button is disabled if the current player
      * is not in jail or cannot afford to pay their way out.
      */
-    public void updateJailButton() {
+    private void updateJailButton() {
         Player player = board.getCurrentPlayer();
-        jailButton.setEnabled(false);
-        if (player.getJailTimer() > 0
-                && player.getJailTimer() < Board.TURNS_IN_JAIL
-                && player.getMoney() > Board.EXIT_JAIL_COST) {
-            jailButton.setEnabled(true);
-        }
+        jailButton.setEnabled(player.canExitJail());
     }
 
     /**
@@ -251,10 +265,20 @@ public class BoardView extends JFrame implements MonopolyView {
      */
     @Override
     public void handleMovePlayer(MovePlayerEvent e) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleMovePlayer(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
         Player player = e.getPlayer();
         this.spacePanels[e.getOldPosition()].removePlayer(player);
         this.spacePanels[player.getPosition()].addPlayer(player);
         updateDiceLabels();
+        if (board.getCurrentPlayer().isAI()) {
+            return; //keep buttons disabled
+        }
         updateBuyButtons();
         updateJailButton();
         endTurnButton.setEnabled(true);
@@ -267,6 +291,16 @@ public class BoardView extends JFrame implements MonopolyView {
      */
     @Override
     public void handleUpdateMoney(UpdateMoneyEvent e) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleUpdateMoney(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (board.getCurrentPlayer().isAI()) {
+            return; //keep buttons disabled
+        }
         updatePlayerLabels();
         updateBuyButtons();
         updateJailButton();
@@ -279,7 +313,17 @@ public class BoardView extends JFrame implements MonopolyView {
      */
     @Override
     public void handleBankruptcy(BankruptcyEvent e) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleBankruptcy(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
         updatePlayerLabels();
+        for (SpacePanel panel: spacePanels) {
+            panel.update();
+        }
         if (this.board.isGameOver()) {
             Player winner = null;
             for (Player player: this.board.getPlayers()) {
@@ -291,33 +335,59 @@ public class BoardView extends JFrame implements MonopolyView {
             JOptionPane.showMessageDialog(this, String.format("%s won!", winner.getName()));
             System.exit(0);
         }
-        for (SpacePanel panel: spacePanels) {
-            panel.update(); //maybe update only specific panels?
-        }
     }
 
     @Override
     public void handleBuyHouse(BuyHouseEvent e) {
-        updatePlayerLabels();
-        updateBuyButtons();
-        updateJailButton();
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleBuyHouse(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }
+        if (board.getCurrentPlayer().isAI()) {
+            return; //keep buttons disabled
+        }
+        updatePlayerLabels();
+        updateBuyButtons();
+        updateJailButton();
     }
 
     @Override
     public void handleNewTurn(NewTurnEvent e) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleNewTurn(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
         updatePlayerLabels();
-        updateBuyButtons();
-        buyButton.setEnabled(false);
-        endTurnButton.setEnabled(false);
-        movePlayerButton.setEnabled(true);
-        jailButton.setEnabled(false);
+        if (board.getCurrentPlayer().isAI()) {
+            disableAllButtons(); //players cannot press buttons while the AI is acting
+        } else {
+            updateBuyButtons();
+            buyButton.setEnabled(false);
+            endTurnButton.setEnabled(false);
+            movePlayerButton.setEnabled(true);
+            jailButton.setEnabled(false);
+        }
     }
 
     @Override
     public void handleBuy(BuyEvent e) {
+        if (!SwingUtilities.isEventDispatchThread()) {
+            try {
+                SwingUtilities.invokeAndWait(() -> handleBuy(e));
+            } catch (InterruptedException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }

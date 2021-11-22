@@ -65,7 +65,7 @@ public class Player {
     }
 
     public boolean canExitJail() {
-        return (jailTimer > 0 && money > Board.EXIT_JAIL_COST);
+        return (jailTimer > 0 && jailTimer < Board.TURNS_IN_JAIL && money > Board.EXIT_JAIL_COST);
     }
 
     /**
