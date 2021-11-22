@@ -1,7 +1,5 @@
 package main;
 
-import java.awt.*;
-
 /**
  * @author Mohammad Alkhaledi 101162465
  * Implements the GoToJailSpace on the monopoly board GUI

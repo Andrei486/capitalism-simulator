@@ -260,8 +260,8 @@ public class Board {
     }
 
     /**
-     * Sends the BankruptcyEvent to all registered views.
-     * @param e the event to be sent out
+     * Sends the BankruptcyEvent to all registered views, advancing the bankrupt player's turn afterwards.
+     * @param e the event to send out
      */
     public void handleBankruptcyEvent(BankruptcyEvent e) {
         bankruptPlayers++;
@@ -271,24 +271,40 @@ public class Board {
         advanceTurn();
     }
 
+    /**
+     * Sends the UpdateMoneyEvent to all registered views.
+     * @param e the event to send out
+     */
     public void handleUpdateMoneyEvent(UpdateMoneyEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleUpdateMoney(e);
         }
     }
 
+    /**
+     * Sends the BuyHouseEvent to all registered views.
+     * @param e the event to send out
+     */
     public void handleBuyHouseEvent(BuyHouseEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleBuyHouse(e);
         }
     }
 
+    /**
+     * Sends the NewTurnEvent to all registered views.
+     * @param e the event to send out
+     */
     private void handleNewTurnEvent(NewTurnEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleNewTurn(e);
         }
     }
 
+    /**
+     * Sends the BuyEvent to all registered views.
+     * @param e the event to send out
+     */
     public void handleBuyEvent(BuyEvent e) {
         for (MonopolyView view: gameViews) {
             view.handleBuy(e);

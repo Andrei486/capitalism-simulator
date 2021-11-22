@@ -81,12 +81,7 @@ public class RealEstateGroup {
                 minHousesInGroup = realEstate.getHouses();
             }
         }
-        if (maxHousesInGroup == minHousesInGroup) {
-            //all houses have the same number of properties: can build on any one
-            return true;
-        } else {
-            //one house has more than the others: can only build on properties with fewer houses
-            return (r.getHouses() == minHousesInGroup);
-        }
+        //can only buy if all properties have equal houses, or if this property has the least houses
+        return (maxHousesInGroup == minHousesInGroup) || (r.getHouses() == minHousesInGroup);
     }
 }

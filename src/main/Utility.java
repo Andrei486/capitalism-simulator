@@ -1,5 +1,4 @@
 package main;
-import main.*;
 
 /**
  *  Class representing the utilities properties

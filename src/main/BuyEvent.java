@@ -17,11 +17,19 @@ public class BuyEvent extends EventObject {
         this.property = property;
     }
 
+    /**
+     * Returns the Player that bought a property.
+     * @return Player that created this event
+     */
     @Override
     public Player getSource() {
         return (Player) super.getSource();
     }
 
+    /**
+     * Gets the property that was bought.
+     * @return the newly bought Property
+     */
     public Property getProperty() {
         return this.property;
     }

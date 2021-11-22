@@ -2,8 +2,6 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Class for displaying a property space on the GUI.
