@@ -1,5 +1,6 @@
 package test;
 
+import main.Railroad;
 import org.junit.runners.Suite;
 import org.junit.runner.RunWith;
 
@@ -11,10 +12,14 @@ import org.junit.runner.RunWith;
         BoardTest.class,
         DiceRollerTest.class,
         EmptySpaceTest.class,
+        GoSpaceTest.class,
+        GoToJailSpaceTest.class,
+        JailSpaceTest.class,
         PlayerTest.class,
         PropertySpaceTest.class,
-        RealEstateTest.class,
+        RailroadTest.class,
         RealEstateGroupTest.class,
+        RealEstateTest.class,
         TurnOrderTest.class,
         UtilityTest.class,
 })

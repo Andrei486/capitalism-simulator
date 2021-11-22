@@ -19,8 +19,8 @@ public class UtilityTest {
     @Before
     public void setVars(){
         board = new Board(2);
-        utility = new Utility("Water Works", board.getDiceRoller());
         dice = board.getDiceRoller();
+        utility = new Utility("Water Works", dice);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class UtilityTest {
     public void getRentTwo() {
         Player P1 = new Player("P1", board);
         Player P2 = new Player("P2", board);
-        utility2 = new Utility("Electricity", board.getDiceRoller());
+        utility2 = new Utility("Electricity", dice);
         P1.gainMoney(5000);
         P1.buy(utility);
         P1.buy(utility2);
@@ -65,7 +65,7 @@ public class UtilityTest {
     @Test
     public void testToStringNotOwned() {
         String sb = "Property: Water Works\n" +
-                    "Cost: 150\n" +
+                    "Cost: $150\n" +
                     "If one utility is owned, rent is 4 times what is shown on dice.\n" +
                     "If both utilities are owned, rent is 10 times what is shown on dice.";
 
@@ -73,14 +73,31 @@ public class UtilityTest {
     }
 
     @Test
-    public void testToStringOwned() {
+    public void testToStringOwnedOne() {
         String sb = "Property: Water Works\n" +
-                "Cost: 150\n" +
+                "Cost: $150\n" +
+                "Rent: 4 * Roll\n" +
                 "Owned by P1";
 
         Player p1 = new Player("P1", new Board(3));
         p1.gainMoney(1000);
         p1.buy(utility);
+
+        assertEquals(sb, utility.toString());
+    }
+
+    @Test
+    public void testToStringOwnedTwo() {
+        String sb = "Property: Water Works\n" +
+                "Cost: $150\n" +
+                "Rent: 10 * Roll\n" +
+                "Owned by P1";
+
+        Player p1 = new Player("P1", new Board(3));
+        utility2 = new Utility("Electric Company", dice);
+        p1.gainMoney(1000);
+        p1.buy(utility);
+        p1.buy(utility2);
 
         assertEquals(sb, utility.toString());
     }

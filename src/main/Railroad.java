@@ -38,8 +38,8 @@ public class Railroad extends Property{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Property: " + this.name + "\n");
-        sb.append("Cost:     $" + this.getCost() + "\n");
+        sb.append("Property:  ").append(this.name).append("\n");
+        sb.append("Cost:     $").append(this.getCost()).append("\n");
         if (this.getOwner() == null) {
             sb.append("Rent(1):  $25\n");
             sb.append("Rent(2):  $50\n");
@@ -47,8 +47,8 @@ public class Railroad extends Property{
             sb.append("Rent(4):  $200\n");
             sb.append("Not owned");
         } else {
-            sb.append("Rent:     $" + this.getRent() + "\n");
-            sb.append("Owned by " + this.getOwner().getName());
+            sb.append("Rent:     $").append(this.getRent()).append("\n");
+            sb.append("Owned by ").append(this.getOwner().getName());
         }
         return sb.toString();
     }
