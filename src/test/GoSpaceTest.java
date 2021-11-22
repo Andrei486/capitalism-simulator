@@ -31,7 +31,7 @@ public class GoSpaceTest {
      * Tests the getDescription method.
      */
     @Test
-    public void testGetDescription() { assertEquals("Go Space", goSpace.getDescription()); }
+    public void testGetDescription() { assertEquals("GO Space", goSpace.getDescription()); }
 
     /**
      * Tests the onPassThrough method gives money to the player.
