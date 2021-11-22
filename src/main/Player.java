@@ -100,8 +100,9 @@ public class Player {
      * @param property the property that determines the rent and owner
      */
     public void payRent(Property property) {
-        int amountPaid = this.loseMoney(property.getRent());
-        property.getOwner().gainMoney(amountPaid);
+        int amountPaid = Math.min(money, property.getRent());
+        property.getOwner().money += amountPaid;
+        this.loseMoney(property.getRent());
     }
 
     /**
