@@ -17,7 +17,7 @@ public class GoSpace extends Space {
      */
     @Override
     public void onPassThrough(Player p){
-        p.gainMoney(200);
+        p.gainMoney(100);
     }
 
     /**

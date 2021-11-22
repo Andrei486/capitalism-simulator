@@ -2,6 +2,7 @@ package main;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -42,10 +43,6 @@ public class Board {
         this.turnOrder = new TurnOrder(this.players);
         this.gameViews = new HashSet<>();
         this.consecutiveDoubles = 0;
-//        if (nAI == totalPlayers) {
-//            getCurrentPlayer().getPlayerAI().doTurn();
-//            advanceTurn();
-//        }
     }
 
     public Board(int nPlayers) {
@@ -156,6 +153,15 @@ public class Board {
         return bankruptPlayers >= (players.length - 1);
     }
 
+    public boolean isAllRemainingAI() {
+        for (Player player: players) {
+            if (!player.isAI() && !player.getIsBankrupt()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * Initializes the spaces on the board, creating properties as needed.
      */
@@ -262,7 +268,7 @@ public class Board {
         for (MonopolyView view: gameViews) {
             view.handleBankruptcy(e);
         }
-        turnOrder.advanceTurnOrder(false);
+        advanceTurn();
     }
 
     public void handleUpdateMoneyEvent(UpdateMoneyEvent e) {
