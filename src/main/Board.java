@@ -2,7 +2,6 @@ package main;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Class representing a Monopoly board. Provides methods that allow
@@ -10,15 +9,15 @@ import java.util.concurrent.TimeUnit;
  */
 public class Board {
     private Space[] spaces;
-    private Player[] players;
+    private final Player[] players;
     private Property[] properties;
-    private TurnOrder turnOrder;
-    private DiceRoller diceRoller;
+    private final TurnOrder turnOrder;
+    private final DiceRoller diceRoller;
     private int jailPosition;
     public static final int BOARD_SIZE = 40;
     private int bankruptPlayers;
     private int consecutiveDoubles;
-    private HashSet<MonopolyView> gameViews;
+    private final HashSet<MonopolyView> gameViews;
     public static final int TURNS_IN_JAIL = 3;
     public static final int EXIT_JAIL_COST = 50;
 
@@ -153,6 +152,10 @@ public class Board {
         return bankruptPlayers >= (players.length - 1);
     }
 
+    /**
+     * Checks whether all non-bankrupt players are AI-controlled.
+     * @return true if all remaining players are AI, false otherwise
+     */
     public boolean isAllRemainingAI() {
         for (Player player: players) {
             if (!player.isAI() && !player.getIsBankrupt()) {

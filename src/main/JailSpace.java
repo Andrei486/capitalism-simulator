@@ -6,7 +6,7 @@ package main;
  * @author Mohammad Alkhaledi 101162465
  */
 public class JailSpace extends Space{
-    private int position;
+    private final int position;
     /**
      * Constructor for the JailSpace. Initializes variables.
      *

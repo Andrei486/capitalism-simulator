@@ -6,8 +6,8 @@ import java.util.EventObject;
  * Event class to represent a player moving along the board.
  */
 public class MovePlayerEvent extends EventObject {
-    private Player player;
-    private int oldPosition;
+    private final Player player;
+    private final int oldPosition;
 
     /**
      * Constructs a prototypical Event.
