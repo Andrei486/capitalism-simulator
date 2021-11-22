@@ -84,6 +84,7 @@ public class RealEstateSpacePanel extends PropertySpacePanel{
                 housePanels[i].setBackground(color);
                 housePanels[i].setOpaque(true);
             } else {
+                housePanels[i].setBackground(Color.WHITE);
                 housePanels[i].setOpaque(false);
             }
         }
