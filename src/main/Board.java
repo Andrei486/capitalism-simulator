@@ -97,6 +97,10 @@ public class Board {
      */
     public void movePlayer(Player player) {
         diceRoller.roll();
+        movePlayerLogic(player);
+    }
+
+    public void movePlayerLogic(Player player) {
         consecutiveDoubles = (diceRoller.isDouble()) ? consecutiveDoubles + 1 : 0;
 
         int oldPosition = player.getPosition();

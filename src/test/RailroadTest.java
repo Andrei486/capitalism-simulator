@@ -111,7 +111,7 @@ public class RailroadTest {
     @Test
     public void testToStringNotOwned() {
         String sb = "Property: Line1\n" +
-                "Cost:     $200\n" +
+                "Cost:       $200\n" +
                 "Rent(1):  $25\n" +
                 "Rent(2):  $50\n" +
                 "Rent(3):  $100\n" +
@@ -127,8 +127,8 @@ public class RailroadTest {
     @Test
     public void testToStringOwned() {
         String sb = "Property: Line1\n" +
-                "Cost:     $200\n" +
-                "Rent:     $25\n" +
+                "Cost:       $200\n" +
+                "Rent:       $25\n" +
                 "Owned by Bill";
 
         Player player = new Player("Bill", new Board(3));
