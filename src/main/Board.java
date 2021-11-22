@@ -119,10 +119,10 @@ public class Board {
                 }
             }
             else{
-                int newPosition = diceRoller.getTotal() + player.getPosition();
+                int newPosition = diceRoller.getTotal() + oldPosition;
                 newPosition = newPosition % BOARD_SIZE;
-                for (int i = 0; i < getDiceRoller().getTotal(); i++) {
-                    this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(getCurrentPlayer());
+                for (int i = 0; i < diceRoller.getTotal(); i++) {
+                    this.spaces[(oldPosition + i + 1) % BOARD_SIZE].onPassThrough(player);
                 }
                 player.setPosition(newPosition);
                 this.getSpace(newPosition).onEndTurn(player);
