@@ -6,12 +6,12 @@ package main;
  */
 public class RealEstate extends Property{
 
-    private ColorGroup colorGroup;
+    private final ColorGroup colorGroup;
     private static final float BASE_RENT_MULTIPLIER = 0.75f;
     private static final float HOUSE_RENT_MULTIPLIER = 0.5f;
     private static final float HOUSE_COST_MULTIPLIER = 0.3f;
     private int houses;
-    private RealEstateGroup group;
+    private final RealEstateGroup group;
 
     /**
      * Constructs a RealEstate object.
@@ -35,7 +35,7 @@ public class RealEstate extends Property{
      */
     @Override
     public int getRent() {
-        //rent is 25% of base cost plus 25% per house (hotel counts as 5 houses)
+        //rent is a percentage of the base cost plus an additional amount per house
         return (int) (this.cost * (BASE_RENT_MULTIPLIER + houses * HOUSE_RENT_MULTIPLIER));
     }
 

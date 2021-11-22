@@ -2,6 +2,10 @@ package main;
 
 import java.util.EventObject;
 
+/**
+ * Event class representing a change in a player's money.
+ * @author Sebastian Lionais
+ */
 public class UpdateMoneyEvent extends EventObject {
 
     /**
@@ -14,6 +18,10 @@ public class UpdateMoneyEvent extends EventObject {
         super(player);
     }
 
+    /**
+     * Gets the player that created this event
+     * @return Player that lost or gained money
+     */
     @Override
     public Player getSource() {
         return (Player) super.getSource();

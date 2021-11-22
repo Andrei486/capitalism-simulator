@@ -215,6 +215,9 @@ public class BoardView extends JFrame implements MonopolyView {
         totalRollLabel.setText(String.valueOf(this.board.getDiceRoller().getTotal()));
     }
 
+    /**
+     * Disables all action buttons so that the user cannot take actions.
+     */
     private void disableAllButtons() {
         buyButton.setEnabled(false);
         buyHouseButton.setEnabled(false);
@@ -261,6 +264,7 @@ public class BoardView extends JFrame implements MonopolyView {
     /**
      * Updates the board display in response to a player moving.
      * This includes moving the player along the board spaces and updating information.
+     * Runs on the EDT because it is a GUI update.
      * @param e MovePlayerEvent representing the movement
      */
     @Override
@@ -287,6 +291,7 @@ public class BoardView extends JFrame implements MonopolyView {
 
     /**
      * Updates the board display in response to a player's money changing.
+     * Runs on the EDT because it is a GUI update.
      * @param e The UpdateMoneyEvent representing the transaction
      */
     @Override
@@ -309,6 +314,7 @@ public class BoardView extends JFrame implements MonopolyView {
     /**
      * Updates the board display in response to a player going bankrupt.
      * Also ends the game if there is only one player left, showing a message with the winner's name.
+     * Runs on the EDT because it is a GUI update.
      * @param e BankruptcyEvent representing the bankruptcy that occurred
      */
     @Override
@@ -337,6 +343,11 @@ public class BoardView extends JFrame implements MonopolyView {
         }
     }
 
+    /**
+     * Updates the board display in response to a player buying a house.
+     * Runs on the EDT because it is a GUI update.
+     * @param e BuyHouseEvent representing the house purchase
+     */
     @Override
     public void handleBuyHouse(BuyHouseEvent e) {
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -350,14 +361,13 @@ public class BoardView extends JFrame implements MonopolyView {
         for (SpacePanel panel: spacePanels) {
             panel.update(); //maybe update only specific panels?
         }
-        if (board.getCurrentPlayer().isAI()) {
-            return; //keep buttons disabled
-        }
-        updatePlayerLabels();
-        updateBuyButtons();
-        updateJailButton();
     }
 
+    /**
+     * Changes the GUI in response to a change in acting player.
+     * Runs on the EDT because it is a GUI update.
+     * @param e NewTurnEvent that represents the change in turn
+     */
     @Override
     public void handleNewTurn(NewTurnEvent e) {
         if (!SwingUtilities.isEventDispatchThread()) {
@@ -379,6 +389,11 @@ public class BoardView extends JFrame implements MonopolyView {
         }
     }
 
+    /**
+     * Updates the GUI in response to a player buying a property.
+     * Runs on the EDT because it is a GUI update.
+     * @param e BuyEvent that represents the change in turn
+     */
     @Override
     public void handleBuy(BuyEvent e) {
         if (!SwingUtilities.isEventDispatchThread()) {

@@ -8,8 +8,8 @@ import java.util.Set;
  * @author Andrei Popescu, 101143798
  */
 public class RealEstateGroup {
-    private Set<RealEstate> realEstates;
-    private ColorGroup color;
+    private final Set<RealEstate> realEstates;
+    private final ColorGroup color;
     private boolean ownedBySamePlayer; //true if all properties are owned by the same (non-null) player
     public final static int MAX_HOUSES = 5; //max number of houses on any given property
 
@@ -37,14 +37,6 @@ public class RealEstateGroup {
      */
     public Set<RealEstate> getRealEstates() {
         return this.realEstates;
-    }
-
-    /**
-     * Checks if all properties in this group are owned by the same player.
-     * @return true if one player owns all properties in this group, false otherwise
-     */
-    public boolean getOwnership() {
-        return this.ownedBySamePlayer;
     }
 
     /**
@@ -81,12 +73,7 @@ public class RealEstateGroup {
                 minHousesInGroup = realEstate.getHouses();
             }
         }
-        if (maxHousesInGroup == minHousesInGroup) {
-            //all houses have the same number of properties: can build on any one
-            return true;
-        } else {
-            //one house has more than the others: can only build on properties with fewer houses
-            return (r.getHouses() == minHousesInGroup);
-        }
+        //can only buy if all properties have equal houses, or if this property has the least houses
+        return (maxHousesInGroup == minHousesInGroup) || (r.getHouses() == minHousesInGroup);
     }
 }

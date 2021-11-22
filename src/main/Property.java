@@ -36,6 +36,10 @@ public abstract class Property {
         return this.name;
     }
 
+    /**
+     * Gets the rent of this property.
+     * @return integer representing the amount to pay for landing on this property
+     */
     public abstract int getRent();
 
     /**

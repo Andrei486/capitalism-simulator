@@ -8,16 +8,16 @@ import java.util.HashSet;
  */
 public class Player {
 
-    private String name;
+    private final String name;
     private int money;
     private int jailTimer;
-    private HashSet<Property> properties;
+    private final HashSet<Property> properties;
     private int position;
     private boolean isBankrupt;
-    private Board board;
-    private int playerNumber;
-    private boolean isAI;
-    private PlayerAI playerAI;
+    private final Board board;
+    private final int playerNumber;
+    private final boolean isAI;
+    private final PlayerAI playerAI;
     private static int nextPlayerNumber = 0;
     private static final int STARTING_MONEY = 1500;
 
@@ -25,6 +25,7 @@ public class Player {
      * Constructs a player class object
      * @param name the name of the player
      * @param board the board the player is playing on
+     * @param isAI true if the player should be AI-controlled, false otherwise
      */
     public Player(String name, Board board, boolean isAI) {
         this.name = name;
@@ -44,6 +45,11 @@ public class Player {
         }
     }
 
+    /**
+     * Constructs a non-AI player.
+     * @param name the name of the player
+     * @param board the board the player is playing on
+     */
     public Player(String name, Board board) {
         this(name, board, false);
     }
@@ -53,17 +59,26 @@ public class Player {
      * Assumption: The method is only called if the player can buy the property when called
      * @param property the property that is being bought
      */
-    public void buy (Property property) {
+    public void buy(Property property) {
         property.setOwner(this);
         this.properties.add(property);
         this.loseMoney(property.getCost());
         board.handleBuyEvent(new BuyEvent(this, property));
     }
 
+    /**
+     * Checks whether the player can buy a given property.
+     * @param property the Property to check
+     * @return true if the Property could be bought, false otherwise
+     */
     public boolean canBuy(Property property) {
         return (property.getOwner() == null && money > property.getCost());
     }
 
+    /**
+     * Checks whether the player can willingly exit jail.
+     * @return true if the player can exit jail, false if the player cannot or is not in jail
+     */
     public boolean canExitJail() {
         return (jailTimer > 0 && jailTimer < Board.TURNS_IN_JAIL && money > Board.EXIT_JAIL_COST);
     }
@@ -219,10 +234,18 @@ public class Player {
         return houseBuyProperties;
     }
 
+    /**
+     * Checks whether this player is AI-controlled.
+     * @return true if this player is an AI, false otherwise
+     */
     public boolean isAI() {
         return isAI;
     }
 
+    /**
+     * Gets this player's AI.
+     * @return this player's AI, or null if this player is not an AI
+     */
     public PlayerAI getPlayerAI() {
         return playerAI;
     }

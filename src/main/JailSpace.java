@@ -6,7 +6,7 @@ package main;
  * @author Mohammad Alkhaledi 101162465
  */
 public class JailSpace extends Space{
-    private int position;
+    private final int position;
     /**
      * Constructor for the JailSpace. Initializes variables.
      *
@@ -24,7 +24,6 @@ public class JailSpace extends Space{
      * If player is passing by:
      * do nothing
      * @param p the Player currently on this space
-     * TO DO Needs to throw JailEvent
      */
     @Override
     public void onEndTurn(Player p) {
@@ -38,6 +37,7 @@ public class JailSpace extends Space{
     }
 
     /**
+     * Gets the position of this space on the Board.
      * @return the position of the JailSpace
      */
     public int getPosition() {
@@ -45,6 +45,7 @@ public class JailSpace extends Space{
     }
 
     /**
+     * Gets a text description of this JailSpace.
      * @return description of the JailSpace
      */
     @Override

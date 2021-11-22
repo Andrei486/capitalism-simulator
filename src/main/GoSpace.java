@@ -1,5 +1,9 @@
 package main;
 
+/**
+ * Class representing a GO space on the board, which gives players money when they pass over it.
+ * @author Sebastian Lionais
+ */
 public class GoSpace extends Space {
 
     /**
@@ -26,6 +30,6 @@ public class GoSpace extends Space {
      */
     @Override
     public String getDescription() {
-        return "Go Space";
+        return "GO Space";
     }
 }

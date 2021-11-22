@@ -2,6 +2,10 @@ package main;
 
 import java.awt.*;
 
+/**
+ * Panel representing a space with a Property on it in the GUI.
+ * Provides functionality related to owning the property.
+ */
 public class PropertySpacePanel extends SpacePanel {
 
     protected Property property;
@@ -18,9 +22,13 @@ public class PropertySpacePanel extends SpacePanel {
         this.topPanel.setBackground(Color.DARK_GRAY);
     }
 
+    /**
+     * Update this panel, potentially changing the owner name displayed.
+     */
     @Override
     public void update() {
         super.update();
+        //show the owner's name in a color that stands out against the background
         Color bg = this.topPanel.getBackground();
         int brightness = (bg.getBlue() + bg.getGreen() + bg.getRed()) / 3;
         Color fg = (brightness > 127) ? Color.BLACK : Color.WHITE;
