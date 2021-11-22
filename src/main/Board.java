@@ -100,6 +100,10 @@ public class Board {
         movePlayerLogic(player);
     }
 
+    /**
+     * Controls the logic of what happens when a player is moved.
+     * @param player the Player to move.
+     */
     public void movePlayerLogic(Player player) {
         consecutiveDoubles = (diceRoller.isDouble()) ? consecutiveDoubles + 1 : 0;
 
