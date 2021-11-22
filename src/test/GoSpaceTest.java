@@ -41,7 +41,7 @@ public class GoSpaceTest {
         Player player = new Player("p1", new Board(3));
         int money = player.getMoney();
         goSpace.onPassThrough(player);
-        assertEquals(money + 200, player.getMoney());
+        assertEquals(money + 100, player.getMoney());
     }
 
 }

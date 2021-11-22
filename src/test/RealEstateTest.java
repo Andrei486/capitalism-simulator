@@ -59,11 +59,11 @@ public class RealEstateTest {
      */
     @Test
     public void getRent() {
-        Assert.assertEquals(25, property.getRent());
-        property.addHouse();
-        Assert.assertEquals(50, property.getRent());
-        property.addHouse();
         Assert.assertEquals(75, property.getRent());
+        property.addHouse();
+        Assert.assertEquals(125, property.getRent());
+        property.addHouse();
+        Assert.assertEquals(175, property.getRent());
     }
 
     /**
@@ -137,7 +137,7 @@ public class RealEstateTest {
                 "Color: Green\n" +
                 "Cost: $100\n" +
                 "House cost: $30\n" +
-                "Rent: $25\n" +
+                "Rent: $75\n" +
                 "0 houses built\n" +
                 "Not owned";
 
@@ -150,7 +150,7 @@ public class RealEstateTest {
                 "Color: Green\n" +
                 "Cost: $100\n" +
                 "House cost: $30\n" +
-                "Rent: $150\n" +
+                "Rent: $325\n" +
                 "Hotel built\n" +
                 "Owned by P1";
         Assert.assertEquals(sb2, property.toString());

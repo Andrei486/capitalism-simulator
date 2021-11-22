@@ -94,20 +94,20 @@ public class RealEstate extends Property{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Property: " + this.name + "\n");
-        sb.append("Color: " + this.getColorGroup() + "\n");
-        sb.append("Cost: $" + this.getCost() + "\n");
-        sb.append("House cost: $" + this.getHouseCost() + "\n");
-        sb.append("Rent: $" + this.getRent() + "\n");
+        sb.append("Property: ").append(this.name).append("\n");
+        sb.append("Color: ").append(this.getColorGroup()).append("\n");
+        sb.append("Cost: $").append(this.getCost()).append("\n");
+        sb.append("House cost: $").append(this.getHouseCost()).append("\n");
+        sb.append("Rent: $").append(this.getRent()).append("\n");
         if (this.getHouses() == 5) {
             sb.append("Hotel built\n");
         } else {
-            sb.append(this.getHouses() + " houses built\n");
+            sb.append(this.getHouses()).append(" houses built\n");
         }
         if (this.getOwner() == null) {
             sb.append("Not owned");
         } else {
-            sb.append("Owned by " + this.getOwner().getName());
+            sb.append("Owned by ").append(this.getOwner().getName());
         }
         return sb.toString();
     }

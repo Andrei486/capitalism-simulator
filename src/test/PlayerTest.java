@@ -2,7 +2,7 @@ package test;
 
 import org.junit.Test;
 import org.junit.Before;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import main.*;
 
 /**
@@ -45,9 +45,9 @@ public class PlayerTest {
     public void buy() {
         int previousMoney = p1.getMoney();
         p1.buy(property1);
-        Assert.assertTrue(p1.getProperties().contains(property1));
-        Assert.assertEquals(previousMoney - 300, p1.getMoney());
-        Assert.assertEquals(property1.getOwner(), p1);
+        assertTrue(p1.getProperties().contains(property1));
+        assertEquals(previousMoney - 300, p1.getMoney());
+        assertEquals(property1.getOwner(), p1);
         //event send is not tested here
     }
 
@@ -58,8 +58,8 @@ public class PlayerTest {
     public void buyHouse() {
         int previousMoney = p1.getMoney();
         p1.buyHouse(realEstate1);
-        Assert.assertEquals(1, realEstate1.getHouses());
-        Assert.assertEquals(previousMoney - realEstate1.getHouseCost(), p1.getMoney());
+        assertEquals(1, realEstate1.getHouses());
+        assertEquals(previousMoney - realEstate1.getHouseCost(), p1.getMoney());
     }
 
     /**
@@ -73,9 +73,9 @@ public class PlayerTest {
         int initialMoney2 = p2.getMoney();
         p2.payRent(property1);
         //this first payment should not bankrupt player 2
-        Assert.assertFalse(p2.getIsBankrupt());
-        Assert.assertEquals(initialMoney1 + property1.getRent(), p1.getMoney());
-        Assert.assertEquals(initialMoney2 - property1.getRent(), p2.getMoney());
+        assertFalse(p2.getIsBankrupt());
+        assertEquals(initialMoney1 + property1.getRent(), p1.getMoney());
+        assertEquals(initialMoney2 - property1.getRent(), p2.getMoney());
 
         p2.loseMoney(p2.getMoney() - 1); //leave P2 with 1$
         p1.buy(property2);
@@ -83,9 +83,9 @@ public class PlayerTest {
         initialMoney2 = p2.getMoney();
         p2.payRent(property2);
         //this payment should bankrupt player 2
-        Assert.assertTrue(p2.getIsBankrupt());
-        Assert.assertEquals(initialMoney1 + initialMoney2, p1.getMoney());
-        Assert.assertEquals(0, p2.getMoney());
+        assertTrue(p2.getIsBankrupt());
+        assertEquals(initialMoney1 + initialMoney2, p1.getMoney());
+        assertEquals(0, p2.getMoney());
     }
 
     /**
@@ -93,8 +93,8 @@ public class PlayerTest {
      */
     @Test
     public void getName() {
-        Assert.assertEquals("P1", p1.getName());
-        Assert.assertEquals("P2", p2.getName());
+        assertEquals("P1", p1.getName());
+        assertEquals("P2", p2.getName());
     }
 
     /**
@@ -103,8 +103,8 @@ public class PlayerTest {
      */
     @Test
     public void getMoney() {
-        Assert.assertNotEquals(0, p1.getMoney());
-        Assert.assertTrue(p1.getMoney() == p2.getMoney());
+        assertNotEquals(0, p1.getMoney());
+        assertTrue(p1.getMoney() == p2.getMoney());
     }
 
     /**
@@ -113,7 +113,7 @@ public class PlayerTest {
      */
     @Test
     public void getPlayerNumber() {
-        Assert.assertEquals(p2.getPlayerNumber(), p1.getPlayerNumber() + 1);
+        assertEquals(p2.getPlayerNumber(), p1.getPlayerNumber() + 1);
     }
 
     /**
@@ -121,10 +121,10 @@ public class PlayerTest {
      */
     @Test
     public void getProperties() {
-        Assert.assertEquals(0, p1.getProperties().size());
+        assertEquals(0, p1.getProperties().size());
         p1.buy(property1);
         p1.buy(property2);
-        Assert.assertEquals(2, p1.getProperties().size());
+        assertEquals(2, p1.getProperties().size());
     }
 
     /**
@@ -135,14 +135,14 @@ public class PlayerTest {
     public void loseMoney() {
         int initialMoney = p1.getMoney();
         int lostMoney = p1.loseMoney(initialMoney - 1);
-        Assert.assertEquals(initialMoney - 1, lostMoney);
-        Assert.assertEquals(1, p1.getMoney());
+        assertEquals(initialMoney - 1, lostMoney);
+        assertEquals(1, p1.getMoney());
         lostMoney = p1.loseMoney(3); //players go bankrupt if they are at 0$ or less
-        Assert.assertEquals(1, lostMoney);
-        Assert.assertEquals(0, p1.getMoney());
+        assertEquals(1, lostMoney);
+        assertEquals(0, p1.getMoney());
         lostMoney = p1.loseMoney(2); //player money should not be reduced beyond 0
-        Assert.assertEquals(0, lostMoney);
-        Assert.assertEquals(0, p1.getMoney());
+        assertEquals(0, lostMoney);
+        assertEquals(0, p1.getMoney());
     }
 
     /**
@@ -152,7 +152,7 @@ public class PlayerTest {
     public void gainMoney() {
         int initialMoney = p1.getMoney();
         p1.gainMoney(100);
-        Assert.assertEquals(initialMoney + 100, p1.getMoney());
+        assertEquals(initialMoney + 100, p1.getMoney());
     }
 
     /**
@@ -161,12 +161,12 @@ public class PlayerTest {
     @Test
     public void setPosition() {
         //test initial positions
-        Assert.assertEquals(0, p1.getPosition());
-        Assert.assertEquals(0, p2.getPosition());
+        assertEquals(0, p1.getPosition());
+        assertEquals(0, p2.getPosition());
         p1.setPosition(3);
         p2.setPosition(45);
-        Assert.assertEquals(3, p1.getPosition());
-        Assert.assertEquals(45, p2.getPosition());
+        assertEquals(3, p1.getPosition());
+        assertEquals(45, p2.getPosition());
     }
 
     /**
@@ -175,11 +175,48 @@ public class PlayerTest {
      */
     @Test
     public void bankrupt() {
-        Assert.assertFalse(p1.getIsBankrupt());
+        assertFalse(p1.getIsBankrupt());
         p1.buy(property1);
         p1.bankrupt();
-        Assert.assertEquals(0, p1.getProperties().size());
-        Assert.assertEquals(null, property1.getOwner());
-        Assert.assertTrue(p1.getIsBankrupt());
+        assertEquals(0, p1.getProperties().size());
+        assertEquals(null, property1.getOwner());
+        assertTrue(p1.getIsBankrupt());
+    }
+
+    /**
+     * Tests canBuy returns a correct value.
+     */
+    @Test
+    public void canBuy() {
+        assertTrue(p1.canBuy(property1));
+        p1.gainMoney(1000);
+        p1.buy(property1);
+        assertFalse(p2.canBuy(property1));
+        p1.loseMoney(p1.getMoney() - 1);
+        assertFalse(p1.canBuy(property2));
+    }
+
+    /**
+     * Tests canExitJail returns a correct value.
+     */
+    @Test
+    public void canExitJail() {
+        p1.setJailTimer(3);
+        assertFalse(p1.canExitJail());
+        p1.setJailTimer(2);
+        p1.loseMoney(p1.getMoney() - 1);
+        assertFalse(p1.canExitJail());
+        p1.gainMoney(1000);
+        assertTrue(p1.canExitJail());
+    }
+
+    /**
+     * Test that isAI and getPlayerAI return the correct values.
+     */
+    @Test
+    public void isAI() {
+        Player ai1 = new Player("AI1", board, true);
+        assertTrue(ai1.isAI());
+        assertNotNull(ai1.getPlayerAI());
     }
 }

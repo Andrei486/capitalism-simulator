@@ -25,12 +25,7 @@ public class Utility extends Property{
      */
     @Override
     public int getRent() {
-       int utilitiesOwned = 0;
-       for(Property property: getOwner().getProperties()){
-           if(property instanceof Utility){
-               utilitiesOwned++;
-           }
-       }
+        int utilitiesOwned = getUtilitiesOwned();
         if(utilitiesOwned == 1){
             return dice.getTotal() * 4;
         }
@@ -41,6 +36,20 @@ public class Utility extends Property{
 
     }
 
+    /**
+     * get the amount of utilities owned by the owner of this property.
+     * @return an int representing the number of utilities owned.
+     */
+    private int getUtilitiesOwned() {
+        int utilitiesOwned = 0;
+        for(Property property: getOwner().getProperties()){
+            if(property instanceof Utility){
+                utilitiesOwned++;
+            }
+        }
+        return utilitiesOwned;
+    }
+
 
     /**
      * Builds a string to represent the information held in the class.
@@ -49,12 +58,19 @@ public class Utility extends Property{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Property: " + this.name + "\n");
-        sb.append("Cost: $" + this.getCost() + "\n");
+        sb.append("Property: ").append(this.name).append("\n");
+        sb.append("Cost: $").append(this.getCost()).append("\n");
         if(this.getOwner() == null){
             sb.append("If one utility is owned, rent is 4 times what is shown on dice.\n");
             sb.append("If both utilities are owned, rent is 10 times what is shown on dice.");
         }else{
+            int utilitiesOwned = getUtilitiesOwned();
+            if(utilitiesOwned == 1){
+                sb.append("Rent: 4 * Roll\n");
+            }
+            else if (utilitiesOwned == 2){
+                sb.append("Rent: 10 * Roll\n");
+            }
             sb.append("Owned by " + this.getOwner().getName());
         }
         return sb.toString();

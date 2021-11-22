@@ -1,8 +1,8 @@
 package test;
 
-import org.junit.Assert;
-import org.junit.Test;
 import static org.junit.Assert.*;
+
+import org.junit.Test;
 import main.*;
 
 /**
@@ -13,14 +13,12 @@ import main.*;
 public class BoardTest {
 
     Board newGame;
-    Board newerGame;
 
 
     /**
      * Tests constructor for Board.
      */
-
-    @org.junit.Test
+    @Test
     public void Board(){
         assertNull(newGame);
         newGame = new Board(2);
@@ -30,23 +28,21 @@ public class BoardTest {
     /**
      * Tests that board initialized properly.
      */
-
-    @org.junit.Test
+    @Test
     public void testBoard(){
         newGame = new Board(3);
-        Assert.assertEquals(26, newGame.getProperties().length);
-        Assert.assertEquals(3, newGame.getPlayers().length);
-        Assert.assertEquals(1500, newGame.getCurrentPlayer().getMoney());
+        assertEquals(28, newGame.getProperties().length);
+        assertEquals(3, newGame.getPlayers().length);
+        assertEquals(1500, newGame.getCurrentPlayer().getMoney());
         RealEstate realEstate = (RealEstate) (newGame.getProperties()[0]);
-        Assert.assertEquals(18, realEstate.getHouseCost());
-        Assert.assertEquals(0, realEstate.getHouses());
+        assertEquals(18, realEstate.getHouseCost());
+        assertEquals(0, realEstate.getHouses());
     }
 
     /**
      * Tests if the getDiceRoller method is not null.
      */
-
-    @org.junit.Test
+    @Test
     public void getDiceRoller(){
         newGame = new Board(3);
         newGame.getDiceRoller().roll();
@@ -56,90 +52,136 @@ public class BoardTest {
     /**
      * Tests the getter for the properties on the board.
      */
-
-    @org.junit.Test
+    @Test
     public void getProperties() {
         newGame = new Board(2);
-        Assert.assertEquals(26, newGame.getProperties().length);
+        assertEquals(28, newGame.getProperties().length);
     }
 
     /**
      * Tests the getter for the spaces on the board.
      */
-
-    @org.junit.Test
+    @Test
     public void getSpace() {
         newGame = new Board(2);
-        Assert.assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
+        assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
     }
 
     /**
      * Tests the getter for player currently playing.
      */
-
-    @org.junit.Test
+    @Test
     public void getCurrentPlayer(){
         newGame = new Board(3);
-        Assert.assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
+        assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
 
         newGame.getDiceRoller().forceRoll(1, 2);
         newGame.advanceTurn();
-        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
+        assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
 
         newGame.getDiceRoller().forceRoll(1, 2);
         newGame.advanceTurn();
-        Assert.assertEquals(newGame.getPlayers()[2], newGame.getCurrentPlayer());
+        assertEquals(newGame.getPlayers()[2], newGame.getCurrentPlayer());
 
         newGame.getDiceRoller().forceRoll(1, 2);
         newGame.advanceTurn();
-        Assert.assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
+        assertEquals(newGame.getPlayers()[0], newGame.getCurrentPlayer());
     }
 
     /**
      * Tests the getter for the players currently playing.
      */
-
-    @org.junit.Test
+    @Test
     public void getPlayers() {
         newGame = new Board(7);
-        Assert.assertEquals(7, newGame.getPlayers().length);
+        assertEquals(7, newGame.getPlayers().length);
     }
 
     /**
      * Tests to see if players move based on given factors.
      */
-
     @Test
     public void movePlayer() {
         newGame = new Board(1);
         newGame.getCurrentPlayer().setPosition(39);
         newGame.movePlayer(newGame.getCurrentPlayer());
         int totalRoll = newGame.getDiceRoller().getTotal();
-        Assert.assertEquals(totalRoll - 1, newGame.getCurrentPlayer().getPosition());
+        assertEquals(totalRoll - 1, newGame.getCurrentPlayer().getPosition());
+    }
+
+    /**
+     * Tests that a player will be put in jail for rolling 3 doubles
+     */
+    @Test
+    public void movePlayerLogicConsecutiveDoubles() {
+        newGame = new Board(2);
+        newGame.getDiceRoller().forceRoll(1,1);
+
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(0, newGame.getCurrentPlayer().getJailTimer());
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(0, newGame.getCurrentPlayer().getJailTimer());
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(3, newGame.getCurrentPlayer().getJailTimer());
+    }
+
+    /**
+     * Tests that a player will stay in jail if they do not roll doubles
+     */
+    @Test
+    public void movePlayerLogicJailedPlayerNoDoubles() {
+        newGame = new Board(1);
+        newGame.getCurrentPlayer().setPosition(10); //puts player in jail space
+        newGame.getCurrentPlayer().setJailTimer(3);
+        newGame.getDiceRoller().forceRoll(1,2);
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(10, newGame.getCurrentPlayer().getPosition());
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(10, newGame.getCurrentPlayer().getPosition());
+    }
+
+    /**
+     * Tests that a player will leave jail after they roll doubles
+     */
+    @Test
+    public void movePlayerLogicJailedPlayerDoubles() {
+        newGame = new Board(1);
+        newGame.getCurrentPlayer().setPosition(10); //puts player in jail space
+        newGame.getCurrentPlayer().setJailTimer(3);
+        newGame.getDiceRoller().forceRoll(1,1);
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(10, newGame.getCurrentPlayer().getPosition());
+
+        newGame.movePlayerLogic(newGame.getCurrentPlayer());
+        assertEquals(12, newGame.getCurrentPlayer().getPosition());
     }
 
 
     /**
      * Tests if the turn order delegates play order efficiently.
      */
-
-    @org.junit.Test
+    @Test
     public void advanceTurn() {
         newGame = new Board(2);
         newGame.getDiceRoller().forceRoll(1,2);
         newGame.advanceTurn();
-        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
+       assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
 
         newGame.getDiceRoller().forceRoll(1,1);
         newGame.advanceTurn();
-        Assert.assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
+        assertEquals(newGame.getPlayers()[1], newGame.getCurrentPlayer());
     }
 
     /**
      * Tests if the game ends after all players but one go bankrupt.
      */
-
-    @org.junit.Test
+    @Test
     public void isGameOver(){
         newGame = new Board(3);
         newGame.getCurrentPlayer().loseMoney(1500);
@@ -147,7 +189,11 @@ public class BoardTest {
         newGame.advanceTurn();
         newGame.getCurrentPlayer().loseMoney(1500);
         assertTrue(newGame.isGameOver());
+    }
 
-
+    @Test
+    public void isAllRemainingAI() {
+        newGame = new Board(3, 3);
+        assertTrue(newGame.isAllRemainingAI());
     }
 }
