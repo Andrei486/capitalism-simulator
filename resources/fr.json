@@ -1,0 +1,162 @@
+{
+"moneySymbol" : "€",
+
+"spaces" : [
+{
+"position": 1,
+"name": "Avenue de la Méditerranée",
+"cost": 60
+},
+{
+"position": 3,
+"name": "Avenue Baltique",
+"cost": 80
+},
+{
+"position": 6,
+"name": "Avenue Orientale",
+"cost": 100
+},
+{
+"position": 8,
+"name": "Avenue Vermont",
+"cost": 100
+},
+{
+"position": 9,
+"name": "Avenue Connecticut",
+"cost": 120
+},
+{
+"position": 11,
+"name": "Place de St. Charles",
+"cost": 140
+},
+{
+"position": 13,
+"name": "Avenue de l'États",
+"cost": 140
+},
+{
+"position": 14,
+"name": "Avenue Virginia",
+"cost": 160
+},
+{
+"position": 16,
+"name": "Place de St. Jacques",
+"cost": 180
+},
+{
+"position": 18,
+"name": "Avenue Tennessee",
+"cost": 180
+},
+{
+"position": 19,
+"name": "Avenue New York",
+"cost": 180
+},
+{
+"position": 21,
+"name": "Avenue Kentucky",
+"cost": 220
+},
+{
+"position": 23,
+"name": "Avenue Indiana",
+"cost": 220
+},
+
+{
+"position": 24,
+"name": "Avenue Illinois",
+"cost": 240
+},
+
+{
+"position": 26,
+"name": "Avenue Atlantique",
+"cost": 260
+},
+
+{
+"position": 27,
+"name": "Avenue Ventnor",
+"cost": 260
+},
+
+{
+"position": 29,
+"name": "Jardins Marvin",
+"cost": 280
+},
+
+{
+"position": 31,
+"name": "Avenue Pacifique",
+"cost": 300
+},
+
+{
+"position": 32,
+"name": "Avenue Caroline du Nord",
+"cost": 300
+},
+
+{
+"position": 34,
+"name": "Avenue Pennsylvanie",
+"cost": 320
+},
+
+{
+"position": 37,
+"name": "Place Parc",
+"cost": 400
+},
+
+{
+"position": 39,
+"name": "Promenade",
+"cost": 400
+},
+
+{
+"position": 5,
+"name": "Chemin de fer Lecture",
+"cost": 200
+},
+
+{
+"position": 15,
+"name": "Chemin de fer Pennsylvanie",
+"cost": 200
+},
+
+{
+"position": 25,
+"name": "Chemin de fer B.&O.",
+"cost": 200
+},
+
+
+{
+"position": 35,
+"name": "Ligne Courte",
+"cost": 200
+},
+
+{
+"position": 12,
+"name": "Service de l'électrique"
+},
+
+{
+"position": 28,
+"name": "Service de l'eau"
+}
+
+
+   ]
+}
