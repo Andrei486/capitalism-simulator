@@ -1,5 +1,6 @@
 package main;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,7 +8,7 @@ import java.util.Set;
  * Class that manages a color group of RealEstates and building houses on them.
  * @author Andrei Popescu, 101143798
  */
-public class RealEstateGroup {
+public class RealEstateGroup implements Serializable {
     private final Set<RealEstate> realEstates;
     private final ColorGroup color;
     private boolean ownedBySamePlayer; //true if all properties are owned by the same (non-null) player

@@ -1,5 +1,6 @@
 package main;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -7,7 +8,7 @@ import java.util.HashSet;
  * Class representing a Monopoly board. Provides methods that allow
  * player turns to be advanced and players to move along the board.
  */
-public class Board {
+public class Board implements Serializable {
     private Space[] spaces;
     private final Player[] players;
     private Property[] properties;
@@ -17,7 +18,7 @@ public class Board {
     public static final int BOARD_SIZE = 40;
     private int bankruptPlayers;
     private int consecutiveDoubles;
-    private final HashSet<MonopolyView> gameViews;
+    private HashSet<MonopolyView> gameViews;
     public static final int TURNS_IN_JAIL = 3;
     public static final int EXIT_JAIL_COST = 50;
 
@@ -320,5 +321,22 @@ public class Board {
         for (MonopolyView view: gameViews) {
             view.handleBuy(e);
         }
+    }
+
+    public static Board importBoard(String filepath) throws IOException, ClassNotFoundException {
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));
+        Board board = (Board) in.readObject();
+        in.close();
+        return board;
+    }
+
+    public void exportBoard(String filepath) throws IOException {
+        HashSet<MonopolyView> views = this.gameViews;
+        this.gameViews = new HashSet<>();
+        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filepath, false));
+        out.writeObject(this);
+        out.flush();
+        out.close();
+        this.gameViews = views;
     }
 }

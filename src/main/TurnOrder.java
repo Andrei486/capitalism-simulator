@@ -1,5 +1,6 @@
 package main;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -7,7 +8,7 @@ import java.util.Queue;
 /**
  * A class that manages the turn order of a Monopoly game.
  */
-public class TurnOrder {
+public class TurnOrder implements Serializable {
     private Player currentPlayer;
     private Queue<Player> nextTurns;
 

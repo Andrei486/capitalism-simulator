@@ -1,10 +1,12 @@
 package main;
 
+import java.io.Serializable;
+
 /**
  * Class representing a Monopoly property that can be bought and owned by a player.
  * @author Andrei Popescu, 101143798
  */
-public abstract class Property {
+public abstract class Property implements Serializable {
 
     protected String name;
     protected int cost;

@@ -1,5 +1,7 @@
 package main;
 
+import java.io.Serializable;
+
 /**
  * AI class to control a player.
  * @author Andrei Popescu
@@ -7,7 +9,7 @@ package main;
  * @author Mohammed Alkhaledi
  * @author Waleed Majbour
  */
-public class PlayerAI {
+public class PlayerAI implements Serializable {
 
     private Board board;
     private Player player;
