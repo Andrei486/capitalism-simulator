@@ -1,12 +1,13 @@
 package main;
 
+import java.io.Serializable;
 import java.util.HashSet;
 
 /**
  * The Player class represents a player on the board, storing all information such as name and money.
  * @author Sebastian Lionais s#101157892
  */
-public class Player {
+public class Player implements Serializable {
 
     private final String name;
     private int money;

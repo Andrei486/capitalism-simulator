@@ -2,7 +2,10 @@ package main;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.LinkedList;
 
 /**
  * @author Waleed Majbour 101144882
@@ -22,6 +25,8 @@ public class BoardView extends JFrame implements MonopolyView {
     private final JButton jailButton;
     private final JButton movePlayerButton;
     private final JButton endTurnButton;
+    private final JButton saveButton;
+    public static final String[] SAVE_LOCATIONS = {"save_file_1.ser", "save_file_2.ser", "save_file_3.ser"};
 
     /**
      * Construct a BoardView to represent a Board, initializing all UI elements.
@@ -110,11 +115,13 @@ public class BoardView extends JFrame implements MonopolyView {
         buyHouseButton.setMnemonic('H'); //button can also be pressed by Alt+H
         centerPanel.add(buyHouseButton);
         updateBuyButtons();
+        buyButton.setEnabled(false);
 
         jailButton = new JButton();
         jailButton.setText("Exit Jail");
         jailButton.setMnemonic('J'); //button can also be pressed by Alt+J
         jailButton.addActionListener(new ExitJailController(this.board));
+        jailButton.setEnabled(false);
         centerPanel.add(jailButton);
         updateJailButton();
 
@@ -132,6 +139,15 @@ public class BoardView extends JFrame implements MonopolyView {
         centerPanel.add(endTurnButton);
         endTurnButton.setEnabled(false);
         gridCenterPanel.add(centerPanel, BorderLayout.CENTER);
+
+        JPanel saveButtonPanel = new JPanel(new FlowLayout());
+        saveButton = new JButton();
+        saveButton.setText("Save Game");
+        saveButton.setMnemonic('S');
+        saveButton.addActionListener(new SaveController(this.board));
+        saveButtonPanel.add(saveButton);
+        saveButton.setEnabled(true);
+        gridCenterPanel.add(saveButtonPanel, BorderLayout.SOUTH);
 
         c = new GridBagConstraints();
         c.gridx = 1;
@@ -224,6 +240,7 @@ public class BoardView extends JFrame implements MonopolyView {
         endTurnButton.setEnabled(false);
         jailButton.setEnabled(false);
         movePlayerButton.setEnabled(false);
+        saveButton.setEnabled(false);
     }
 
     /**
@@ -287,6 +304,7 @@ public class BoardView extends JFrame implements MonopolyView {
         updateJailButton();
         endTurnButton.setEnabled(true);
         movePlayerButton.setEnabled(false);
+        saveButton.setEnabled(false);
     }
 
     /**
@@ -389,6 +407,7 @@ public class BoardView extends JFrame implements MonopolyView {
             endTurnButton.setEnabled(false);
             movePlayerButton.setEnabled(true);
             jailButton.setEnabled(false);
+            saveButton.setEnabled(true);
         }
     }
 
@@ -413,48 +432,83 @@ public class BoardView extends JFrame implements MonopolyView {
 
     public static void main(String[] args) {
         boolean isInputValid = false;
-        int playerCount = 0;
-        while (!isInputValid) {
-            String playerCountString = JOptionPane.showInputDialog("Please enter the number of players (2-8).");
-            if (playerCountString == null) {
-                System.exit(0);
-            }
-            try {
-                playerCount = Integer.parseInt(playerCountString);
-                if (2 <= playerCount && playerCount <= 8) {
-                    isInputValid = true;
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            "The number of players must be between 2 and 8 (inclusive).");
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        String.format("%s is not a valid number of players.", playerCountString));
-            }
-        }
-        isInputValid = false;
-        int aiCount = 0;
-        while (!isInputValid) {
-            String playerCountString = JOptionPane.showInputDialog(
-                    String.format("Please enter the number of AI players (up to %d)", playerCount));
-            if (playerCountString == null) {
-                System.exit(0);
-            }
-            try {
-                aiCount = Integer.parseInt(playerCountString);
-                if (0 <= aiCount && aiCount <= playerCount) {
-                    isInputValid = true;
-                } else {
-                    JOptionPane.showMessageDialog(null,
-                            String.format("The number of AIs must be between 0 and %d (inclusive).", playerCount));
-                }
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null,
-                        String.format("%s is not a valid number of AIs.", playerCountString));
-            }
-        }
+        Board board = null;
 
-        Board board = new Board(playerCount, aiCount);
+        int reply = JOptionPane.showConfirmDialog(null, "Load a saved game?",
+                "Start Game", JOptionPane.YES_NO_OPTION);
+
+        if (reply == JOptionPane.YES_OPTION) {
+            String filepath;
+            LinkedList<String> validSlots = new LinkedList<>();
+            for (String slot : BoardView.SAVE_LOCATIONS) {
+                File saveFile = new File(slot);
+                if (saveFile.exists()) {
+                    validSlots.add(slot);
+                }
+            }
+            if (validSlots.size() == 0) {
+                JOptionPane.showMessageDialog(null, "There are no save files. Exiting.");
+                System.exit(0);
+            }
+            String[] saveSlots = validSlots.toArray(new String[validSlots.size()]);
+            filepath = (String) JOptionPane.showInputDialog(null, "Select a save slot",
+                    "Save Game", JOptionPane.PLAIN_MESSAGE, null,
+                    saveSlots, saveSlots[0]);
+            if (filepath == null) {
+                JOptionPane.showMessageDialog(null, "No save file was selected. Exiting.");
+                System.exit(0);
+            }
+            try {
+                board = Board.importBoard(filepath);
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Could not load the game. Exiting.");
+                System.exit(1);
+            }
+        } else {
+            int playerCount = 0;
+            while (!isInputValid) {
+                String playerCountString = JOptionPane.showInputDialog("Please enter the number of players (2-8).");
+                if (playerCountString == null) {
+                    System.exit(0);
+                }
+                try {
+                    playerCount = Integer.parseInt(playerCountString);
+                    if (2 <= playerCount && playerCount <= 8) {
+                        isInputValid = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                "The number of players must be between 2 and 8 (inclusive).");
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            String.format("%s is not a valid number of players.", playerCountString));
+                }
+            }
+            isInputValid = false;
+            int aiCount = 0;
+            while (!isInputValid) {
+                String playerCountString = JOptionPane.showInputDialog(
+                        String.format("Please enter the number of AI players (up to %d)", playerCount));
+                if (playerCountString == null) {
+                    System.exit(0);
+                }
+                try {
+                    aiCount = Integer.parseInt(playerCountString);
+                    if (0 <= aiCount && aiCount <= playerCount) {
+                        isInputValid = true;
+                    } else {
+                        JOptionPane.showMessageDialog(null,
+                                String.format("The number of AIs must be between 0 and %d (inclusive).", playerCount));
+                    }
+                } catch (NumberFormatException e) {
+                    JOptionPane.showMessageDialog(null,
+                            String.format("%s is not a valid number of AIs.", playerCountString));
+                }
+            }
+
+            board = new Board(playerCount, aiCount);
+        }
         new BoardView(board);
     }
 }

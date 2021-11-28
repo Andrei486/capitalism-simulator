@@ -1,11 +1,13 @@
 package main;
 
+import java.io.Serializable;
+
 /**
  * Class representing a space on a Monopoly board.
  * Base class for all different space types.
  * @author Andrei Popescu, 101143798
  */
-public abstract class Space {
+public abstract class Space implements Serializable {
     private String name;
 
     /**

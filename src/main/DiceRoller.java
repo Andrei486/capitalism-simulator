@@ -1,12 +1,14 @@
 package main;
 
+import java.io.Serializable;
+
 /**
  * Using the Random util library to simulate rolling dice with a limit of 1 - 6 per die.
  *
  * @author Waleed Majbour (101144882)
  */
 
-public class DiceRoller {
+public class DiceRoller implements Serializable {
 
     private int die1;
     private int die2;
