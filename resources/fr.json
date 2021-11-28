@@ -124,27 +124,21 @@
 
 {
 "position": 5,
-"name": "Chemin de fer Lecture",
-"cost": 200
+"name": "Chemin de fer Lecture"
 },
 
 {
 "position": 15,
-"name": "Chemin de fer Pennsylvanie",
-"cost": 200
+"name": "Chemin de fer Pennsylvanie"
 },
 
 {
 "position": 25,
-"name": "Chemin de fer B.&O.",
-"cost": 200
+"name": "Chemin de fer B.&O."
 },
-
-
 {
 "position": 35,
-"name": "Ligne Courte",
-"cost": 200
+"name": "Ligne Courte"
 },
 
 {
@@ -156,7 +150,5 @@
 "position": 28,
 "name": "Service de l'eau"
 }
-
-
    ]
 }
