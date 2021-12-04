@@ -1,154 +1,123 @@
 {
-"moneySymbol" : "€",
-
-"spaces" : [
-{
-"position": 1,
-"name": "Avenue de la Méditerranée",
-"cost": 60
-},
-{
-"position": 3,
-"name": "Avenue Baltique",
-"cost": 80
-},
-{
-"position": 6,
-"name": "Avenue Orientale",
-"cost": 100
-},
-{
-"position": 8,
-"name": "Avenue Vermont",
-"cost": 100
-},
-{
-"position": 9,
-"name": "Avenue Connecticut",
-"cost": 120
-},
-{
-"position": 11,
-"name": "Place de St. Charles",
-"cost": 140
-},
-{
-"position": 13,
-"name": "Avenue de l'États",
-"cost": 140
-},
-{
-"position": 14,
-"name": "Avenue Virginia",
-"cost": 160
-},
-{
-"position": 16,
-"name": "Place de St. Jacques",
-"cost": 180
-},
-{
-"position": 18,
-"name": "Avenue Tennessee",
-"cost": 180
-},
-{
-"position": 19,
-"name": "Avenue New York",
-"cost": 180
-},
-{
-"position": 21,
-"name": "Avenue Kentucky",
-"cost": 220
-},
-{
-"position": 23,
-"name": "Avenue Indiana",
-"cost": 220
-},
-
-{
-"position": 24,
-"name": "Avenue Illinois",
-"cost": 240
-},
-
-{
-"position": 26,
-"name": "Avenue Atlantique",
-"cost": 260
-},
-
-{
-"position": 27,
-"name": "Avenue Ventnor",
-"cost": 260
-},
-
-{
-"position": 29,
-"name": "Jardins Marvin",
-"cost": 280
-},
-
-{
-"position": 31,
-"name": "Avenue Pacifique",
-"cost": 300
-},
-
-{
-"position": 32,
-"name": "Avenue Caroline du Nord",
-"cost": 300
-},
-
-{
-"position": 34,
-"name": "Avenue Pennsylvanie",
-"cost": 320
-},
-
-{
-"position": 37,
-"name": "Place Parc",
-"cost": 400
-},
-
-{
-"position": 39,
-"name": "Promenade",
-"cost": 400
-},
-
-{
-"position": 5,
-"name": "Chemin de fer Lecture"
-},
-
-{
-"position": 15,
-"name": "Chemin de fer Pennsylvanie"
-},
-
-{
-"position": 25,
-"name": "Chemin de fer B.&O."
-},
-{
-"position": 35,
-"name": "Ligne Courte"
-},
-
-{
-"position": 12,
-"name": "Service de l'électrique"
-},
-
-{
-"position": 28,
-"name": "Service de l'eau"
-}
+   "moneySymbol" : "€",
+   "spaces" : [
+      {},
+      {
+         "name": "Boul. de Belleville",
+         "cost": 60
+      },
+      {},
+      {
+         "name": "Rue Lecourbe",
+         "cost": 80
+      },
+      {},
+      {
+         "name": "Gare Montparnasse"
+      },
+      {
+         "name": "Rue de Vaugirard",
+         "cost": 100
+      },
+      {},
+      {
+         "name": "Rue de Courcelles",
+         "cost": 100
+      },
+      {
+         "name": "Avenue de la République",
+         "cost": 120
+      },
+      {},
+      {
+         "name": "Boul. de la Villette",
+         "cost": 140
+      },
+      {
+         "name": "Compagnie d'électricité"
+      },
+      {
+         "name": "Avenue de Neuilly",
+         "cost": 140
+      },
+      {
+         "name": "Rue de Paradis",
+         "cost": 160
+      },
+      {
+         "name": "Gare de Lyon"
+      },
+      {
+         "name": "Avenue Mozart",
+         "cost": 180
+      },
+      {},
+      {
+         "name": "Boulevard Saint-Michel",
+         "cost": 180
+      },
+      {
+         "name": "Place Pigalle",
+         "cost": 180
+      },
+      {},
+      {
+         "name": "Avenue Matignon",
+         "cost": 220
+      },
+      {},
+      {
+         "name": "Boulevard Malesherbes",
+         "cost": 220
+      },
+      {
+         "name": "Avenue Henri-Martin",
+         "cost": 240
+      },
+      {
+         "name": "Gare du Nord."
+      },
+      {
+         "name": "Faubourg Saint-Honoré",
+         "cost": 260
+      },
+      {
+         "name": "Place de la Bourse",
+         "cost": 260
+      },
+      {
+         "name": "Compagnie des eaux"
+      },
+      {
+         "name": "Rue Lafayette",
+         "cost": 280
+      },
+      {},
+      {
+         "name": "Avenue de Breteuil",
+         "cost": 300
+      },
+      {
+         "name": "Avenue Foch",
+         "cost": 300
+      },
+      {},
+      {
+         "name": "Boulevard des Capucines",
+         "cost": 320
+      },
+      {
+         "name": "Gare Saint-Lazare"
+      },
+      {},
+      {
+         "name": "Avenue des Champs-Élysées",
+         "cost": 400
+      },
+      {},
+      {
+         "name": "Rue de la Paix",
+         "cost": 400
+      }
    ]
 }
