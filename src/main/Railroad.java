@@ -39,15 +39,15 @@ public class Railroad extends Property{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(this.name).append("\n");
-        sb.append("Cost:       $").append(this.getCost()).append("\n");
+        sb.append("Cost:       ").append(moneySymbol).append(this.getCost()).append("\n");
         if (this.getOwner() == null) {
-            sb.append("Rent(1):  $25\n");
-            sb.append("Rent(2):  $50\n");
-            sb.append("Rent(3):  $100\n");
-            sb.append("Rent(4):  $200\n");
+            sb.append("Rent(1): ").append(moneySymbol).append("25\n");
+            sb.append("Rent(2): ").append(moneySymbol).append("50\n");
+            sb.append("Rent(3): ").append(moneySymbol).append("100\n");
+            sb.append("Rent(4): ").append(moneySymbol).append("200\n");
             sb.append("Not owned");
         } else {
-            sb.append("Rent:       $").append(this.getRent()).append("\n");
+            sb.append("Rent:       ").append(moneySymbol).append(this.getRent()).append("\n");
             sb.append("Owned by ").append(this.getOwner().getName());
         }
         return sb.toString();

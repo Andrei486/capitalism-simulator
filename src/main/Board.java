@@ -1,5 +1,8 @@
 package main;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,6 +22,8 @@ public class Board implements Serializable {
     private int bankruptPlayers;
     private int consecutiveDoubles;
     private HashSet<MonopolyView> gameViews;
+    private char moneySymbol;
+    public static char MONEY_SYMBOL;
     public static final int TURNS_IN_JAIL = 3;
     public static final int EXIT_JAIL_COST = 50;
 
@@ -26,10 +31,10 @@ public class Board implements Serializable {
      * Constructs a board with the specified number of players.
      * @param totalPlayers integer number of players (including AI)
      */
-    public Board(int totalPlayers, int nAI) {
+    public Board(int totalPlayers, int nAI, InternationalVersion version) {
         int nPlayers = totalPlayers - nAI;
         diceRoller = new DiceRoller();
-        initializeBoard();
+        initializeBoard(getVersionFile(version));
         bankruptPlayers = 0;
         this.players = new Player[totalPlayers];
         for (int i = 0; i < nPlayers; i++) {
@@ -46,7 +51,7 @@ public class Board implements Serializable {
     }
 
     public Board(int nPlayers) {
-        this(nPlayers, 0);
+        this(nPlayers, 0, InternationalVersion.NORTH_AMERICA);
     }
 
     /**
@@ -99,6 +104,10 @@ public class Board implements Serializable {
     public void movePlayer(Player player) {
         diceRoller.roll();
         movePlayerLogic(player);
+    }
+
+    public char getMoneySymbol() {
+        return moneySymbol;
     }
 
     /**
@@ -175,31 +184,56 @@ public class Board implements Serializable {
     }
 
     /**
+     * Gets the JSON file containing the information needed to load a board of a
+     * given international version.
+     * @param version the InternationalVersion to load
+     * @return File object representing the JSON file
+     */
+    public File getVersionFile(InternationalVersion version) {
+        String filepath = null;
+        switch (version) {
+            case NORTH_AMERICA:
+                filepath = "resources/na.json";
+                break;
+            case FRANCE:
+                filepath = "resources/fr.json";
+                break;
+            case UNITED_KINGDOM:
+                filepath = "resources/uk.json";
+                break;
+        }
+        return new File(filepath);
+    }
+
+    /**
      * Initializes the spaces on the board, creating properties as needed.
      */
-    private void initializeBoard() {
-        Property property;
-        this.spaces = new Space[40];
-        int[] emptyIndices = {2, 4, 7, 17, 20, 22, 33, 36, 38};
-        for (int i : emptyIndices) {
-            this.spaces[i] = new EmptySpace();
+    private void initializeBoard(File file) {
+
+        JSONTokener tokener;
+        JSONObject rootObject = null;
+        JSONObject propertyObject;
+
+        try (InputStream input = new FileInputStream(file)) {
+            tokener = new JSONTokener(input);
+            rootObject = new JSONObject(tokener);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        //get money symbol from the JSON file
+        MONEY_SYMBOL = rootObject.getString("moneySymbol").charAt(0);
+        this.moneySymbol = MONEY_SYMBOL;
+        JSONArray propertyArray = rootObject.getJSONArray("spaces");
+
+        this.spaces = new Space[40];
+
+        //define indices which have each type of space
+        Property property;
+        int[] emptyIndices = {2, 4, 7, 17, 20, 22, 33, 36, 38};
         int[] propertyIndices = {1, 3, 6, 8, 9, 11, 13, 14, 16, 18, 19,
                 21, 23, 24, 26, 27, 29, 31, 32, 34, 37, 39
         };
-        int[] propertyCosts = {60, 60, 100, 100, 120, 140, 140, 160, 180, 180, 200,
-                220, 220, 240, 260, 260, 280, 300, 300, 320, 350, 400
-        };
-        int[] railroadIndices = {5, 15, 25, 35};
-        int[] utilityIndices = {12, 28};
-        int[] jailIndices = {10, 30};
-        jailPosition = 10;
-        int[] goIndices = {0};
-        this.properties = new Property[propertyIndices.length + railroadIndices.length + utilityIndices.length];
-        this.spaces[jailIndices[0]] = new JailSpace("Jail", jailIndices[0]);
-        this.spaces[jailIndices[1]] = new GoToJailSpace("Go to Jail", (JailSpace) this.spaces[jailIndices[0]]);
-        this.spaces[goIndices[0]] = new GoSpace("Go");
-
         ColorGroup[] propertyColors = {
                 ColorGroup.BROWN, ColorGroup.BROWN,
                 ColorGroup.LIGHT_BLUE, ColorGroup.LIGHT_BLUE, ColorGroup.LIGHT_BLUE,
@@ -210,37 +244,47 @@ public class Board implements Serializable {
                 ColorGroup.GREEN, ColorGroup.GREEN, ColorGroup.GREEN,
                 ColorGroup.BLUE, ColorGroup.BLUE
         };
-        String[] propertyNames = {
-                "Mediterranean Avenue", "Baltic Avenue",
-                "Oriental Avenue", "Vermont Avenue", "Connecticut Avenue",
-                "St. Charles Place", "States Avenue", "Virginia Avenue",
-                "St. James Place", "Tennessee Avenue", "New York Avenue",
-                "Kentucky Avenue", "Indiana Avenue", "Illinois Avenue",
-                "Atlantic Avenue", "Ventnor Avenue", "Marvin Gardens",
-                "Pacific Avenue", "North Carolina Avenue", "Pennsylvania Avenue",
-                "Park Place", "Boardwalk"
-        };
-        String[] railroadNames = {"Reading Railroad", "Pennsylvania Railroad", "B.&O. Railroad", "Short Line"};
-        String[] utilityNames = {"Electric Company", "Water Works"};
+        int[] railroadIndices = {5, 15, 25, 35};
+        int[] utilityIndices = {12, 28};
+        int[] jailIndices = {10, 30};
+        int[] goIndices = {0};
+        jailPosition = 10;
+        this.properties = new Property[propertyIndices.length + railroadIndices.length + utilityIndices.length];
+
+        //create empty spaces
+        for (int i : emptyIndices) {
+            this.spaces[i] = new EmptySpace();
+        }
+
+        //create jail and GO spaces
+        this.spaces[jailIndices[0]] = new JailSpace("Jail", jailIndices[0]);
+        this.spaces[jailIndices[1]] = new GoToJailSpace("Go to Jail", (JailSpace) this.spaces[jailIndices[0]]);
+        this.spaces[goIndices[0]] = new GoSpace("Go");
+
+        //create color groups (don't need JSON file input, colors never change)
         HashMap<ColorGroup, RealEstateGroup> groups = new HashMap<>();
         for (ColorGroup c: ColorGroup.values()) {
             groups.put(c, new RealEstateGroup(c));
         }
+        //create real estate spaces with values from JSON file
         for (int i = 0; i < propertyIndices.length; i++) {
-            property = new RealEstate(propertyNames[i], propertyCosts[i],
+            propertyObject = (JSONObject) propertyArray.get(propertyIndices[i]);
+            property = new RealEstate(propertyObject.getString("name"), propertyObject.getInt("cost"),
                     propertyColors[i], groups.get(propertyColors[i]));
             this.properties[i] = property;
             this.spaces[propertyIndices[i]] = new PropertySpace(property);
         }
-
+        //create railroad spaces with values from JSON file
         for (int i = 0; i < railroadIndices.length; i++) {
-            property = new Railroad(railroadNames[i]);
+            propertyObject = (JSONObject) propertyArray.get(railroadIndices[i]);
+            property = new Railroad(propertyObject.getString("name"));
             this.properties[i + propertyIndices.length] = property;
             this.spaces[railroadIndices[i]] = new PropertySpace(property);
         }
-
+        //create utility spaces with values from JSON file
         for (int i = 0; i < utilityIndices.length; i++) {
-            property = new Utility(utilityNames[i], this.diceRoller);
+            propertyObject = (JSONObject) propertyArray.get(utilityIndices[i]);
+            property = new Utility(propertyObject.getString("name"), this.diceRoller);
             this.properties[i + propertyIndices.length + railroadIndices.length] = property;
             this.spaces[utilityIndices[i]] = new PropertySpace(property);
         }

@@ -10,6 +10,7 @@ public abstract class Property implements Serializable {
 
     protected String name;
     protected int cost;
+    protected char moneySymbol;
     private Player owner = null;
 
     /**
@@ -20,6 +21,7 @@ public abstract class Property implements Serializable {
     public Property(String name, int cost) {
         this.name = name;
         this.cost = cost;
+        this.moneySymbol = Board.MONEY_SYMBOL;
     }
 
     /**

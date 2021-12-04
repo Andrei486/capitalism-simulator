@@ -96,9 +96,9 @@ public class RealEstate extends Property{
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(this.name).append("\n");
         sb.append("Color: ").append(this.getColorGroup()).append("\n");
-        sb.append("Cost: $").append(this.getCost()).append("\n");
-        sb.append("House cost: $").append(this.getHouseCost()).append("\n");
-        sb.append("Rent: $").append(this.getRent()).append("\n");
+        sb.append("Cost: ").append(moneySymbol).append(this.getCost()).append("\n");
+        sb.append("House cost: ").append(moneySymbol).append(this.getHouseCost()).append("\n");
+        sb.append("Rent: ").append(moneySymbol).append(this.getRent()).append("\n");
         if (this.getHouses() == 5) {
             sb.append("Hotel built\n");
         } else {

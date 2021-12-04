@@ -210,7 +210,7 @@ public class BoardView extends JFrame implements MonopolyView {
         for (int i = 0; i < playerInfoLabels.length; i++) {
             Player player = board.getPlayers()[i];
             JLabel label = playerInfoLabels[i];
-            label.setText(String.format("%s: $%d", player.getName(), player.getMoney()));
+            label.setText(String.format("%s: %c%d", player.getName(), this.board.getMoneySymbol(), player.getMoney()));
             if (player == board.getCurrentPlayer()) {
                 label.setForeground(Color.BLUE);
             } else if (player.getIsBankrupt()) {
@@ -465,8 +465,33 @@ public class BoardView extends JFrame implements MonopolyView {
                 JOptionPane.showMessageDialog(null, "Could not load the game. Exiting.");
                 System.exit(1);
             }
+
         } else {
+            //don't load an old game
+            //prompt user for the version to use
+            InternationalVersion version = null;
             int playerCount = 0;
+            int aiCount = 0;
+
+            String[] versionNames = new String[InternationalVersion.values().length];
+            for (int i = 0; i < InternationalVersion.values().length; i++) {
+                versionNames[i] = InternationalVersion.values()[i].toString();
+            }
+            String selectedVersionName = (String) JOptionPane.showInputDialog(null,
+                    "Select an international version",
+                    "Select Version", JOptionPane.PLAIN_MESSAGE,null,
+                    versionNames, versionNames[0]);
+            if (selectedVersionName == null) {
+                System.exit(0);
+            }
+            for (InternationalVersion internationalVersion : InternationalVersion.values()) {
+                if (internationalVersion.toString().equals(selectedVersionName)) {
+                    version = internationalVersion;
+                }
+            }
+
+            //prompt user for number of total players
+            isInputValid = false;
             while (!isInputValid) {
                 String playerCountString = JOptionPane.showInputDialog("Please enter the number of players (2-8).");
                 if (playerCountString == null) {
@@ -485,8 +510,9 @@ public class BoardView extends JFrame implements MonopolyView {
                             String.format("%s is not a valid number of players.", playerCountString));
                 }
             }
+
+            //prompt user for number of AI players
             isInputValid = false;
-            int aiCount = 0;
             while (!isInputValid) {
                 String playerCountString = JOptionPane.showInputDialog(
                         String.format("Please enter the number of AI players (up to %d)", playerCount));
@@ -507,7 +533,7 @@ public class BoardView extends JFrame implements MonopolyView {
                 }
             }
 
-            board = new Board(playerCount, aiCount);
+            board = new Board(playerCount, aiCount, version);
         }
         new BoardView(board);
     }
