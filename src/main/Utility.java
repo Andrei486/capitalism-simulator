@@ -58,7 +58,7 @@ public class Utility extends Property{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(this.name).append("\n");
-        sb.append("Cost: $").append(this.getCost()).append("\n");
+        sb.append("Cost: ").append(moneySymbol).append(this.getCost()).append("\n");
         if(this.getOwner() == null){
             sb.append("If one utility is owned, rent is 4 times what is shown on dice.\n");
             sb.append("If both utilities are owned, rent is 10 times what is shown on dice.");

@@ -1,139 +1,123 @@
 {
   "moneySymbol": "$",
   "spaces": [
+    {},
     {
-      "position": 1,
       "name": "Baltic Avenue",
       "cost": 60
     },
+    {},
     {
-      "position": 3,
       "name": "Mediterranean Avenue",
       "cost": 60
     },
+    {},
     {
-      "position": 6,
+      "name": "Reading Railroad"
+    },
+    {
       "name": "Oriental Avenue",
       "cost": 100
     },
+    {},
     {
-      "position": 8,
       "name": "Vermont Avenue",
       "cost": 100
     },
     {
-      "position": 9,
       "name": "Connecticut Avenue",
       "cost": 120
     },
+    {},
     {
-      "position": 11,
       "name": "St. Charles Place",
       "cost": 140
     },
     {
-      "position": 13,
+      "name": "Electric Company"
+    },
+    {
       "name": "States Avenue",
       "cost": 140
     },
     {
-      "position": 14,
       "name": "Virginia Avenue",
       "cost": 160
     },
     {
-      "position": 16,
+      "name": "Pennsylvania Railroad"
+    },
+    {
       "name": "St. James Place",
       "cost": 180
     },
+    {},
     {
-      "position": 18,
       "name": "Tennessee Avenue",
       "cost": 180
     },
     {
-      "position": 19,
       "name": "New York Avenue",
       "cost": 200
     },
+    {},
     {
-      "position": 21,
       "name": "Kentucky Avenue",
       "cost": 220
     },
+    {},
     {
-      "position": 23,
       "name": "Indiana Avenue",
       "cost": 220
     },
     {
-      "position": 24,
       "name": "Illinois Avenue",
       "cost": 240
     },
     {
-      "position": 26,
+      "name": "B.&O. Railroad"
+    },
+    {
       "name": "Atlantic Avenue",
       "cost": 260
     },
     {
-      "position": 27,
       "name": "Ventnor Avenue",
       "cost": 260
     },
     {
-      "position": 29,
+      "name": "Water Works"
+    },
+    {
       "name": "Marvin Gardens",
       "cost": 280
     },
+    {},
     {
-      "position": 31,
       "name": "Pacific Avenue",
       "cost": 300
     },
     {
-      "position": 32,
       "name": "North Carolina Avenue",
       "cost": 300
     },
+    {},
     {
-      "position": 34,
       "name": "Pennsylvania Avenue",
       "cost": 320
     },
     {
-      "position": 37,
+      "name": "Short Line"
+    },
+    {},
+    {
       "name": "Park Place",
       "cost": 350
     },
+    {},
     {
-      "position": 39,
       "name": "Boardwalk",
       "cost": 400
-    },
-    {
-      "position": 5,
-      "name": "Reading Railroad"
-    },
-    {
-      "position": 15,
-      "name": "Pennsylvania Railroad"
-    },
-    {
-      "position": 25,
-      "name": "B.&O. Railroad"
-    },
-    {
-      "position": 35,
-      "name": "Short Line"
-    },
-    {
-      "position": 12,
-      "name": "Electric Company"
-    },
-    {
-      "position": 28,
-      "name": "Water Works"
     }
   ]
 }

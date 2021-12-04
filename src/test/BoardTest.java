@@ -193,7 +193,7 @@ public class BoardTest {
 
     @Test
     public void isAllRemainingAI() {
-        newGame = new Board(3, 3);
+        newGame = new Board(3, 3, InternationalVersion.NORTH_AMERICA);
         assertTrue(newGame.isAllRemainingAI());
     }
 }
