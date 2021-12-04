@@ -1,139 +1,123 @@
 {
     "moneySymbol": "£",
     "spaces": [
+        {},
         {
-            "position": 1,
             "name": "Old Kent Road",
             "cost": 60
         },
+        {},
         {
-            "position": 3,
             "name": "Whitechapel Road",
             "cost": 60
         },
+        {},
         {
-            "position": 6,
+            "name": "King's Cross station"
+        },
+        {
             "name": "The Angel Islington",
             "cost": 100
         },
+        {},
         {
-            "position": 8,
             "name": "Euston Road",
             "cost": 100
         },
         {
-            "position": 9,
             "name": "Pentonville Road",
             "cost": 120
         },
+        {},
         {
-            "position": 11,
             "name": "Pall Mall",
             "cost": 140
         },
         {
-            "position": 13,
+            "name": "Electric Company"
+        },
+        {
             "name": "Whitehall",
             "cost": 140
         },
         {
-            "position": 14,
             "name": "Northumberland Avenue",
             "cost": 160
         },
         {
-            "position": 16,
+            "name": "Marylebone station"
+        },
+        {
             "name": "Bow Street",
             "cost": 180
         },
+        {},
         {
-            "position": 18,
             "name": "Great Marlborough Street",
             "cost": 180
         },
         {
-            "position": 19,
             "name": "Vine Street",
             "cost": 200
         },
+        {},
         {
-            "position": 21,
             "name": "Strand",
             "cost": 220
         },
+        {},
         {
-            "position": 23,
             "name": "Fleet Street",
             "cost": 220
         },
         {
-            "position": 24,
             "name": "Trafalgar Square",
             "cost": 240
         },
         {
-            "position": 26,
+            "name": "Fenchurch Street station"
+        },
+        {
             "name": "Leicester Square",
             "cost": 260
         },
         {
-            "position": 27,
             "name": "Coventry Street",
             "cost": 260
         },
         {
-            "position": 29,
+            "name": "Water Works"
+        },
+        {
             "name": "Piccadilly",
             "cost": 280
         },
+        {},
         {
-            "position": 31,
             "name": "Regent Street",
             "cost": 300
         },
         {
-            "position": 32,
             "name": "Oxford Street",
             "cost": 300
         },
+        {},
         {
-            "position": 34,
             "name": "Bond Street",
             "cost": 320
         },
         {
-            "position": 37,
+            "name": "Liverpool Street station"
+        },
+        {},
+        {
             "name": "Park Lane",
             "cost": 350
         },
+        {},
         {
-            "position": 39,
             "name": "Mayfair",
             "cost": 400
-        },
-        {
-            "position": 5,
-            "name": "King's Cross station"
-        },
-        {
-            "position": 15,
-            "name": "Marylebone station"
-        },
-        {
-            "position": 25,
-            "name": "Fenchurch Street station"
-        },
-        {
-            "position": 35,
-            "name": "Liverpool Street station"
-        },
-        {
-            "position": 12,
-            "name": "Electric Company"
-        },
-        {
-            "position": 28,
-            "name": "Water Works"
         }
     ]
 }
