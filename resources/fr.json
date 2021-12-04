@@ -1,139 +1,123 @@
 {
    "moneySymbol" : "€",
    "spaces" : [
+      {},
       {
-         "position": 1,
          "name": "Boul. de Belleville",
          "cost": 60
       },
+      {},
       {
-         "position": 3,
          "name": "Rue Lecourbe",
          "cost": 80
       },
+      {},
       {
-         "position": 6,
+         "name": "Gare Montparnasse"
+      },
+      {
          "name": "Rue de Vaugirard",
          "cost": 100
       },
+      {},
       {
-         "position": 8,
          "name": "Rue de Courcelles",
          "cost": 100
       },
       {
-         "position": 9,
          "name": "Avenue de la République",
          "cost": 120
       },
+      {},
       {
-         "position": 11,
          "name": "Boul. de la Villette",
          "cost": 140
       },
       {
-         "position": 13,
+         "name": "Compagnie d'électricité"
+      },
+      {
          "name": "Avenue de Neuilly",
          "cost": 140
       },
       {
-         "position": 14,
          "name": "Rue de Paradis",
          "cost": 160
       },
       {
-         "position": 16,
+         "name": "Gare de Lyon"
+      },
+      {
          "name": "Avenue Mozart",
          "cost": 180
       },
+      {},
       {
-         "position": 18,
          "name": "Boulevard Saint-Michel",
          "cost": 180
       },
       {
-         "position": 19,
          "name": "Place Pigalle",
          "cost": 180
       },
+      {},
       {
-         "position": 21,
          "name": "Avenue Matignon",
          "cost": 220
       },
+      {},
       {
-         "position": 23,
          "name": "Boulevard Malesherbes",
          "cost": 220
       },
       {
-         "position": 24,
          "name": "Avenue Henri-Martin",
          "cost": 240
       },
       {
-         "position": 26,
+         "name": "Gare du Nord."
+      },
+      {
          "name": "Faubourg Saint-Honoré",
          "cost": 260
       },
       {
-         "position": 27,
          "name": "Place de la Bourse",
          "cost": 260
       },
       {
-         "position": 29,
+         "name": "Compagnie des eaux"
+      },
+      {
          "name": "Rue Lafayette",
          "cost": 280
       },
+      {},
       {
-         "position": 31,
          "name": "Avenue de Breteuil",
          "cost": 300
       },
       {
-         "position": 32,
          "name": "Avenue Foch",
          "cost": 300
       },
+      {},
       {
-         "position": 34,
          "name": "Boulevard des Capucines",
          "cost": 320
       },
       {
-         "position": 37,
+         "name": "Gare Saint-Lazare"
+      },
+      {},
+      {
          "name": "Avenue des Champs-Élysées",
          "cost": 400
       },
+      {},
       {
-         "position": 39,
          "name": "Rue de la Paix",
          "cost": 400
-      },
-      {
-         "position": 5,
-         "name": "Gare Montparnasse"
-      },
-      {
-         "position": 15,
-         "name": "Gare de Lyon"
-      },
-      {
-         "position": 25,
-         "name": "Gare du Nord."
-      },
-      {
-         "position": 35,
-         "name": "Gare Saint-Lazare"
-      },
-      {
-         "position": 12,
-         "name": "Compagnie d'électricité"
-      },
-      {
-         "position": 28,
-         "name": "Compagnie des eaux"
       }
    ]
 }
