@@ -1,0 +1,123 @@
+{
+    "moneySymbol": "\u00A3",
+    "spaces": [
+        {},
+        {
+            "name": "Old Kent Road",
+            "cost": 60
+        },
+        {},
+        {
+            "name": "Whitechapel Road",
+            "cost": 60
+        },
+        {},
+        {
+            "name": "King's Cross Station"
+        },
+        {
+            "name": "The Angel Islington",
+            "cost": 100
+        },
+        {},
+        {
+            "name": "Euston Road",
+            "cost": 100
+        },
+        {
+            "name": "Pentonville Road",
+            "cost": 120
+        },
+        {},
+        {
+            "name": "Pall Mall",
+            "cost": 140
+        },
+        {
+            "name": "Electric Company"
+        },
+        {
+            "name": "Whitehall",
+            "cost": 140
+        },
+        {
+            "name": "Northumberland Avenue",
+            "cost": 160
+        },
+        {
+            "name": "Marylebone Station"
+        },
+        {
+            "name": "Bow Street",
+            "cost": 180
+        },
+        {},
+        {
+            "name": "Great Marlborough Street",
+            "cost": 180
+        },
+        {
+            "name": "Vine Street",
+            "cost": 200
+        },
+        {},
+        {
+            "name": "Strand",
+            "cost": 220
+        },
+        {},
+        {
+            "name": "Fleet Street",
+            "cost": 220
+        },
+        {
+            "name": "Trafalgar Square",
+            "cost": 240
+        },
+        {
+            "name": "Fenchurch Street Station"
+        },
+        {
+            "name": "Leicester Square",
+            "cost": 260
+        },
+        {
+            "name": "Coventry Street",
+            "cost": 260
+        },
+        {
+            "name": "Water Works"
+        },
+        {
+            "name": "Piccadilly",
+            "cost": 280
+        },
+        {},
+        {
+            "name": "Regent Street",
+            "cost": 300
+        },
+        {
+            "name": "Oxford Street",
+            "cost": 300
+        },
+        {},
+        {
+            "name": "Bond Street",
+            "cost": 320
+        },
+        {
+            "name": "Liverpool Street Station"
+        },
+        {},
+        {
+            "name": "Park Lane",
+            "cost": 350
+        },
+        {},
+        {
+            "name": "Mayfair",
+            "cost": 400
+        }
+    ]
+}

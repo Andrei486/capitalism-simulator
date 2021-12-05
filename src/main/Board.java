@@ -187,9 +187,9 @@ public class Board implements Serializable {
      * Gets the JSON file containing the information needed to load a board of a
      * given international version.
      * @param version the InternationalVersion to load
-     * @return File object representing the JSON file
+     * @return
      */
-    public File getVersionFile(InternationalVersion version) {
+    public String getVersionFile(InternationalVersion version) {
         String filepath = null;
         switch (version) {
             case NORTH_AMERICA:
@@ -202,19 +202,19 @@ public class Board implements Serializable {
                 filepath = "resources/uk.json";
                 break;
         }
-        return new File(filepath);
+        return filepath;
     }
 
     /**
      * Initializes the spaces on the board, creating properties as needed.
      */
-    private void initializeBoard(File file) {
+    private void initializeBoard(String resourcePath) {
 
         JSONTokener tokener;
         JSONObject rootObject = null;
         JSONObject propertyObject;
 
-        try (InputStream input = new FileInputStream(file)) {
+        try (InputStream input = getClass().getResourceAsStream(resourcePath)) {
             tokener = new JSONTokener(input);
             rootObject = new JSONObject(tokener);
         } catch (IOException e) {

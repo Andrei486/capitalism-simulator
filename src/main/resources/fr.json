@@ -1,5 +1,5 @@
 {
-   "moneySymbol" : "€",
+   "moneySymbol" : "\u20AC",
    "spaces" : [
       {},
       {
@@ -25,7 +25,7 @@
          "cost": 100
       },
       {
-         "name": "Avenue de la République",
+         "name": "Avenue de la R\u00E9publique",
          "cost": 120
       },
       {},
@@ -34,7 +34,7 @@
          "cost": 140
       },
       {
-         "name": "Compagnie d'électricité"
+         "name": "Compagnie d'\u00E9lectricit\u00E9"
       },
       {
          "name": "Avenue de Neuilly",
@@ -78,7 +78,7 @@
          "name": "Gare du Nord"
       },
       {
-         "name": "Faubourg Saint-Honoré",
+         "name": "Faubourg Saint-Honor\u00E9",
          "cost": 260
       },
       {
@@ -111,7 +111,7 @@
       },
       {},
       {
-         "name": "Av. des Champs-Élysées",
+         "name": "Av. des Champs-\u00C9lys\u00E9es",
          "cost": 400
       },
       {},

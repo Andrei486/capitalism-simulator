@@ -1,0 +1,123 @@
+{
+   "moneySymbol" : "\u20AC",
+   "spaces" : [
+      {},
+      {
+         "name": "Boul. de Belleville",
+         "cost": 60
+      },
+      {},
+      {
+         "name": "Rue Lecourbe",
+         "cost": 80
+      },
+      {},
+      {
+         "name": "Gare Montparnasse"
+      },
+      {
+         "name": "Rue de Vaugirard",
+         "cost": 100
+      },
+      {},
+      {
+         "name": "Rue de Courcelles",
+         "cost": 100
+      },
+      {
+         "name": "Avenue de la R\u00E9publique",
+         "cost": 120
+      },
+      {},
+      {
+         "name": "Boul. de la Villette",
+         "cost": 140
+      },
+      {
+         "name": "Compagnie d'\u00E9lectricit\u00E9"
+      },
+      {
+         "name": "Avenue de Neuilly",
+         "cost": 140
+      },
+      {
+         "name": "Rue de Paradis",
+         "cost": 160
+      },
+      {
+         "name": "Gare de Lyon"
+      },
+      {
+         "name": "Avenue Mozart",
+         "cost": 180
+      },
+      {},
+      {
+         "name": "Boulevard Saint-Michel",
+         "cost": 180
+      },
+      {
+         "name": "Place Pigalle",
+         "cost": 180
+      },
+      {},
+      {
+         "name": "Avenue Matignon",
+         "cost": 220
+      },
+      {},
+      {
+         "name": "Boulevard Malesherbes",
+         "cost": 220
+      },
+      {
+         "name": "Avenue Henri-Martin",
+         "cost": 240
+      },
+      {
+         "name": "Gare du Nord"
+      },
+      {
+         "name": "Faubourg Saint-Honor\u00E9",
+         "cost": 260
+      },
+      {
+         "name": "Place de la Bourse",
+         "cost": 260
+      },
+      {
+         "name": "Compagnie des eaux"
+      },
+      {
+         "name": "Rue Lafayette",
+         "cost": 280
+      },
+      {},
+      {
+         "name": "Avenue de Breteuil",
+         "cost": 300
+      },
+      {
+         "name": "Avenue Foch",
+         "cost": 300
+      },
+      {},
+      {
+         "name": "Boulevard des Capucines",
+         "cost": 320
+      },
+      {
+         "name": "Gare Saint-Lazare"
+      },
+      {},
+      {
+         "name": "Av. des Champs-\u00C9lys\u00E9es",
+         "cost": 400
+      },
+      {},
+      {
+         "name": "Rue de la Paix",
+         "cost": 400
+      }
+   ]
+}
