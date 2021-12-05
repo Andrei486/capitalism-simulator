@@ -191,9 +191,108 @@ public class BoardTest {
         assertTrue(newGame.isGameOver());
     }
 
+    /**
+     * Tests if the board can check if all the remaining players are AI.
+     */
     @Test
     public void isAllRemainingAI() {
         newGame = new Board(3, 3, InternationalVersion.NORTH_AMERICA);
         assertTrue(newGame.isAllRemainingAI());
+    }
+
+    /**
+     * Tests the France board loads.
+     */
+    @Test
+    public void doesFranceBoardLoad() {
+        newGame = new Board(3, 1, InternationalVersion.FRANCE);
+        assertEquals("Boul. de Belleville", newGame.getSpace(1).getName());
+        assertEquals("Av. des Champs-\u00C9lys\u00E9es", newGame.getSpace(37).getName());
+        assertEquals(400,((PropertySpace) newGame.getSpace(37)).getProperty().getCost());
+        String sb = "Property: Av. des Champs-\u00C9lys\u00E9es\n" +
+                "Color: Blue\n" +
+                "Cost: \u20AC400\n" +
+                "House cost: \u20AC120\n" +
+                "Rent: \u20AC300\n" +
+                "0 houses built\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(37).getDescription());
+        sb = "Property: Gare Montparnasse\n" +
+                "Cost: \u20AC200\n" +
+                "Rent(1): \u20AC25\n" +
+                "Rent(2): \u20AC50\n" +
+                "Rent(3): \u20AC100\n" +
+                "Rent(4): \u20AC200\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(5).getDescription());
+        sb = "Property: Compagnie d'\u00E9lectricit\u00E9\n" +
+                "Cost: \u20AC150\n" +
+                "If one utility is owned, rent is 4 times what is shown on dice.\n" +
+                "If both utilities are owned, rent is 10 times what is shown on dice.";
+        assertEquals(sb, newGame.getSpace(12).getDescription());
+    }
+
+    /**
+     * Tests the UK board loads.
+     */
+    @Test
+    public void doesUKBoardLoad() {
+        newGame = new Board(3, 1, InternationalVersion.UNITED_KINGDOM);
+        assertEquals("Old Kent Road", newGame.getSpace(1).getName());
+        assertEquals("Park Lane", newGame.getSpace(37).getName());
+        assertEquals(350,((PropertySpace) newGame.getSpace(37)).getProperty().getCost());
+        String sb = "Property: Park Lane\n" +
+                "Color: Blue\n" +
+                "Cost: \u00A3350\n" +
+                "House cost: \u00A3105\n" +
+                "Rent: \u00A3262\n" +
+                "0 houses built\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(37).getDescription());
+        sb = "Property: King's Cross Station\n" +
+                "Cost: \u00A3200\n" +
+                "Rent(1): \u00A325\n" +
+                "Rent(2): \u00A350\n" +
+                "Rent(3): \u00A3100\n" +
+                "Rent(4): \u00A3200\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(5).getDescription());
+        sb = "Property: Electric Company\n" +
+                "Cost: \u00A3150\n" +
+                "If one utility is owned, rent is 4 times what is shown on dice.\n" +
+                "If both utilities are owned, rent is 10 times what is shown on dice.";
+        assertEquals(sb, newGame.getSpace(12).getDescription());
+    }
+
+    /**
+     * Tests the NA board loads.
+     */
+    @Test
+    public void doesNABoardLoad() {
+        newGame = new Board(3, 1, InternationalVersion.NORTH_AMERICA);
+        assertEquals("Mediterranean Avenue", newGame.getSpace(1).getName());
+        assertEquals("Park Place", newGame.getSpace(37).getName());
+        assertEquals(350,((PropertySpace) newGame.getSpace(37)).getProperty().getCost());
+        String sb = "Property: Park Place\n" +
+                "Color: Blue\n" +
+                "Cost: \u0024350\n" +
+                "House cost: \u0024105\n" +
+                "Rent: \u0024262\n" +
+                "0 houses built\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(37).getDescription());
+        sb = "Property: Reading Railroad\n" +
+                "Cost: \u0024200\n" +
+                "Rent(1): \u002425\n" +
+                "Rent(2): \u002450\n" +
+                "Rent(3): \u0024100\n" +
+                "Rent(4): \u0024200\n" +
+                "Not owned";
+        assertEquals(sb, newGame.getSpace(5).getDescription());
+        sb = "Property: Electric Company\n" +
+                "Cost: \u0024150\n" +
+                "If one utility is owned, rent is 4 times what is shown on dice.\n" +
+                "If both utilities are owned, rent is 10 times what is shown on dice.";
+        assertEquals(sb, newGame.getSpace(12).getDescription());
     }
 }

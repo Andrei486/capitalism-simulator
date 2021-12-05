@@ -30,6 +30,9 @@ public class Board implements Serializable {
     /**
      * Constructs a board with the specified number of players.
      * @param totalPlayers integer number of players (including AI)
+     * @param nAI integer number of AI players
+     * @param version InternationalVersion Enum representing the
+     *                international version of the board
      */
     public Board(int totalPlayers, int nAI, InternationalVersion version) {
         int nPlayers = totalPlayers - nAI;
@@ -187,7 +190,7 @@ public class Board implements Serializable {
      * Gets the JSON file containing the information needed to load a board of a
      * given international version.
      * @param version the InternationalVersion to load
-     * @return
+     * @return String representation of the path to the file
      */
     public String getVersionFile(InternationalVersion version) {
         String filepath = null;
@@ -207,6 +210,8 @@ public class Board implements Serializable {
 
     /**
      * Initializes the spaces on the board, creating properties as needed.
+     * @param resourcePath a String representation of the path to the Json File
+     *                     needed to construct the board
      */
     private void initializeBoard(String resourcePath) {
 
@@ -367,6 +372,14 @@ public class Board implements Serializable {
         }
     }
 
+    /**
+     * Gets a saved state of a Board from a file
+     * @param filepath String representation of the path to the file
+     * @return the Board that the save game was playing on
+     * @throws IOException if the class is interrupted while reading the file
+     *                     or if it fails to read the file altogether
+     * @throws ClassNotFoundException if the file does not contain a class
+     */
     public static Board importBoard(String filepath) throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream(filepath));
         Board board = (Board) in.readObject();
@@ -374,6 +387,12 @@ public class Board implements Serializable {
         return board;
     }
 
+    /**
+     * Saves the current state of the board to a file
+     * @param filepath String representation of the path to the file
+     * @throws IOException if the class is interrupted while writing to the file
+     *                     or if it fails to write to the file altogether
+     */
     public void exportBoard(String filepath) throws IOException {
         HashSet<MonopolyView> views = this.gameViews;
         this.gameViews = new HashSet<>();
