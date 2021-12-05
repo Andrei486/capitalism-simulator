@@ -94,3 +94,21 @@ For Milestone 4 (ending December 6), the goals are:
 
 - Implement save/load functionality
 - Implement custom international versions with street names
+
+## Milestone 4
+
+### Deliverables
+
+The Milestone 4 submission is a zip file which includes the following deliverables.
+For all deliverables except the source code, the authors are included in the deliverable. For the source code, see GitHub.
+
+- Readme.md (this file): a short description of all deliverables and authors
+- g2-monopoly.jar (executable + source): a .jar file runnable on command line or by double-clicking the file, containing the source and executable, including unit tests
+- UML class diagram .png file: a diagram showing the structure of classes in this project, as well as their relationships
+- Four UML sequence diagram .png files: diagrams showing the flow of events in different scenarios
+- Design discussion .pdf file: a file containing a discussion of important design decisions in the project
+- User manual .pdf file: a file explaining how to play this version of Monopoly, including images
+
+### Known Issues
+
+No issues are currently known.
