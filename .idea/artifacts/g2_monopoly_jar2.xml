@@ -1,0 +1,12 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="g2-monopoly:jar2">
+    <output-path>$PROJECT_DIR$/out/artifacts/g2_monopoly_jar2</output-path>
+    <root id="archive" name="g2-monopoly.jar">
+      <element id="module-output" name="g2-monopoly" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/json-20210307.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/junit/junit/4.13.1/junit-4.13.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar" path-in-jar="/" />
+      <element id="module-source" name="g2-monopoly" />
+    </root>
+  </artifact>
+</component>
